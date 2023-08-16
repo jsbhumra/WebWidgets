@@ -7,7 +7,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const Demo = () => {
   const getFromLS = (key) => {
     let ls = {};
-    if (localStorage) {
+    if (typeof window !== 'undefined' && localStorage) {
       try {
         ls = JSON.parse(localStorage.getItem("rgl-8")) || {};
       } catch (e) {
@@ -58,9 +58,9 @@ const Demo = () => {
   // };
 
   return (
-    <div className="h-screen border-2 border-red-500">
+    <div className="h-screen border-2 border-red-500 overflow-hidden">
       <ResponsiveReactGridLayout
-        className="border-2 border-red-500 h-screen"
+        className="border-2 border-red-500 max-h-screen"
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
         rowHeight={30}
         layouts={layouts}
