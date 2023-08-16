@@ -7,7 +7,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const Demo = () => {
   const getFromLS = (key) => {
     let ls = {};
-    if (typeof window !== 'undefined' && localStorage) {
+    if (localStorage) {
       try {
         ls = JSON.parse(localStorage.getItem("rgl-8")) || {};
       } catch (e) {
@@ -28,17 +28,6 @@ const Demo = () => {
     }
   };
 
-  // const [layouts, setLayouts] = useState(() => {
-  //   const initialLayouts = getFromLS("layouts") || {};
-  //   return {
-  //     lg: initialLayouts.lg || [],
-  //     md: initialLayouts.md || [],
-  //     sm: initialLayouts.sm || [],
-  //     xs: initialLayouts.xs || [],
-  //     xxs: initialLayouts.xxs || [],
-  //   };
-  // });
-
   const originalLayouts = getFromLS("layouts") || {};
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
@@ -52,15 +41,10 @@ const Demo = () => {
     setLayouts(layouts);
   };
 
-  // const onLayoutChange = (layout, layouts) => {
-  //   saveToLS("layouts", layouts);
-  //   setLayouts(layouts);
-  // };
-
   return (
-    <div className="h-screen border-2 border-red-500 overflow-hidden">
+    <div className="h-screen">
       <ResponsiveReactGridLayout
-        className="border-2 border-red-500 max-h-screen"
+        className="border-2 border-red-500 h-screen"
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
         rowHeight={30}
         layouts={layouts}
