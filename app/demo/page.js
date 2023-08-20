@@ -5,6 +5,27 @@ import { WidthProvider, Responsive } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const Demo = () => {
+  const screenSize = window.innerWidth;
+  let currentScreen;
+  switch (true) {
+    case screenSize > 1200:
+      currentScreen = "lg";
+      break;
+    case screenSize < 1200 && screenSize > 996:
+      currentScreen = "md";
+      break;
+    case screenSize < 996 && screenSize > 768:
+      currentScreen = "sm";
+      break;
+    case screenSize < 768 && screenSize > 480:
+      currentScreen = "xs";
+      break;
+
+    default:
+      currentScreen = "xxs";
+      break;
+  }
+
   const getFromLS = (key) => {
     let ls = {};
     if (localStorage) {
@@ -28,43 +49,7 @@ const Demo = () => {
     }
   };
 
-  const originalLayouts = getFromLS("layouts") || {
-    lg: [
-      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    ],
-    md: [
-      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    ],
-    sm: [
-      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    ],
-    xs: [
-      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    ],
-    xxs: [
-      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    ],
-  };
+  const originalLayouts = getFromLS("layouts");
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
   );
@@ -76,32 +61,26 @@ const Demo = () => {
   //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
   // ]);
 
-  const [currentLayout, setCurrentLayout] = useState(layouts.lg);
-
+  const [currentLayout, setCurrentLayout] = useState(
+    layouts[`${currentScreen}`]
+  );
   useEffect(() => {
     saveToLS("layouts", layouts);
   }, [layouts]);
 
   const onLayoutChange = (layout, layouts) => {
     setLayouts(layouts);
-    // console.log(layout);
     setCurrentLayout(layout);
   };
 
   const onRemoveItem = (e) => {
     const id = e.target.id;
-    // setLayouts((prevLayout) => {
-    //   console.log(prevLayout);
-    //   return prevLayout;
-    // });
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
 
     saveToLS("layouts", currentLayout);
   };
-
-  console.log(layouts);
 
   return (
     <div className="min-h-screen h-auto bg-repeat bg-[url('/demobg.jpg')] bg-cover bg-center">
