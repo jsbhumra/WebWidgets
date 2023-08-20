@@ -68,13 +68,15 @@ const Demo = () => {
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
   );
-  const [currentLayout, setCurrentLayout] = useState([
-    { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-    { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-    { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-    { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-    { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-  ]);
+  // const [currentLayout, setCurrentLayout] = useState([
+  //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+  //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+  //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+  //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+  //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+  // ]);
+
+  const [currentLayout, setCurrentLayout] = useState(layouts.lg);
 
   useEffect(() => {
     saveToLS("layouts", layouts);
@@ -82,7 +84,7 @@ const Demo = () => {
 
   const onLayoutChange = (layout, layouts) => {
     setLayouts(layouts);
-    console.log(layout);
+    // console.log(layout);
     setCurrentLayout(layout);
   };
 
@@ -96,8 +98,10 @@ const Demo = () => {
       prevLayout.filter((layout) => layout.i != id)
     );
 
-    // saveToLS("layouts", currentLayout);
+    saveToLS("layouts", currentLayout);
   };
+
+  console.log(layouts);
 
   return (
     <div className="min-h-screen h-auto bg-repeat bg-[url('/demobg.jpg')] bg-cover bg-center">
