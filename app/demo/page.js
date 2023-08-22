@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 
@@ -49,7 +50,43 @@ const Demo = () => {
     }
   };
 
-  const originalLayouts = getFromLS("layouts");
+  const originalLayouts = getFromLS("layouts") || {
+    lg: [
+      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+    ],
+    md: [
+      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+    ],
+    sm: [
+      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+    ],
+    xs: [
+      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+    ],
+    xxs: [
+      { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+    ],
+  };
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
   );
@@ -101,15 +138,15 @@ const Demo = () => {
             <div
               key={box.i}
               data-grid={{ w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 }}
-              className="flex flex-row bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
+              className="group flex flex-row bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
               <span className="text">{box.i}</span>
               <span
-                className="border-2 border-red-500 rounded-md px-2 py-1 cursor-pointer absolute right-0 top-0"
+                className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
                 onClick={onRemoveItem}
                 id={box.i}
               >
-                <img src="/delete.svg" />
+                <Image src="/delete.svg" height={20} width={20} className="h-full w-full m-0 p-0" />
               </span>
             </div>
           );
