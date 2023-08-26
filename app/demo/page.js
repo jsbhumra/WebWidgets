@@ -99,19 +99,24 @@ const Demo = () => {
   }, [layouts]);
 
   const breakPointChange = (newBreakPt) => {
+    setLayouts(getFromLS("layouts"));
     setCurrentLayout(layouts[newBreakPt]);
   };
 
   const onLayoutChange = (layout, layouts) => {
-    setLayouts(layouts);
     setCurrentLayout(layout);
+    setLayouts(layouts);
   };
 
   const onRemoveItem = (e) => {
     const id = e.target.id;
+    console.log(getFromLS("layouts"))
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
+    console.log(getFromLS("layouts"))
+    setLayouts(JSON.parse(JSON.stringify(getFromLS("layouts"))))
+    console.log(getFromLS("layouts"))
   };
 
   return (

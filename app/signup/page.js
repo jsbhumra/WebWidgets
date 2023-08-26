@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import {Input} from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import './styles.css'
-import {EyeFilledIcon} from "./EyeFilledIcon";
-import {EyeSlashFilledIcon} from "./EyeSlashFilledIcon";
-import {Button} from "@nextui-org/react";
-import {MailIcon} from './MailIcon';
+import { EyeFilledIcon } from "./EyeFilledIcon";
+import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
+import { Button } from "@nextui-org/react";
+import { MailIcon } from './MailIcon';
 
 export default function Login()
 {
