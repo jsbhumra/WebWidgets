@@ -90,13 +90,6 @@ const Demo = () => {
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
   );
-  // const [currentLayout, setCurrentLayout] = useState([
-  //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-  //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-  //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-  //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-  //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-  // ]);
 
   const [currentLayout, setCurrentLayout] = useState(
     layouts[`${currentScreen}`]
@@ -104,6 +97,10 @@ const Demo = () => {
   useEffect(() => {
     saveToLS("layouts", layouts);
   }, [layouts]);
+
+  const breakPointChange = (newBreakPt) => {
+    setCurrentLayout(layouts[newBreakPt]);
+  };
 
   const onLayoutChange = (layout, layouts) => {
     setLayouts(layouts);
@@ -115,8 +112,6 @@ const Demo = () => {
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
-
-    saveToLS("layouts", currentLayout);
   };
 
   return (
@@ -132,6 +127,7 @@ const Demo = () => {
         preventCollision={true}
         useCSSTransforms={true}
         margin={[15, 15]}
+        onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
       >
         {currentLayout.map((box) => {
           return (
@@ -146,7 +142,12 @@ const Demo = () => {
                 onClick={onRemoveItem}
                 id={box.i}
               >
-                <Image src="/delete.svg" height={20} width={20} className="h-full w-full m-0 p-0" />
+                <Image
+                  src="/delete.svg"
+                  height={20}
+                  width={20}
+                  className="h-full w-full m-0 p-0"
+                />
               </span>
             </div>
           );
