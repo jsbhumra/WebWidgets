@@ -31,12 +31,14 @@ const Demo = () => {
     let ls = {};
     if (localStorage) {
       try {
-        ls = JSON.parse(localStorage.getItem("rgl-8")) || {};
+        ls = JSON.parse(localStorage.getItem("rgl-8"));
+        return ls[key];
       } catch (e) {
         console.log(e);
       }
+    } else {
+      {}
     }
-    return ls[key];
   };
 
   const saveToLS = (key, value) => {
