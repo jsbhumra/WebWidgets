@@ -1,38 +1,39 @@
-.body{
-    background-color: #282a37;
-    /* background-color: #ffffff; */
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    position: absolute;
-    padding-left: 5rem;
-    padding-top: 10rem;
+.body {
+  background-color: #282a37;
+  /* background-color: #ffffff; */
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  position: absolute;
+  padding-left: 5rem;
+  padding-top: 10rem;
 }
 /* .textdiv{
     
 } */
-.text1{
-    color: #959fb0;
-    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    padding-bottom: 1rem;
+.text1 {
+  color: #959fb0;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  padding-bottom: 1rem;
 }
-.heading{
-    color:#ffffff;
-    padding-bottom: 1rem;
+.heading {
+  color: #ffffff;
+  padding-bottom: 1rem;
 }
-.question{
-    color: #8891a1;
-    padding-bottom: 1rem;
+.question {
+  color: #8891a1;
+  padding-bottom: 1rem;
 }
-.redirect{
-    color: #f68f30;
-    text-decoration: underline;
+.redirect {
+  color: #f68f30;
+  text-decoration: underline;
 }
-.form{
-    width:30%;
-    min-width: 250px;
+.form {
+  width: 30%;
+  min-width: 250px;
 }
-.submitbtn{
-    margin:0 25%;
+.submitbtn {
+  margin: 0 25%;
 }
