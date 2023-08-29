@@ -36,12 +36,16 @@
   text-decoration: underline;
 }
 .form {
-  width: 30%;
+  width: 50%;
   min-width: 250px;
 }
 .submitbtn {
   margin: 0 25%;
 }
-/* .inputsm{
-    width: 50%;
-} */
+.inputsm{
+    width: 400px;
+}
+.inputlg{
+    width: 400px;
+    text-align: center;
+}
