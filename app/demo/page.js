@@ -37,7 +37,8 @@ const Demo = () => {
         console.log(e);
       }
     } else {
-      {}
+      {
+      }
     }
   };
 
@@ -112,17 +113,17 @@ const Demo = () => {
 
   const onRemoveItem = (e) => {
     const id = e.target.id;
-    console.log(getFromLS("layouts"))
+    console.log(getFromLS("layouts"));
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
-    console.log(getFromLS("layouts"))
-    setLayouts(JSON.parse(JSON.stringify(getFromLS("layouts"))))
-    console.log(getFromLS("layouts"))
+    console.log(getFromLS("layouts"));
+    setLayouts(JSON.parse(JSON.stringify(getFromLS("layouts"))));
+    console.log(getFromLS("layouts"));
   };
 
   return (
-    <div className="min-h-screen h-auto bg-repeat bg-[url('/demobg.jpg')] bg-cover bg-center">
+    <div className="min-h-screen h-auto bg-repeat bgcol bg-cover bg-center">
       <ResponsiveReactGridLayout
         className="border-2 border-red-500 h-screen overflow-hidden"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}

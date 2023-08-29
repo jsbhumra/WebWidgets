@@ -30,7 +30,7 @@ export default function App() {
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
       isBordered
-      className="py-4 bg-black border-b-[#262626]"
+      className="py-4 bg-transparent border-b-[#262626] backdrop-blur-sm backdrop-saturate-100"
     >
       <NavbarContent>
         <NavbarMenuToggle
@@ -45,7 +45,7 @@ export default function App() {
         <NavbarItem>
           <Link
             href="#"
-            className="text-lg lg:text-xl border-b-2 border-black hover:border-primaryOrange py-1"
+            className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
             Home
           </Link>
@@ -53,7 +53,7 @@ export default function App() {
         <NavbarItem>
           <Link
             href="#"
-            className="text-lg lg:text-xl border-b-2 border-black hover:border-primaryOrange py-1"
+            className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
             About
           </Link>
@@ -61,7 +61,7 @@ export default function App() {
         <NavbarItem>
           <Link
             href="#"
-            className="text-lg lg:text-xl border-b-2 border-black hover:border-primaryOrange py-1"
+            className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
             Configure
           </Link>
@@ -69,7 +69,7 @@ export default function App() {
         <NavbarItem>
           <Link
             href="/demo"
-            className="text-lg lg:text-xl border-b-2 border-black hover:border-primaryOrange py-1"
+            className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
             Demo
           </Link>
@@ -93,7 +93,7 @@ export default function App() {
             as={Link}
             color="primary"
             href="signup"
-            variant="flat"
+            variant="bordered"
             className="text-lg lg:text-xl p-4"
           >
             Sign Up

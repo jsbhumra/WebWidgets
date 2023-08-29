@@ -30,6 +30,8 @@ module.exports = {
             focus: "#f68f30",
             primaryOrange: "#f09032",
             bgBlue: "#282a37",
+            bgGradientLight: "#131642",
+            bgGradientDark: "#070823",
           },
         },
         light: {
@@ -41,6 +43,8 @@ module.exports = {
             focus: "#f68f30",
             primaryOrange: "#f09032",
             bgBlue: "#282a37",
+            bgGradientLight: "#131642",
+            bgGradientDark: "#070823",
           },
         },
       },
