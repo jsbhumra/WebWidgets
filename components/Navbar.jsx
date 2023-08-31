@@ -18,12 +18,12 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    "Home",
-    "About",
-    "Demo",
-    "Configure",
-    "Sign Up",
-    "Log Out",
+    { name: "Home", to: "/" },
+    { name: "About", to: "/" },
+    { name: "Demo", to: "/demo" },
+    { name: "Configure", to: "/" },
+    { name: "Sign Up", to: "/signup" },
+    { name: "Log Out", to: "/" },
   ];
 
   return (
@@ -101,11 +101,11 @@ export default function App() {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu className="bg-black">
+      <NavbarMenu className="bg-transparent">
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link color="primary" className="w-full" href="#" size="lg">
-              {item}
+            <Link color="primary" className="w-full" href={item.to} size="lg">
+              {item.name}
             </Link>
           </NavbarMenuItem>
         ))}

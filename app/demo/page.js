@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import Counter from "@/components/Counter";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -123,9 +124,9 @@ const Demo = () => {
   };
 
   return (
-    <div className="min-h-screen h-auto bg-repeat bgcol bg-cover bg-center">
+    <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
       <ResponsiveReactGridLayout
-        className="border-2 border-red-500 h-screen overflow-hidden"
+        className="border-2 border-red-500 min-h-screen"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
         rowHeight={30}
@@ -141,10 +142,14 @@ const Demo = () => {
           return (
             <div
               key={box.i}
-              data-grid={{ w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 }}
-              className="group flex flex-row bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
+              // Dynamic Values from Database for w, h, minW, minH. w = minW and h = minH
+              data-grid={{ w: 6, h: 12, x: 0, y: 0, minW: 5, minH: 10 }}
+              className="group flex flex-row bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing min-h-min min-w-min"
             >
-              <span className="text">{box.i}</span>
+              <span className="text">
+                <Counter />
+              </span>
+              {/* <span className="text">{box.i}</span> */}
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
                 onClick={onRemoveItem}

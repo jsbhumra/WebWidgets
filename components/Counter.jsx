@@ -8,7 +8,7 @@ const Counter = () => {
   const resetValue = () => setValue(0);
 
   return (
-    <div className="border-2 border-red-500 flex flex-col gap-10 items-center px-20 py-6 m-4 rounded-lg">
+    <div className="border-2 border-red-500 flex flex-col gap-10 items-center px-20 py-6 m-4 rounded-lg w-full h-full">
       <div className="text-5xl">Counter</div>
       <div className="text-8xl">{value}</div>
       <div className="flex gap-4">
