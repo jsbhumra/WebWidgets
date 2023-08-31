@@ -162,7 +162,16 @@ const Demo = () => {
             <div
               key={box.i}
               // Dynamic Values from Database for w, h, minW, minH.
-              data-grid={{ w: 6, h: 12, x: 0, y: 0, minW: 5, minH: 12 }}
+              data-grid={{
+                w: 6,
+                h: 12,
+                x: 0,
+                y: 0,
+                minW: 5,
+                minH: 12,
+                maxW: 10,
+                minH: 10,
+              }}
               className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
               {/* Add Paddind to remove overlap betn widget and delete btn*/}
