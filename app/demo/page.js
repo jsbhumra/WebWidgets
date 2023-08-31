@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Counter from "@/components/Counter";
 
@@ -122,6 +122,25 @@ const Demo = () => {
     setLayouts(JSON.parse(JSON.stringify(getFromLS("layouts"))));
     console.log(getFromLS("layouts"));
   };
+  // -----------------------------------
+  const parentRef = useRef(null);
+  const childrenRef = useRef(null);
+
+  useEffect(() => {
+    if (parentRef.current) {
+      let parentHeight = parentRef.current.offsetHeight;
+      let parentWidth = parentRef.current.offsetWidth;
+      console.log("Parent: ");
+      console.log(parentHeight, parentWidth);
+    }
+
+    if (childrenRef.current) {
+      let childrenHeight = childrenRef.current.offsetHeight;
+      let childrenWidth = childrenRef.current.offsetWidth;
+      console.log("Child: ");
+      console.log(childrenHeight, childrenWidth);
+    }
+  }, [parentRef, childrenRef]);
 
   return (
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
@@ -142,14 +161,14 @@ const Demo = () => {
           return (
             <div
               key={box.i}
-              // Dynamic Values from Database for w, h, minW, minH. w = minW and h = minH
-              data-grid={{ w: 6, h: 12, x: 0, y: 0, minW: 5, minH: 10 }}
-              className="group flex flex-row bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing min-h-min min-w-min"
+              // Dynamic Values from Database for w, h, minW, minH.
+              data-grid={{ w: 6, h: 12, x: 0, y: 0, minW: 5, minH: 12 }}
+              className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
-              <span className="text">
+              {/* Add Paddind to remove overlap betn widget and delete btn*/}
+              <div className="text w-full h-full" ref={parentRef}>
                 <Counter />
-              </span>
-              {/* <span className="text">{box.i}</span> */}
+              </div>
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
                 onClick={onRemoveItem}
