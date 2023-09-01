@@ -168,9 +168,9 @@ const Demo = () => {
                 x: 0,
                 y: 0,
                 minW: 5,
-                minH: 12,
-                maxW: 10,
                 minH: 10,
+                maxW: 10,
+                maxH: 12,
               }}
               className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
