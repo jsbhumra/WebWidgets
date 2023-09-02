@@ -123,24 +123,11 @@ const Demo = () => {
     console.log(getFromLS("layouts"));
   };
   // -----------------------------------
-  const parentRef = useRef(null);
-  const childrenRef = useRef(null);
+  const parentRef = useRef([]);
 
   useEffect(() => {
-    if (parentRef.current) {
-      let parentHeight = parentRef.current.offsetHeight;
-      let parentWidth = parentRef.current.offsetWidth;
-      console.log("Parent: ");
-      console.log(parentHeight, parentWidth);
-    }
-
-    if (childrenRef.current) {
-      let childrenHeight = childrenRef.current.offsetHeight;
-      let childrenWidth = childrenRef.current.offsetWidth;
-      console.log("Child: ");
-      console.log(childrenHeight, childrenWidth);
-    }
-  }, [parentRef, childrenRef]);
+    console.log(parentRef)
+  })
 
   return (
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
@@ -175,8 +162,9 @@ const Demo = () => {
               className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
               {/* Add Paddind to remove overlap betn widget and delete btn*/}
-              <div className="text w-full h-full" ref={parentRef}>
-                <Counter />
+              <div className="text w-full h-full" ref={el => (parentRef.current[box.i] = el)}>
+                {/* {parentRef?.current[box.i]?.clientWidth} */}
+                <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} />
               </div>
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"

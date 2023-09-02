@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-const Counter = () => {
+const Counter = ({ width, height }) => {
   const [value, setValue] = useState(0);
   const incerement = () => setValue(value + 1);
   const decrement = () => setValue(value - 1);
   const resetValue = () => setValue(0);
+  // console.log({width})
 
   return (
     <div className="border-2 border-red-500 flex flex-col gap-10 items-center px-20 py-6 rounded-lg w-full h-full">
       <div className="text-5xl">Counter</div>
-      <div className="text-8xl">{value}</div>
+      <div className="text">Width : {width}</div>
+      <div className="text">Height : {height}</div>
+      <div className="text-2xl">{value}</div>
       <div className="flex gap-4">
         <button
           className="text-5xl px-7 border-2 border-red-500 text-center pb-2 rounded-md cursor-pointer"
