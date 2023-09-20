@@ -3,6 +3,8 @@ import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Counter from "@/components/Counter";
+import { Button } from "@nextui-org/react";
+import toast, { Toaster } from "react-hot-toast";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -91,16 +93,36 @@ const Demo = () => {
       { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
     ],
   };
+  const onSaveOriginalLayouts = () => {
+    saveToLS("layouts", originalLayouts);
+  };
+
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
   );
 
+  if (layouts === undefined) {
+    onSaveOriginalLayouts();
+    location.reload();
+  }
+
+  const onSave = () => {
+    saveToLS("layouts", layouts);
+    toast.success("Layout Saved");
+    // toast.promise(saveToLS("layouts", layouts), {
+    //   loading: "Saving...",
+    //   success: <b>Settings saved!</b>,
+    //   error: <b>Could not save.</b>,
+    // });
+  };
+
   const [currentLayout, setCurrentLayout] = useState(
     layouts[`${currentScreen}`]
   );
-  useEffect(() => {
-    saveToLS("layouts", layouts);
-  }, [layouts]);
+
+  // useEffect(() => {
+  //   saveToLS("layouts", layouts);
+  // }, [layouts]);
 
   const breakPointChange = (newBreakPt) => {
     setLayouts(getFromLS("layouts"));
@@ -114,23 +136,29 @@ const Demo = () => {
 
   const onRemoveItem = (e) => {
     const id = e.target.id;
-    console.log(getFromLS("layouts"));
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
-    console.log(getFromLS("layouts"));
     setLayouts(JSON.parse(JSON.stringify(getFromLS("layouts"))));
-    console.log(getFromLS("layouts"));
+    toast.success("Widget Deleted");
   };
   // -----------------------------------
   const parentRef = useRef([]);
 
   useEffect(() => {
-    console.log(parentRef)
-  })
+    console.log(parentRef);
+  });
 
   return (
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
+      <Toaster position="top-center" reverseOrder={false} />
+      <Button
+        color="warning"
+        className="absolute z-10 top-5 right-5 text-xl font-medium"
+        onClick={onSave}
+      >
+        Save
+      </Button>
       <ResponsiveReactGridLayout
         className="border-2 border-red-500 min-h-screen"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -150,21 +178,25 @@ const Demo = () => {
               key={box.i}
               // Dynamic Values from Database for w, h, minW, minH.
               data-grid={{
-                w: 6,
-                h: 12,
+                w: 3,
+                h: 4,
                 x: 0,
                 y: 0,
-                minW: 5,
-                minH: 10,
-                maxW: 10,
-                maxH: 12,
+                minW: 3,
+                minH: 4,
+                // maxW: 10,
+                // maxH: 12,
               }}
               className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
               {/* Add Paddind to remove overlap betn widget and delete btn*/}
-              <div className="text w-full h-full" ref={el => (parentRef.current[box.i] = el)}>
+              <div
+                className="text w-full h-full"
+                ref={(el) => (parentRef.current[box.i] = el)}
+              >
                 {/* {parentRef?.current[box.i]?.clientWidth} */}
-                <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} />
+                {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
+                {box.i}
               </div>
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
