@@ -8,25 +8,47 @@ import toast, { Toaster } from "react-hot-toast";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
+function useWindowSize(){
+  const [size,setSize] = useState([window.innerHeight,window.innerWidth]);
+  useEffect(() => {
+    const handleResize = () => {
+      setSize([window.innerHeight,window.innerWidth])
+    }
+    window.addEventListener('resize',handleResize)
+    return() => {
+      window.removeEventListener('resize',handleResize)
+    }
+  },[])
+  return size;
+}
+
 const Demo = () => {
+
+  const [screenHeight,screenWidth] = useWindowSize()
+
   const screenSize = window.innerWidth;
-  let currentScreen;
+  let currentScreen,currCols;
   switch (true) {
     case screenSize > 1200:
       currentScreen = "lg";
+      currCols = 12;
       break;
     case screenSize < 1200 && screenSize > 996:
       currentScreen = "md";
+      currCols = 10;
       break;
     case screenSize < 996 && screenSize > 768:
       currentScreen = "sm";
+      currCols = 6
       break;
     case screenSize < 768 && screenSize > 480:
       currentScreen = "xs";
+      currCols = 4
       break;
 
     default:
       currentScreen = "xxs";
+      currCols = 2;
       break;
   }
 
@@ -37,7 +59,7 @@ const Demo = () => {
         ls = JSON.parse(localStorage.getItem("rgl-8"));
         return ls[key];
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     } else {
       {
@@ -142,12 +164,6 @@ const Demo = () => {
     setLayouts(JSON.parse(JSON.stringify(getFromLS("layouts"))));
     toast.success("Widget Deleted");
   };
-  // -----------------------------------
-  const parentRef = useRef([]);
-
-  useEffect(() => {
-    console.log(parentRef);
-  });
 
   return (
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
@@ -173,6 +189,8 @@ const Demo = () => {
         onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
       >
         {currentLayout.map((box) => {
+          var boxheight = Math.floor(box.h*30)+(15*(box.h-1))
+          var boxwidth = Math.floor(box.w*(screenWidth/currCols))+(15*(box.w-1))
           return (
             <div
               key={box.i}
@@ -192,11 +210,10 @@ const Demo = () => {
               {/* Add Paddind to remove overlap betn widget and delete btn*/}
               <div
                 className="text w-full h-full"
-                ref={(el) => (parentRef.current[box.i] = el)}
               >
                 {/* {parentRef?.current[box.i]?.clientWidth} */}
                 {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
-                {box.i}
+                <p>Height: {boxheight}<br />Width: {boxwidth}</p>
               </div>
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
