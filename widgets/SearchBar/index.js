@@ -1,15 +1,17 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import "./styles.css";
+import { useRouter } from "next/navigation";
 
 const SearchBar = () => {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
       const response = await fetch(
-        `http://google.com/complete/search?client=chrome&q=${searchTerm}`);
+        `https://google.com/complete/search?client=chrome&q=${searchTerm}`);
       const data = await response.json();
       console.log(data[1])
       if(data[1].length>0){
@@ -34,7 +36,7 @@ const SearchBar = () => {
       />
       <ul className="suggestions">
         {suggestions.map((suggestion,i) => (
-          <li key={i}>{suggestion}</li>
+          <li key={i} onClick={() => {router.push(`https://google.com/search?q=${suggestion}`)}}>{suggestion}</li>
         ))}
       </ul>
     </div>
