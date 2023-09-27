@@ -9,10 +9,14 @@ const SearchBar = () => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       const response = await fetch(
-        `https://api.github.com/search/repositories?q=${searchTerm}`
-      );
+        `http://google.com/complete/search?client=chrome&q=${searchTerm}`);
       const data = await response.json();
-      setSuggestions(data.items);
+      console.log(data[1])
+      if(data[1].length>0){
+        setSuggestions(data[1]);
+      } else {
+        setSuggestions([])
+      }
     };
 
     if (searchTerm.length > 0) {
@@ -29,9 +33,9 @@ const SearchBar = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <ul className="suggestions">
-        {suggestions!=[] && suggestions!=undefined ? suggestions.map((suggestion) => (
-          <li key={suggestion.id}>{suggestion.name}</li>
-        )):null}
+        {suggestions.map((suggestion,i) => (
+          <li key={i}>{suggestion}</li>
+        ))}
       </ul>
     </div>
   );
