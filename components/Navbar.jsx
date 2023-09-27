@@ -21,7 +21,7 @@ export default function App() {
     { name: "Home", to: "/" },
     { name: "About", to: "/" },
     { name: "Demo", to: "/demo" },
-    { name: "Configure", to: "/" },
+    { name: "Configure", to: "/config" },
     { name: "Sign Up", to: "/signup" },
     { name: "Log Out", to: "/" },
   ];
@@ -60,7 +60,7 @@ export default function App() {
         </NavbarItem>
         <NavbarItem>
           <Link
-            href="#"
+            href="config"
             className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
             Configure
