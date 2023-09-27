@@ -1,10 +1,13 @@
 "use client"
 
 import Nav from "../../components/Navbar";
+
 import AnalogClock from "../../widgets/AnalogClock";
-import DigitalClock from "../../widgets/DigitalClock";
 import "../../widgets/AnalogClock/styles.css"
+
+import DigitalClock from "../../widgets/DigitalClock";
 import "../../widgets/DigitalClock/styles.css"
+
 
 //REMOVE 2 LINES TO REMOVE CALENDAR
 import Calendar from 'react-calendar'
@@ -41,6 +44,8 @@ export default function config(){
                     
                 </div>
             </div>
+            <Search />
+
             <AnalogClock />
 
             <DigitalClock />
