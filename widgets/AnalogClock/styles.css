@@ -3,7 +3,7 @@
   font-family: sans-serif;
 }
 
-.clock {
+.Analogclock {
   width: 300px;
   height: 300px;
   border-radius: 50%;
@@ -18,7 +18,7 @@
   text-align: center;
 }
 
-.clock::after {
+.Analogclock::after {
   background: #aaa;
   content: "";
   width: 12px;
@@ -32,7 +32,7 @@
   border: 2px solid #fff;
 }
 
-.hour_hand {
+.Analoghour_hand {
   position: absolute;
   width: 6px;
   height: 60px;
@@ -42,7 +42,7 @@
   transform-origin: bottom;
 }
 
-.min_hand {
+.Analogmin_hand {
   position: absolute;
   width: 4px;
   height: 80px;
@@ -52,7 +52,7 @@
   transform-origin: bottom;
 }
 
-.sec_hand {
+.Analogsec_hand {
   position: absolute;
   width: 2px;
   height: 118px;
@@ -62,68 +62,68 @@
   transform-origin: bottom;
 }
 
-.clock span {
+.Analogclock span {
   position: absolute;
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 700;
 }
 
-.twelve {
+.Analogtwelve {
   top: 10px;
   left: 46%;
 }
 
-.one {
+.Analogone {
   top: 10%;
   right: 26%;
 }
 
-.eleven {
+.Analogeleven {
   top: 10%;
   left: 26%;
 }
 
-.two {
+.Analogtwo {
   top: 25%;
   right: 10%;
 }
 
-.three {
+.Analogthree {
   right: 10px;
   top: 46%;
 }
 
-.four {
+.Analogfour {
   right: 30px;
   top: 67%;
 }
 
-.five {
+.Analogfive {
   right: 78px;
   top: 80%;
 }
 
-.six {
+.Analogsix {
   bottom: 10px;
   left: 50%;
 }
 
-.seven {
+.Analogseven {
   left: 80px;
   top: 82%;
 }
 
-.eight {
+.Analogeight {
   left: 30px;
   top: 67%;
 }
 
-.nine {
+.Analognine {
   left: 10px;
   top: 46%;
 }
 
-.ten {
+.Analogten {
   top: 25%;
   left: 10%;
 }
