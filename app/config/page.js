@@ -77,7 +77,7 @@ const Config = () => {
         <SearchBar />
 
         <div style={{width:'300px', height: '300px', position: 'relative'}}>
-        <AnalogClock />
+        <AnalogClock width={300} height={200} />
         </div>
         <DigitalClock clock24hr={false} showSeconds={true} />
         <Calendar />

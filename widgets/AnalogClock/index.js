@@ -2,9 +2,22 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 
-export default function Clock() {
+export default function Clock({ width, height }) {
  const [time, setTime] = useState(new Date());
+ const [dim,setDim] = useState(width<height?width:height)
+//  const [fs,setFs] = useState(width<height?'cqw':'cqh')
+ useEffect(() => {
+  if(height<width){
+    setDim(height)
+    // setFs('cqh')
+  } else {
+    setDim(width)
+    // setFs('cqw')
+  }
+ },[height,width])
 
+ console.log(dim)
+ 
  useEffect(() => {
     const timerId = setInterval(() => {
       setTime(new Date());
@@ -16,6 +29,8 @@ export default function Clock() {
  }, []);
 
  return (
+    <div style={{position: 'absolute', width: `${dim}px`, height: `${dim}px`, left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: `calc(8 / 100 * ${dim}px)`}} >
+      {/* <p>{dim}</p> */}
     <div className="Analogclock">
       <div
         className="Analoghour_hand"
@@ -49,6 +64,7 @@ export default function Clock() {
         <span className="Analogten">10</span>
         <span className="Analogeleven">11</span>
       </div>
+    </div>
     </div>
  );
 }

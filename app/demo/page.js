@@ -1,8 +1,10 @@
 "use client";
+import dynamic from 'next/dynamic'
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Counter from "@/components/Counter";
+const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), { ssr: false });
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -196,14 +198,14 @@ const Demo = () => {
               key={box.i}
               // Dynamic Values from Database for w, h, minW, minH.
               data-grid={{
-                w: 3,
-                h: 4,
+                w: 2,
+                h: 3,
                 x: 0,
                 y: 0,
-                minW: 3,
-                minH: 4,
-                // maxW: 10,
-                // maxH: 12,
+                minW: 2,
+                minH: 3,
+                maxW: 10,
+                maxH: 10,
               }}
               className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
@@ -213,7 +215,8 @@ const Demo = () => {
               >
                 {/* {parentRef?.current[box.i]?.clientWidth} */}
                 {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
-                <p>Height: {boxheight}<br />Width: {boxwidth}</p>
+                {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
+                <AnalogClock width={Math.floor((9/10)*boxwidth)} height={boxheight} />
               </div>
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
