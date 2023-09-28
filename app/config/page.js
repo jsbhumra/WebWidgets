@@ -1,15 +1,20 @@
 "use client";
+import dynamic from 'next/dynamic'
 
-import Nav from "@/components/Navbar";
+const Nav = dynamic(() => import("@/components/Navbar"), { ssr: false });
 
-import AnalogClock from "@/widgets/AnalogClock";
-import "@/widgets/AnalogClock/styles.css";
+const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), { ssr: false });
 
-import DigitalClock from "@/widgets/DigitalClock";
-import "@/widgets/DigitalClock/styles.css";
+const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), { ssr: false });
+
+// import AnalogClock from "@/widgets/AnalogClock";
+// import "@/widgets/AnalogClock/styles.css";
+
+// import DigitalClock from "@/widgets/DigitalClock";
+// import "@/widgets/DigitalClock/styles.css";
 
 import SearchBar from "@/widgets/SearchBar";
-import "@/widgets/SearchBar/styles.css";
+// import "@/widgets/SearchBar/styles.css";
 
 //REMOVE 2 LINES TO REMOVE CALENDAR
 import Calendar from "react-calendar";
@@ -71,8 +76,10 @@ const Config = () => {
         </div>
         <SearchBar />
 
+        <div style={{width:'300px', height: '300px', position: 'relative'}}>
         <AnalogClock />
-        {/* <DigitalClock /> */}
+        </div>
+        <DigitalClock clock24hr={false} showSeconds={true} />
         <Calendar />
       </div>
     </>

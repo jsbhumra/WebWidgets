@@ -23,6 +23,8 @@ const SearchBar = () => {
 
     if (searchTerm.length > 0) {
       fetchSuggestions();
+    } else {
+      setSuggestions([])
     }
   }, [searchTerm]);
 
@@ -80,6 +82,7 @@ const SearchBar = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         tabIndex={1}
+        autoComplete="off"
       />
       <ul className="suggestions" id="searchList">
         {suggestions.map((suggestion,i) => (

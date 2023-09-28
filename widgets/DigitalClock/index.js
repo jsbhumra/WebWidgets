@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import "./styles.css";
 
-function DigitalClock() {
+function DigitalClock({ clock24hr, showSeconds }) {
+
   const [time, setTime] = useState({
     minutes: new Date().getMinutes(),
     hours: new Date().getHours(),
@@ -29,10 +31,10 @@ function DigitalClock() {
 
   return (
     <div className="DigitalClock">
-      <span>{convertToTwoDigit(time.hours)}:</span>
-      <span>{convertToTwoDigit(time.minutes)}:</span>
-      <span>{convertToTwoDigit(time.seconds)}</span>
-      <span>{time.hours >= 12 ? " PM" : " AM"}</span>
+      <span>{clock24hr?convertToTwoDigit(time.hours):convertToTwoDigit(time.hours%12)}:</span>
+      <span>{convertToTwoDigit(time.minutes)}</span>
+      {showSeconds?<span>:{convertToTwoDigit(time.seconds)}</span>:null}
+      <span>{clock24hr?null:(time.hours >= 12 ? " PM" : " AM")}</span>
     </div>
   );
 }
