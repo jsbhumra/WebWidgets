@@ -90,32 +90,32 @@ const Demo = () => {
       {i: 5, widget: {name: 'empty'}},
     ],
     md: [
-      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
-      {i: 2, widget: {name: 'empty'}},
+      {i: 1, widget: {name: 'empty'}},
+      {i: 2, widget: {name: 'AnalogClock', showSeconds: 'true'}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
       {i: 5, widget: {name: 'empty'}},
     ],
     sm: [
-      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 1, widget: {name: 'empty'}},
       {i: 2, widget: {name: 'empty'}},
-      {i: 3, widget: {name: 'empty'}},
+      {i: 3, widget: {name: 'AnalogClock', showSeconds: 'true'}},
       {i: 4, widget: {name: 'empty'}},
       {i: 5, widget: {name: 'empty'}},
     ],
     xs: [
-      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 1, widget: {name: 'empty'}},
       {i: 2, widget: {name: 'empty'}},
       {i: 3, widget: {name: 'empty'}},
-      {i: 4, widget: {name: 'empty'}},
+      {i: 4, widget: {name: 'AnalogClock', showSeconds: 'true'}},
       {i: 5, widget: {name: 'empty'}},
     ],
     xxs: [
-      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 1, widget: {name: 'empty'}},
       {i: 2, widget: {name: 'empty'}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
-      {i: 5, widget: {name: 'empty'}},
+      {i: 5, widget: {name: 'AnalogClock', showSeconds: 'true'}},
     ],
   }
 
@@ -184,8 +184,11 @@ const Demo = () => {
   }
 
   const onSave = () => {
+    onWidgetChange()
     saveToLS("layoutStorage","layouts", layouts);
     saveToLS("widgetStorage","widgets", widgets);
+    console.log(currentLayout)
+    console.log(currentWidget)
     toast.success("Layout Saved");
     // toast.promise(saveToLS("layouts", layouts), {
     //   loading: "Saving...",
@@ -202,7 +205,7 @@ const Demo = () => {
     widgets[`${currentScreen}`]
   );
 
-  const [widgetCounter, setWidgetCounter] = useState(currentLayout.length);
+  const [widgetCounter, setWidgetCounter] = useState(currentLayout[currentLayout.length-1].i);
 
   const onAdd = () => {
     setCurrentLayout((prevLayout) => [
@@ -240,16 +243,30 @@ const Demo = () => {
     setLayouts(layouts);
   };
 
+  function onWidgetChange() {
+    const editWidget = widgets;
+    editWidget[`${currentScreen}`] = currentWidget
+    setWidgets(editWidget);
+  }
+
   const onRemoveItem = (e) => {
     const id = e.target.id;
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
+    console.log('layout removed')
+    // console.log(id)
     setCurrentWidget((prevWidget) =>
-      prevWidget.filter((widget) => widget.i != id)
+      prevWidget.filter((currWidget) => currWidget.i != id)
     );
-    setLayouts(JSON.parse(JSON.stringify(getFromLS("layoutStorage","layouts"))));
-    setWidgets(JSON.parse(JSON.stringify(getFromLS("widgetStorage","widgets"))));
+    onWidgetChange()
+    console.log(currentLayout)
+    console.log(currentWidget)
+    console.log('widget removed')
+    // setLayouts(JSON.parse(JSON.stringify(getFromLS("layoutStorage","layouts"))));
+    // setWidgets(JSON.parse(JSON.stringify(getFromLS("widgetStorage","widgets"))));
+    console.log(currentLayout)
+    console.log(currentWidget)
     toast.success("Widget Deleted");
   };
 
