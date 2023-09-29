@@ -1,35 +1,36 @@
 "use client";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Counter from "@/components/Counter";
-const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), { ssr: false });
+const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
+  ssr: false,
+});
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-function useWindowSize(){
-  const [size,setSize] = useState([window.innerHeight,window.innerWidth]);
+function useWindowSize() {
+  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
   useEffect(() => {
     const handleResize = () => {
-      setSize([window.innerHeight,window.innerWidth])
-    }
-    window.addEventListener('resize',handleResize)
-    return() => {
-      window.removeEventListener('resize',handleResize)
-    }
-  },[])
+      setSize([window.innerHeight, window.innerWidth]);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return size;
 }
 
 const Demo = () => {
-
-  const [screenHeight,screenWidth] = useWindowSize()
+  const [screenHeight, screenWidth] = useWindowSize();
 
   const screenSize = window.innerWidth;
-  let currentScreen,currCols;
+  let currentScreen, currCols;
   switch (true) {
     case screenSize > 1200:
       currentScreen = "lg";
@@ -41,11 +42,11 @@ const Demo = () => {
       break;
     case screenSize < 996 && screenSize > 768:
       currentScreen = "sm";
-      currCols = 6
+      currCols = 6;
       break;
     case screenSize < 768 && screenSize > 480:
       currentScreen = "xs";
-      currCols = 4
+      currCols = 4;
       break;
 
     default:
@@ -144,6 +145,23 @@ const Demo = () => {
     layouts[`${currentScreen}`]
   );
 
+  const [widgetCounter, setWidgetCounter] = useState(currentLayout.length);
+
+  const onAdd = () => {
+    setCurrentLayout((prevLayout) => [
+      ...prevLayout,
+      {
+        i: widgetCounter + 1,
+        x: Infinity,
+        y: Infinity,
+        w: 3,
+        h: 4,
+      },
+    ]);
+    setWidgetCounter(widgetCounter + 1);
+    toast.success("Widget Added");
+  };
+
   // useEffect(() => {
   //   saveToLS("layouts", layouts);
   // }, [layouts]);
@@ -177,6 +195,13 @@ const Demo = () => {
       >
         Save
       </Button>
+      <Button
+        color="warning"
+        className="absolute z-10 top-5 right-28 text-xl font-medium"
+        onClick={onAdd}
+      >
+        Add
+      </Button>
       <ResponsiveReactGridLayout
         className="border-2 border-red-500 min-h-screen"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -191,8 +216,9 @@ const Demo = () => {
         onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
       >
         {currentLayout.map((box) => {
-          var boxheight = Math.floor(box.h*30)+(15*(box.h-1))
-          var boxwidth = Math.floor(box.w*(screenWidth/currCols))+(15*(box.w-1))
+          var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
+          var boxwidth =
+            Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
           return (
             <div
               key={box.i}
@@ -210,13 +236,14 @@ const Demo = () => {
               className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
               {/* Add Paddind to remove overlap betn widget and delete btn*/}
-              <div
-                className="text w-full h-full"
-              >
+              <div className="text w-full h-full">
                 {/* {parentRef?.current[box.i]?.clientWidth} */}
                 {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
                 {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
-                <AnalogClock width={Math.floor((9/10)*boxwidth)} height={boxheight} />
+                <AnalogClock
+                  width={Math.floor((9 / 10) * boxwidth)}
+                  height={boxheight}
+                />
               </div>
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
