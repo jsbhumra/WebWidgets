@@ -55,11 +55,11 @@ const Demo = () => {
       break;
   }
 
-  const getFromLS = (key) => {
+  const getFromLS = (name, key) => {
     let ls = {};
     if (localStorage) {
       try {
-        ls = JSON.parse(localStorage.getItem("rgl-8"));
+        ls = JSON.parse(localStorage.getItem(name));
         return ls[key];
       } catch (e) {
         // console.log(e);
@@ -70,10 +70,10 @@ const Demo = () => {
     }
   };
 
-  const saveToLS = (key, value) => {
+  const saveToLS = (name,key, value) => {
     if (localStorage) {
       localStorage.setItem(
-        "rgl-8",
+        name,
         JSON.stringify({
           [key]: value,
         })
@@ -81,7 +81,45 @@ const Demo = () => {
     }
   };
 
-  const originalLayouts = getFromLS("layouts") || {
+  const originalWidgets = getFromLS("widgetStorage","widgets") || {
+    lg: [
+      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 2, widget: {name: 'empty'}},
+      {i: 3, widget: {name: 'empty'}},
+      {i: 4, widget: {name: 'empty'}},
+      {i: 5, widget: {name: 'empty'}},
+    ],
+    md: [
+      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 2, widget: {name: 'empty'}},
+      {i: 3, widget: {name: 'empty'}},
+      {i: 4, widget: {name: 'empty'}},
+      {i: 5, widget: {name: 'empty'}},
+    ],
+    sm: [
+      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 2, widget: {name: 'empty'}},
+      {i: 3, widget: {name: 'empty'}},
+      {i: 4, widget: {name: 'empty'}},
+      {i: 5, widget: {name: 'empty'}},
+    ],
+    xs: [
+      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 2, widget: {name: 'empty'}},
+      {i: 3, widget: {name: 'empty'}},
+      {i: 4, widget: {name: 'empty'}},
+      {i: 5, widget: {name: 'empty'}},
+    ],
+    xxs: [
+      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 2, widget: {name: 'empty'}},
+      {i: 3, widget: {name: 'empty'}},
+      {i: 4, widget: {name: 'empty'}},
+      {i: 5, widget: {name: 'empty'}},
+    ],
+  }
+
+  const originalLayouts = getFromLS("layoutStorage","layouts") || {
     lg: [
       { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
       { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
@@ -118,21 +156,36 @@ const Demo = () => {
       { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
     ],
   };
+
   const onSaveOriginalLayouts = () => {
-    saveToLS("layouts", originalLayouts);
+    saveToLS("layoutStorage","layouts", originalLayouts);
+  };
+
+  const onSaveOriginalWidgets = () => {
+    saveToLS("widgetStorage","widgets", originalWidgets)
   };
 
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
   );
 
+  const [widgets, setWidgets] = useState(
+    JSON.parse(JSON.stringify(originalWidgets))
+  )
+
   if (layouts === undefined) {
     onSaveOriginalLayouts();
     location.reload();
   }
 
+  if (widgets === undefined) {
+    onSaveOriginalWidgets();
+    location.reload();
+  }
+
   const onSave = () => {
-    saveToLS("layouts", layouts);
+    saveToLS("layoutStorage","layouts", layouts);
+    saveToLS("widgetStorage","widgets", widgets);
     toast.success("Layout Saved");
     // toast.promise(saveToLS("layouts", layouts), {
     //   loading: "Saving...",
@@ -143,6 +196,10 @@ const Demo = () => {
 
   const [currentLayout, setCurrentLayout] = useState(
     layouts[`${currentScreen}`]
+  );
+
+  const [currentWidget, setCurrentWidget] = useState(
+    widgets[`${currentScreen}`]
   );
 
   const [widgetCounter, setWidgetCounter] = useState(currentLayout.length);
@@ -158,20 +215,27 @@ const Demo = () => {
         h: 4,
       },
     ]);
+    setCurrentWidget((prevWidget) => [
+      ...prevWidget,
+      {
+        i: widgetCounter + 1,
+        widget: {name: 'empty'}
+      },
+    ]);
     setWidgetCounter(widgetCounter + 1);
     toast.success("Widget Added");
   };
 
-  // useEffect(() => {
-  //   saveToLS("layouts", layouts);
-  // }, [layouts]);
 
   const breakPointChange = (newBreakPt) => {
-    setLayouts(getFromLS("layouts"));
+    setLayouts(getFromLS("layoutStorage","layouts"));
+    setWidgets(getFromLS("widgetStorage","widgets"));
     setCurrentLayout(layouts[newBreakPt]);
+    setCurrentWidget(widgets[newBreakPt]);
   };
 
   const onLayoutChange = (layout, layouts) => {
+    // console.log(layout)
     setCurrentLayout(layout);
     setLayouts(layouts);
   };
@@ -181,7 +245,11 @@ const Demo = () => {
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
-    setLayouts(JSON.parse(JSON.stringify(getFromLS("layouts"))));
+    setCurrentWidget((prevWidget) =>
+      prevWidget.filter((widget) => widget.i != id)
+    );
+    setLayouts(JSON.parse(JSON.stringify(getFromLS("layoutStorage","layouts"))));
+    setWidgets(JSON.parse(JSON.stringify(getFromLS("widgetStorage","widgets"))));
     toast.success("Widget Deleted");
   };
 
@@ -216,6 +284,7 @@ const Demo = () => {
         onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
       >
         {currentLayout.map((box) => {
+          console.log(currentWidget.filter(ele => ele.i == box.i)[0].widget.name)
           var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
           var boxwidth =
             Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
@@ -240,10 +309,12 @@ const Demo = () => {
                 {/* {parentRef?.current[box.i]?.clientWidth} */}
                 {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
                 {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
+                {currentWidget.filter(ele => ele.i == box.i)[0].widget.name == 'AnalogClock'?
                 <AnalogClock
                   width={Math.floor((9 / 10) * boxwidth)}
                   height={boxheight}
                 />
+                : null }
               </div>
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
