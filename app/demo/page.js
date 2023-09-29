@@ -83,7 +83,7 @@ const Demo = () => {
 
   const originalWidgets = getFromLS("widgetStorage","widgets") || {
     lg: [
-      {i: 1, widget: {name: 'AnalogClock', showSeconds: false}},
+      {i: 1, widget: {name: 'AnalogClock', showSeconds: false, smooth: true}},
       {i: 2, widget: {name: 'empty'}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
@@ -91,7 +91,7 @@ const Demo = () => {
     ],
     md: [
       {i: 1, widget: {name: 'empty'}},
-      {i: 2, widget: {name: 'AnalogClock', showSeconds: true}},
+      {i: 2, widget: {name: 'AnalogClock', showSeconds: true, smooth: false}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
       {i: 5, widget: {name: 'empty'}},
@@ -99,7 +99,7 @@ const Demo = () => {
     sm: [
       {i: 1, widget: {name: 'empty'}},
       {i: 2, widget: {name: 'empty'}},
-      {i: 3, widget: {name: 'AnalogClock', showSeconds: true}},
+      {i: 3, widget: {name: 'AnalogClock', showSeconds: true, smooth: true}},
       {i: 4, widget: {name: 'empty'}},
       {i: 5, widget: {name: 'empty'}},
     ],
@@ -107,7 +107,7 @@ const Demo = () => {
       {i: 1, widget: {name: 'empty'}},
       {i: 2, widget: {name: 'empty'}},
       {i: 3, widget: {name: 'empty'}},
-      {i: 4, widget: {name: 'AnalogClock', showSeconds: true}},
+      {i: 4, widget: {name: 'AnalogClock', showSeconds: true, smooth: true}},
       {i: 5, widget: {name: 'empty'}},
     ],
     xxs: [
@@ -115,7 +115,7 @@ const Demo = () => {
       {i: 2, widget: {name: 'empty'}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
-      {i: 5, widget: {name: 'AnalogClock', showSeconds: true}},
+      {i: 5, widget: {name: 'AnalogClock', showSeconds: true, smooth: true}},
     ],
   }
 
@@ -328,7 +328,7 @@ const Demo = () => {
                 {
                   {
                     'empty': <></>,
-                    'AnalogClock': <AnalogClock width={Math.floor((9 / 10) * boxwidth)} height={boxheight} showSeconds={thisWidget.showSeconds} />,
+                    'AnalogClock': <AnalogClock width={Math.floor((9 / 10) * boxwidth)} height={boxheight} showSeconds={thisWidget.showSeconds} smooth={thisWidget.smooth} />,
                     // 'bar': <Bar />
                   }[thisWidget.name]
                 }

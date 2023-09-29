@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 
-export default function Clock({ width, height, showSeconds }) {
+export default function Clock({ width, height, showSeconds, smooth }) {
  const [time, setTime] = useState(new Date());
  const [dim,setDim] = useState(width<height?width:height)
 //  const [fs,setFs] = useState(width<height?'cqw':'cqh')
@@ -15,13 +15,11 @@ export default function Clock({ width, height, showSeconds }) {
     // setFs('cqw')
   }
  },[height,width])
-
- console.log(dim)
  
  useEffect(() => {
     const timerId = setInterval(() => {
       setTime(new Date());
-    }, 1000);
+    }, smooth?1:1000);
 
     return () => {
       clearInterval(timerId);
@@ -34,20 +32,25 @@ export default function Clock({ width, height, showSeconds }) {
     <div className="Analogclock">
       <div
         className="Analoghour_hand"
-        style={{
+        style={smooth?{
+          transform: `translateX(-50%) rotateZ(${time.getHours() * 30 + time.getMinutes() * 0.5 + time.getSeconds() * 0.00833}deg)`
+        }:{
           transform: `translateX(-50%) rotateZ(${time.getHours() * 30}deg)`
         }}
       />
       <div
         className="Analogmin_hand"
-        style={{
+        style={smooth?{
+          transform: `translateX(-50%) rotateZ(${time.getMinutes() * 6 + time.getSeconds() * 0.1 + time.getMilliseconds() * 0.0001}deg)`
+        }:{
           transform: `translateX(-50%) rotateZ(${time.getMinutes() * 6}deg)`
         }}
       />
-      {console.log(showSeconds)}
       {showSeconds?<div
         className="Analogsec_hand"
-        style={{
+        style={smooth?{
+          transform: `translateX(-50%) rotateZ(${time.getSeconds() * 6 + time.getMilliseconds() * 0.006}deg)`
+        }:{
           transform: `translateX(-50%) rotateZ(${time.getSeconds() * 6}deg)`
         }}
       />:null}
