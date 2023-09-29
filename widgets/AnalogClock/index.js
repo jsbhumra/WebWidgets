@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 
-export default function Clock({ width, height }) {
+export default function Clock({ width, height, showSeconds }) {
  const [time, setTime] = useState(new Date());
  const [dim,setDim] = useState(width<height?width:height)
 //  const [fs,setFs] = useState(width<height?'cqw':'cqh')
@@ -44,12 +44,13 @@ export default function Clock({ width, height }) {
           transform: `translateX(-50%) rotateZ(${time.getMinutes() * 6}deg)`
         }}
       />
-      <div
+      {console.log(showSeconds)}
+      {showSeconds?<div
         className="Analogsec_hand"
         style={{
           transform: `translateX(-50%) rotateZ(${time.getSeconds() * 6}deg)`
         }}
-      />
+      />:null}
       <div className="Analoginner">
         <span className="Analogtwelve">12</span>
         <span className="Analogone">1</span>

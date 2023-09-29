@@ -83,7 +83,7 @@ const Demo = () => {
 
   const originalWidgets = getFromLS("widgetStorage","widgets") || {
     lg: [
-      {i: 1, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 1, widget: {name: 'AnalogClock', showSeconds: false}},
       {i: 2, widget: {name: 'empty'}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
@@ -91,7 +91,7 @@ const Demo = () => {
     ],
     md: [
       {i: 1, widget: {name: 'empty'}},
-      {i: 2, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 2, widget: {name: 'AnalogClock', showSeconds: true}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
       {i: 5, widget: {name: 'empty'}},
@@ -99,7 +99,7 @@ const Demo = () => {
     sm: [
       {i: 1, widget: {name: 'empty'}},
       {i: 2, widget: {name: 'empty'}},
-      {i: 3, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 3, widget: {name: 'AnalogClock', showSeconds: true}},
       {i: 4, widget: {name: 'empty'}},
       {i: 5, widget: {name: 'empty'}},
     ],
@@ -107,7 +107,7 @@ const Demo = () => {
       {i: 1, widget: {name: 'empty'}},
       {i: 2, widget: {name: 'empty'}},
       {i: 3, widget: {name: 'empty'}},
-      {i: 4, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 4, widget: {name: 'AnalogClock', showSeconds: true}},
       {i: 5, widget: {name: 'empty'}},
     ],
     xxs: [
@@ -115,7 +115,7 @@ const Demo = () => {
       {i: 2, widget: {name: 'empty'}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
-      {i: 5, widget: {name: 'AnalogClock', showSeconds: 'true'}},
+      {i: 5, widget: {name: 'AnalogClock', showSeconds: true}},
     ],
   }
 
@@ -301,10 +301,9 @@ const Demo = () => {
         onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
       >
         {currentLayout.map((box) => {
-          console.log(currentWidget.filter(ele => ele.i == box.i)[0].widget.name)
+          var thisWidget = currentWidget.filter(ele => ele.i == box.i)[0].widget
           var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
-          var boxwidth =
-            Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
+          var boxwidth = Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
           return (
             <div
               key={box.i}
@@ -326,12 +325,13 @@ const Demo = () => {
                 {/* {parentRef?.current[box.i]?.clientWidth} */}
                 {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
                 {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
-                {currentWidget.filter(ele => ele.i == box.i)[0].widget.name == 'AnalogClock'?
-                <AnalogClock
-                  width={Math.floor((9 / 10) * boxwidth)}
-                  height={boxheight}
-                />
-                : null }
+                {
+                  {
+                    'empty': <></>,
+                    'AnalogClock': <AnalogClock width={Math.floor((9 / 10) * boxwidth)} height={boxheight} showSeconds={thisWidget.showSeconds} />,
+                    // 'bar': <Bar />
+                  }[thisWidget.name]
+                }
               </div>
               <span
                 className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
