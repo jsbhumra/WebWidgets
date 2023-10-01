@@ -79,7 +79,7 @@ const Config = () => {
         <div style={{width:'300px', height: '300px', position: 'relative'}}>
         <AnalogClock width={300} height={200} />
         </div>
-        <DigitalClock clock24hr={false} showSeconds={true} />
+        <DigitalClock clock24hr={true} showSeconds={false} vertical={true} />
         <Calendar />
       </div>
     </>

@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import "./styles.css";
 
-function DigitalClock({ clock24hr, showSeconds }) {
-
+function DigitalClock({ clock24hr, showSeconds, vertical }) {
+  const [dir,setDir] = useState(vertical?'column':'row')
   const [time, setTime] = useState({
     minutes: new Date().getMinutes(),
     hours: new Date().getHours(),
@@ -30,10 +30,10 @@ function DigitalClock({ clock24hr, showSeconds }) {
   };
 
   return (
-    <div className="DigitalClock">
-      <span>{clock24hr?convertToTwoDigit(time.hours):convertToTwoDigit(time.hours%12)}:</span>
+    <div className="DigitalClock" style={{lineHeight: 1, display: 'flex', flexDirection: `${dir}`}}>
+      <span>{clock24hr?convertToTwoDigit(time.hours):convertToTwoDigit(time.hours%12)}{vertical?null:':'}</span>
       <span>{convertToTwoDigit(time.minutes)}</span>
-      {showSeconds?<span>:{convertToTwoDigit(time.seconds)}</span>:null}
+      {showSeconds?<span>{vertical?null:':'}{convertToTwoDigit(time.seconds)}</span>:null}
       <span>{clock24hr?null:(time.hours >= 12 ? " PM" : " AM")}</span>
     </div>
   );
