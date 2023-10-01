@@ -1,12 +1,23 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./styles.css";
 import { useRouter } from "next/navigation";
 
-const SearchBar = () => {
+const SearchBar = ({ width, height, darkMode }) => {
+  const inputRef = useRef(null);
   const router = useRouter()
+  const [value, setValue] = useState('')
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [dark, setDark] = useState(darkMode);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    setDark(darkMode)
+  },[darkMode])
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -37,7 +48,15 @@ const SearchBar = () => {
     }
 }
 
-  // var selectSearch =
+  var selectSearch = function(e) {
+    const focusElem = document.querySelector(':focus');
+    const tabElements = [...document.querySelectorAll('#myinput, #searchList>li')];
+    // const tabElementsCount = tabElements.length - 1;
+    if (!tabElements.includes(focusElem)){
+      setSuggestions([]);
+      setValue(searchTerm)
+    }
+  }
 
   var iterator = function(e) {
     if(e.key == 'Enter'){
@@ -50,7 +69,7 @@ const SearchBar = () => {
         else router.push(`https://google.com/search?q=${searchTerm}`)
       }
       
-      console.log(focusElem.tagName)
+      // console.log(focusElem.tagName)
       // router.push(`https://google.com/search?q=${focusElem.innerHTML}`)
     }
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
@@ -68,25 +87,35 @@ const SearchBar = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', iterator);
+    window.addEventListener('click', selectSearch);
     return() => {
       window.removeEventListener('keydown',iterator)
+      window.removeEventListener('click',selectSearch)
     }
   },[searchTerm])
 
   return (
-    <div className="search-bar">
+    <div className="search-bar h-12 w-[width] relative mt-0">
       <input
         type="text"
-        placeholder="Search..."
+        placeholder="Search Google..."
         id="myinput"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        tabIndex={1}
+        value={value}
+        ref={inputRef}
+        onChange={(e) => {
+          setValue(e.target.value)
+          setSearchTerm(e.target.value)
+        }}
+        // onBlur={() => setSuggestions([])}
+        onFocus={() => setValue(searchTerm)}
+        tabIndex={-1}
         autoComplete="off"
+        className={dark?"relative rounded-full w-full h-full ps-[5%] pe-[10%] text-white focus:outline-0 z-[100] bg-[#303134] placeholder:text-[#9aa0a6]":"relative rounded-full w-full h-full ps-[5%] pe-[10%] text-black focus:outline-0 z-[100] bg-white placeholder:text-gray-400"}
       />
-      <ul className="suggestions" id="searchList">
-        {suggestions.map((suggestion,i) => (
-          <li key={i} tabIndex={i+4} value={suggestion} onClick={() => {if(!isValidUrl(suggestion)){router.push(`https://google.com/search?q=${suggestion}`)}else{router.push(suggestion)}}}>{suggestion}</li>
+      {value!=''?<svg className={dark?"absolute z-[101] h-1/2 top-[25%] right-[3%] fill-[#9aa0a6] cursor-pointer":"absolute z-[101] h-1/2 top-[25%] right-[3%] fill-gray-400 cursor-pointer"} onClick={()=>{setSearchTerm('');setValue('')}} focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>:null}
+      <ul className={dark?"suggestions absolute w-full top-1/2 left-0 list-none overflow-y-auto z-[99] rounded-b-[1.5rem] pt-6 bg-[#303134]":"suggestions absolute w-full top-1/2 left-0 list-none overflow-y-auto z-[99] rounded-b-[1.5rem] pt-6 bg-white"} id="searchList">
+        {suggestions.slice(0, 7).map((suggestion,i) => (
+          <li className={dark?"w-full px-[5%] p-[1%] focus:outline-0 focus:bg-[#3c4043] hover:bg-[#3c4043] cursor-pointer text-white":"w-full px-[5%] p-[1%] focus:outline-0 focus:bg-[#eeeeee] hover:bg-[#eeeeee] cursor-pointer text-black"} key={i} tabIndex={i+4} value={suggestion} onFocus={() => setValue(suggestion)} onClick={() => {if(!isValidUrl(suggestion)){router.push(`https://google.com/search?q=${suggestion}`)}else{router.push(suggestion)}}}>{suggestion}</li>
         ))}
       </ul>
     </div>

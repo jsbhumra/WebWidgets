@@ -74,8 +74,9 @@ const Config = () => {
             </a>
           </div>
         </div>
-        <SearchBar />
-
+        <div style={{width:'500px', height: '300px'}}>
+        <SearchBar width={500} height={300} darkMode={true} />
+        </div>
         <div style={{width:'300px', height: '300px', position: 'relative'}}>
         <AnalogClock width={300} height={200} />
         </div>

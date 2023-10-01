@@ -7,6 +7,7 @@ import Counter from "@/components/Counter";
 const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
   ssr: false,
 });
+import SearchBar from "@/widgets/SearchBar";
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -84,7 +85,7 @@ const Demo = () => {
   const originalWidgets = getFromLS("widgetStorage","widgets") || {
     lg: [
       {i: 1, widget: {name: 'AnalogClock', showSeconds: false, smooth: true}},
-      {i: 2, widget: {name: 'empty'}},
+      {i: 2, widget: {name: 'SearchBar', darkMode: true}},
       {i: 3, widget: {name: 'empty'}},
       {i: 4, widget: {name: 'empty'}},
       {i: 5, widget: {name: 'empty'}},
@@ -93,7 +94,7 @@ const Demo = () => {
       {i: 1, widget: {name: 'empty'}},
       {i: 2, widget: {name: 'AnalogClock', showSeconds: true, smooth: false}},
       {i: 3, widget: {name: 'empty'}},
-      {i: 4, widget: {name: 'empty'}},
+      {i: 4, widget: {name: 'SearchBar', darkMode: false}},
       {i: 5, widget: {name: 'empty'}},
     ],
     sm: [
@@ -321,7 +322,7 @@ const Demo = () => {
               className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
             >
               {/* Add Paddind to remove overlap betn widget and delete btn*/}
-              <div className="text w-full h-full">
+              <div className="text w-full h-full pointer-events-none">
                 {/* {parentRef?.current[box.i]?.clientWidth} */}
                 {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
                 {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
@@ -329,12 +330,12 @@ const Demo = () => {
                   {
                     'empty': <></>,
                     'AnalogClock': <AnalogClock width={Math.floor((9 / 10) * boxwidth)} height={boxheight} showSeconds={thisWidget.showSeconds} smooth={thisWidget.smooth} />,
-                    // 'bar': <Bar />
+                    'SearchBar': <SearchBar width={Math.floor((9 / 10) * boxwidth)} height={boxheight} darkMode={thisWidget.darkMode} />
                   }[thisWidget.name]
                 }
               </div>
               <span
-                className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block"
+                className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block z-[500]"
                 onClick={onRemoveItem}
                 id={box.i}
               >
@@ -342,7 +343,7 @@ const Demo = () => {
                   src="/delete.svg"
                   height={20}
                   width={20}
-                  className="h-full w-full m-0 p-0"
+                  className="h-full w-full m-0 p-0 z-[500]"
                 />
               </span>
             </div>

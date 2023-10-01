@@ -1,21 +1,21 @@
 /* CSS for SearchBar component */
 
-.search-bar {
+/* .search-bar {
     position: relative;
     display: flex;
     align-items: center;
-  }
+  } */
   
-  .search-bar input {
+  /* .search-bar input {
     width: 100%;
     height: 30px;
     padding: 5px 10px;
     border: 1px solid #ccc;
     color: #000;
     border-radius: 5px;
-  }
+  } */
   
-  .search-bar ul {
+  /* .search-bar ul {
     position: absolute;
     top: 100%;
     left: 0;
@@ -28,14 +28,14 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #fff;
-  }
+  } */
   
-  .search-bar ul li {
+  /* .search-bar ul li {
     padding: 5px 10px;
     cursor: pointer;
     color: black;
-  }
+  } */
   
-  .search-bar ul li:hover {
+  /* .search-bar ul li:hover {
     background-color: #eee;
-  }
+  } */
