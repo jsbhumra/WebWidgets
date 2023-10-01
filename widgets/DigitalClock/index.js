@@ -3,12 +3,22 @@ import { useState, useEffect } from "react";
 import "./styles.css";
 
 function DigitalClock({ clock24hr, showSeconds, vertical }) {
-  const [dir,setDir] = useState(vertical?'column':'row')
+  // const [dir,setDir] = useState(vertical?'column':'row')
   const [time, setTime] = useState({
     minutes: new Date().getMinutes(),
     hours: new Date().getHours(),
     seconds: new Date().getSeconds(),
   });
+
+  // useEffect(() => {
+  //   if(vertical){
+  //     setDir('column')
+  //     // setFs('cqh')
+  //   } else {
+  //     setDir('row')
+  //     // setFs('cqw')
+  //   }
+  //  },[vertical])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -30,7 +40,7 @@ function DigitalClock({ clock24hr, showSeconds, vertical }) {
   };
 
   return (
-    <div className="DigitalClock" style={{lineHeight: 1, display: 'flex', flexDirection: `${dir}`}}>
+    <div className="DigitalClock" style={vertical?{lineHeight: 1, display: 'flex', flexDirection: 'column', fontVariantNumeric: 'tabular-nums lining-nums'}:{lineHeight: 1, display: 'flex', flexDirection: 'row'}}>
       <span>{clock24hr?convertToTwoDigit(time.hours):convertToTwoDigit(time.hours%12)}{vertical?null:':'}</span>
       <span>{convertToTwoDigit(time.minutes)}</span>
       {showSeconds?<span>{vertical?null:':'}{convertToTwoDigit(time.seconds)}</span>:null}
