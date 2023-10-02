@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 
-export default function Clock({ width, height, showSeconds, smooth }) {
+export default function AnalogClock({ width, height, showSeconds, smooth }) {
  const [time, setTime] = useState(new Date());
  const [dim,setDim] = useState(width<height?width:height)
 //  const [fs,setFs] = useState(width<height?'cqw':'cqh')

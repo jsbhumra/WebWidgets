@@ -95,7 +95,7 @@ const SearchBar = ({ width, height, darkMode }) => {
   },[searchTerm])
 
   return (
-    <div className="search-bar h-12 w-[width] relative mt-0">
+    <div className={`search-bar h-12 w-[${width}] relative mt-0`}>
       <input
         type="text"
         placeholder="Search Google..."
@@ -114,6 +114,8 @@ const SearchBar = ({ width, height, darkMode }) => {
       />
       {value!=''?<svg className={dark?"absolute z-[101] h-1/2 top-[25%] right-[3%] fill-[#9aa0a6] cursor-pointer":"absolute z-[101] h-1/2 top-[25%] right-[3%] fill-gray-400 cursor-pointer"} onClick={()=>{setSearchTerm('');setValue('')}} focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>:null}
       <ul className={dark?"suggestions absolute w-full top-1/2 left-0 list-none overflow-y-auto z-[99] rounded-b-[1.5rem] pt-6 bg-[#303134]":"suggestions absolute w-full top-1/2 left-0 list-none overflow-y-auto z-[99] rounded-b-[1.5rem] pt-6 bg-white"} id="searchList">
+        
+      <hr className={dark?"absolute border-[#6c7075] rounded-full w-[95%] top-0 mt-6 left-1/2 -translate-x-1/2 z-[101]":"absolute border-gray-400 rounded-full w-[92.5%] top-0 mt-6 left-1/2 -translate-x-1/2 z-[101]"}/>
         {suggestions.slice(0, 7).map((suggestion,i) => (
           <li className={dark?"w-full px-[5%] p-[1%] focus:outline-0 focus:bg-[#3c4043] hover:bg-[#3c4043] cursor-pointer text-white":"w-full px-[5%] p-[1%] focus:outline-0 focus:bg-[#eeeeee] hover:bg-[#eeeeee] cursor-pointer text-black"} key={i} tabIndex={i+4} value={suggestion} onFocus={() => setValue(suggestion)} onClick={() => {if(!isValidUrl(suggestion)){router.push(`https://google.com/search?q=${suggestion}`)}else{router.push(suggestion)}}}>{suggestion}</li>
         ))}
