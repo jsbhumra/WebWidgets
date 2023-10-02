@@ -7,6 +7,9 @@ import Counter from "@/components/Counter";
 const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
   ssr: false,
 });
+const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
+  ssr: false,
+});
 import SearchBar from "@/widgets/SearchBar";
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
@@ -86,7 +89,7 @@ const Demo = () => {
     lg: [
       {i: 1, widget: {name: 'AnalogClock', showSeconds: false, smooth: true}},
       {i: 2, widget: {name: 'SearchBar', darkMode: true}},
-      {i: 3, widget: {name: 'empty'}},
+      {i: 3, widget: {name: 'DigitalClock', clock24hr: true, showSeconds: true, vertical: false}},
       {i: 4, widget: {name: 'empty'}},
       {i: 5, widget: {name: 'empty'}},
     ],
@@ -330,6 +333,7 @@ const Demo = () => {
                   {
                     'empty': <></>,
                     'AnalogClock': <AnalogClock width={Math.floor((9 / 10) * boxwidth)} height={boxheight} showSeconds={thisWidget.showSeconds} smooth={thisWidget.smooth} />,
+                    'DigitalClock': <DigitalClock width={boxwidth} height={boxheight} clock24hr={thisWidget.clock24hr} showSeconds={thisWidget.showSeconds} vertical={thisWidget.vertical} />,
                     'SearchBar': <SearchBar width={Math.floor((9 / 10) * boxwidth)} height={boxheight} darkMode={thisWidget.darkMode} />
                   }[thisWidget.name]
                 }
