@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "AnalogClock",
+        "props": {
+            "showSeconds": true,
+            "smooth": true
+        }
+    },
+    {
+        "id": 2,
+        "name": "DigitalClock",
+        "props": {
+            "clock24hr": true,
+            "showSeconds": false,
+            "vertical": true
+        }
+    },
+    {
+        "id": 3,
+        "name": "SearchBar",
+        "props": {
+            "darkMode": true
+        }
+    }
+]

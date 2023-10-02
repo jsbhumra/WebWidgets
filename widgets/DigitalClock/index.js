@@ -2,7 +2,18 @@
 import { useState, useEffect } from "react";
 import "./styles.css";
 
-function DigitalClock({ clock24hr, showSeconds, vertical }) {
+function DigitalClock({ width = 250, height = 250, clock24hr = true, showSeconds = false, vertical = true }) {
+  const [dim,setDim] = useState(width<height?width:height)
+ const [fs,setFs] = useState(width<height?'cqw':'cqh')
+ useEffect(() => {
+  if(height<width){
+    setDim(height)
+    setFs('cqh')
+  } else {
+    setDim(width)
+    setFs('cqw')
+  }
+ },[height,width])
   // const [dir,setDir] = useState(vertical?'column':'row')
   const [time, setTime] = useState({
     minutes: new Date().getMinutes(),
@@ -40,7 +51,7 @@ function DigitalClock({ clock24hr, showSeconds, vertical }) {
   };
 
   return (
-    <div className="DigitalClock" style={vertical?{lineHeight: 1, display: 'flex', flexDirection: 'column', fontVariantNumeric: 'tabular-nums lining-nums'}:{lineHeight: 1, display: 'flex', flexDirection: 'row'}}>
+    <div className={`absolute DigitalClock w-full h-full left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2`} style={vertical?{lineHeight: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', fontVariantNumeric: 'tabular-nums lining-nums', fontSize: `calc(5 / 10 * ${dim}px)`}:{lineHeight: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
       <span>{clock24hr?convertToTwoDigit(time.hours):convertToTwoDigit(time.hours%12)}{vertical?null:':'}</span>
       <span>{convertToTwoDigit(time.minutes)}</span>
       {showSeconds?<span>{vertical?null:':'}{convertToTwoDigit(time.seconds)}</span>:null}
@@ -48,5 +59,6 @@ function DigitalClock({ clock24hr, showSeconds, vertical }) {
     </div>
   );
 }
+
 
 export default DigitalClock;

@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import "./styles.css";
 import { useRouter } from "next/navigation";
 
-const SearchBar = ({ width, height, darkMode }) => {
+function SearchBar ({ width = 250, darkMode = true }) {
   const inputRef = useRef(null);
   const router = useRouter()
   const [value, setValue] = useState('')
@@ -95,7 +95,7 @@ const SearchBar = ({ width, height, darkMode }) => {
   },[searchTerm])
 
   return (
-    <div className={`search-bar h-12 w-[${width}] relative mt-0`}>
+    <div className={`search-bar h-12 w-full relative mt-0`}>
       <input
         type="text"
         placeholder="Search Google..."
