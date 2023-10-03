@@ -61,7 +61,7 @@ function DigitalClock({ width = 250, height = 250, clock24hr = true, showSeconds
   };
 
   return (
-    <div className={`absolute DigitalClock w-full h-full left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2`} style={vertical?{lineHeight: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', fontVariantNumeric: 'tabular-nums lining-nums', fontSize: `calc(${fs} * ${dim}px)`}:{lineHeight: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', fontSize: `calc(${fs} * ${dim}px)`}}>
+    <div className={`absolute DigitalClock w-full h-full left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-[5]`} style={vertical?{lineHeight: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', fontVariantNumeric: 'tabular-nums lining-nums', fontSize: `calc(${fs} * ${dim}px)`}:{lineHeight: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', fontSize: `calc(${fs} * ${dim}px)`}}>
       <span>{clock24hr?convertToTwoDigit(time.hours):convertToTwoDigit(time.hours%12)}{vertical?null:':'}</span>
       <span>{convertToTwoDigit(time.minutes)}</span>
       {showSeconds?<span>{vertical?null:':'}{convertToTwoDigit(time.seconds)}</span>:null}

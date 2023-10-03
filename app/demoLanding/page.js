@@ -158,11 +158,20 @@ const Demo = () => {
             <div
               key={box.i}
               // Dynamic Values from Database for w, h, minW, minH.
-              data-grid={box}
-              className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10  items-center justify-center "
+              ddata-grid={{
+                w: 2,
+                h: 3,
+                x: 0,
+                y: 0,
+                minW: 2,
+                minH: 3,
+                maxW: 10,
+                maxH: 10,
+              }}
+              className="group flex  bg-gray-950 rounded-md bg-clip-padding bg-transparent items-center justify-center "
             >
               {/* Add Paddind to remove overlap betn widget and delete btn*/}
-              <div className="text w-full h-full pointer-events-none">
+              <div className="text w-full h-full">
                 {/* {parentRef?.current[box.i]?.clientWidth} */}
                 {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
                 {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}

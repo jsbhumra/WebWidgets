@@ -27,7 +27,7 @@ export default function AnalogClock({ width = 250, height = 250, showSeconds = t
  }, []);
 
  return (
-    <div style={{position: 'absolute', width: `${dim}px`, height: `${dim}px`, left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: `calc(8 / 100 * ${dim}px)`}} >
+    <div className="z-[5]" style={{position: 'absolute', width: `${dim}px`, height: `${dim}px`, left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: `calc(8 / 100 * ${dim}px)`}} >
       {/* <p>{dim}</p> */}
     <div className="Analogclock">
       <div
