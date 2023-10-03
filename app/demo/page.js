@@ -10,6 +10,7 @@ const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
 const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
   ssr: false,
 });
+import Calendar from "@/widgets/Calendar";
 import SearchBar from "@/widgets/SearchBar";
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
@@ -396,6 +397,13 @@ const Demo = () => {
                         width={Math.floor((9 / 10) * boxwidth)}
                         height={boxheight}
                         darkMode={thisWidget.darkMode}
+                      />
+                    ),
+                    Calendar: (
+                      <Calendar
+                        width={Math.floor((9 / 10) * boxwidth)}
+                        height={boxheight}
+                        showYear={thisWidget.showYear}
                       />
                     ),
                   }[thisWidget.name]

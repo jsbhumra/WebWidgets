@@ -1,11 +1,19 @@
 "use client";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
 const Nav = dynamic(() => import("@/components/Navbar"), { ssr: false });
 
-const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), { ssr: false });
+const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
+  ssr: false,
+});
 
-const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), { ssr: false });
+const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
+  ssr: false,
+});
+
+const Calendar = dynamic(() => import("@/widgets/Calendar"), {
+  ssr: false,
+});
 
 // import AnalogClock from "@/widgets/AnalogClock";
 // import "@/widgets/AnalogClock/styles.css";
@@ -17,8 +25,8 @@ import SearchBar from "@/widgets/SearchBar";
 // import "@/widgets/SearchBar/styles.css";
 
 //REMOVE 2 LINES TO REMOVE CALENDAR
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+// import Calendar from "react-calendar";
+// import "react-calendar/dist/Calendar.css";
 
 import React from "react";
 
@@ -74,13 +82,13 @@ const Config = () => {
             </a>
           </div>
         </div>
-        <div style={{width:'500px', height: '300px'}}>
-        <SearchBar width={500} height={300} darkMode={true} />
+        {/* <div style={{ width: "500px", height: "300px" }}>
+          <SearchBar width={500} height={300} darkMode={true} />
         </div>
-        <div style={{width:'300px', height: '300px', position: 'relative'}}>
-        <AnalogClock width={300} height={200} />
+        <div style={{ width: "300px", height: "300px", position: "relative" }}>
+          <AnalogClock width={300} height={200} />
         </div>
-        <DigitalClock clock24hr={true} showSeconds={false} vertical={true} />
+        <DigitalClock clock24hr={true} showSeconds={false} vertical={true} /> */}
         <Calendar />
       </div>
     </>

@@ -9,6 +9,7 @@ const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
 const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
   ssr: false,
 });
+import Calendar from "@/widgets/Calendar";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -158,16 +159,7 @@ const Demo = () => {
             <div
               key={box.i}
               // Dynamic Values from Database for w, h, minW, minH.
-              ddata-grid={{
-                w: 2,
-                h: 3,
-                x: 0,
-                y: 0,
-                minW: 2,
-                minH: 3,
-                maxW: 10,
-                maxH: 10,
-              }}
+              data-grid={box}
               className="group flex  bg-gray-950 rounded-md bg-clip-padding bg-transparent items-center justify-center "
             >
               {/* Add Paddind to remove overlap betn widget and delete btn*/}
@@ -200,6 +192,13 @@ const Demo = () => {
                         width={Math.floor((9 / 10) * boxwidth)}
                         height={boxheight}
                         darkMode={thisWidget.darkMode}
+                      />
+                    ),
+                    Calendar: (
+                      <Calendar
+                        width={Math.floor((9 / 10) * boxwidth)}
+                        height={boxheight}
+                        // darkMode={thisWidget.darkMode}
                       />
                     ),
                   }[thisWidget.name]
