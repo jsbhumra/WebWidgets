@@ -5,8 +5,8 @@
     display: flex;
     align-items: center;
   } */
-  
-  /* .search-bar input {
+
+/* .search-bar input {
     width: 100%;
     height: 30px;
     padding: 5px 10px;
@@ -14,8 +14,8 @@
     color: #000;
     border-radius: 5px;
   } */
-  
-  /* .search-bar ul {
+
+/* .search-bar ul {
     position: absolute;
     top: 100%;
     left: 0;
@@ -29,13 +29,23 @@
     border-radius: 5px;
     background-color: #fff;
   } */
-  
-  /* .search-bar ul li {
+
+/* .search-bar ul li {
     padding: 5px 10px;
     cursor: pointer;
     color: black;
   } */
-  
-  /* .search-bar ul li:hover {
+
+/* .search-bar ul li:hover {
     background-color: #eee;
   } */
+
+.suggestions::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.suggestions {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
