@@ -209,6 +209,11 @@ const Demo = () => {
     widgets[`${currentScreen}`]
   );
 
+  useEffect(()=>{
+    setCurrentLayout(layouts[`${currentScreen}`])
+    setCurrentWidget(widgets[`${currentScreen}`])
+  },[])
+
   const [widgetCounter, setWidgetCounter] = useState(currentLayout[currentLayout.length-1].i);
 
   const onAdd = () => {
@@ -305,6 +310,7 @@ const Demo = () => {
         onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
       >
         {currentLayout.map((box) => {
+          console.log(currentWidget)
           var thisWidget = currentWidget.filter(ele => ele.i == box.i)[0].widget
           var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
           var boxwidth = Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
