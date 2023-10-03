@@ -253,7 +253,7 @@ export default function add() {
     };
 
     return (
-      <>
+      <div className="bg-bgGradientDark h-screen p-3">
         <div className="flex flex-wrap">
           {widgets.map((widget) => {
             const WidgetName = widgetComponents[widget.name];
@@ -261,7 +261,7 @@ export default function add() {
             console.log(widget.name)
             console.log({...widget.props})
             return(
-            <div key={widget.id} onClick={(elem)=>showPropOptions(elem,widget.id)} className="widgetlist relative w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-4">
+            <div key={widget.id} onClick={(elem)=>showPropOptions(elem,widget.id)} className="widgetlist relative w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6">
               <div className="w-full h-full m-0 p-0 pointer-events-none">
               <WidgetName {...widget.props} />
               </div>
@@ -271,10 +271,12 @@ export default function add() {
           })}
            {console.log(currWidgetID)}
         </div>
-        <div className="w-full h-auto">
+        <div className="w-full h-auto ms-8 mt-8">
         {console.log(JSON.stringify(currWidgetProps))}
           {currWidgetProps==''?<p>Select a component first!</p>:
-            currWidgetProps.map((arr) => {
+            <div className="">
+              
+            {currWidgetProps.map((arr) => {
               const prop = arr[0]
               return(
                 <div key={arr[0]}>
@@ -282,14 +284,16 @@ export default function add() {
                   <Switch value={prop} defaultChecked={arr[1]} onChange={(e) => changeProps(e)} />
                 </div>
               )})}
+              </div>
+              }
               {currWidgetProps!=''?<Button
                 color="warning"
-                className="absolute z-10 top-5 right-28 text-xl font-medium"
+                className="z-10 top-5 text-xl font-medium"
                 onClick={onAdd}
               >
                 Add
               </Button>:null}
         </div>
-      </>
+      </div>
     );
 }
