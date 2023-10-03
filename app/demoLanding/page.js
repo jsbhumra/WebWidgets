@@ -1,17 +1,14 @@
 "use client";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import SearchBar from "@/widgets/SearchBar";
 const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
   ssr: false,
 });
 const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
   ssr: false,
 });
-import SearchBar from "@/widgets/SearchBar";
-import { Button } from "@nextui-org/react";
-import toast, { Toaster } from "react-hot-toast";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -136,7 +133,6 @@ const Demo = () => {
 
   return (
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
-      <Toaster position="top-center" reverseOrder={false} />
       <ResponsiveReactGridLayout
         className="border-2 border-red-500 min-h-screen"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}

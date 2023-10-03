@@ -1,9 +1,9 @@
 "use client";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
-import Counter from "@/components/Counter";
 const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
   ssr: false,
 });
@@ -74,7 +74,7 @@ const Demo = () => {
     }
   };
 
-  const saveToLS = (name,key, value) => {
+  const saveToLS = (name, key, value) => {
     if (localStorage) {
       localStorage.setItem(
         name,
@@ -85,45 +85,68 @@ const Demo = () => {
     }
   };
 
-  const originalWidgets = getFromLS("widgetStorage","widgets") || {
+  const originalWidgets = getFromLS("widgetStorage", "widgets") || {
     lg: [
-      {i: 1, widget: {name: 'AnalogClock', showSeconds: false, smooth: true}},
-      {i: 2, widget: {name: 'SearchBar', darkMode: true}},
-      {i: 3, widget: {name: 'DigitalClock', clock24hr: true, showSeconds: true, vertical: false}},
-      {i: 4, widget: {name: 'empty'}},
-      {i: 5, widget: {name: 'empty'}},
+      {
+        i: 1,
+        widget: { name: "AnalogClock", showSeconds: false, smooth: true },
+      },
+      { i: 2, widget: { name: "SearchBar", darkMode: true } },
+      {
+        i: 3,
+        widget: {
+          name: "DigitalClock",
+          clock24hr: true,
+          showSeconds: true,
+          vertical: false,
+        },
+      },
+      { i: 4, widget: { name: "empty" } },
+      { i: 5, widget: { name: "empty" } },
     ],
     md: [
-      {i: 1, widget: {name: 'empty'}},
-      {i: 2, widget: {name: 'AnalogClock', showSeconds: true, smooth: false}},
-      {i: 3, widget: {name: 'empty'}},
-      {i: 4, widget: {name: 'SearchBar', darkMode: false}},
-      {i: 5, widget: {name: 'empty'}},
+      { i: 1, widget: { name: "empty" } },
+      {
+        i: 2,
+        widget: { name: "AnalogClock", showSeconds: true, smooth: false },
+      },
+      { i: 3, widget: { name: "empty" } },
+      { i: 4, widget: { name: "SearchBar", darkMode: false } },
+      { i: 5, widget: { name: "empty" } },
     ],
     sm: [
-      {i: 1, widget: {name: 'empty'}},
-      {i: 2, widget: {name: 'empty'}},
-      {i: 3, widget: {name: 'AnalogClock', showSeconds: true, smooth: true}},
-      {i: 4, widget: {name: 'empty'}},
-      {i: 5, widget: {name: 'empty'}},
+      { i: 1, widget: { name: "empty" } },
+      { i: 2, widget: { name: "empty" } },
+      {
+        i: 3,
+        widget: { name: "AnalogClock", showSeconds: true, smooth: true },
+      },
+      { i: 4, widget: { name: "empty" } },
+      { i: 5, widget: { name: "empty" } },
     ],
     xs: [
-      {i: 1, widget: {name: 'empty'}},
-      {i: 2, widget: {name: 'empty'}},
-      {i: 3, widget: {name: 'empty'}},
-      {i: 4, widget: {name: 'AnalogClock', showSeconds: true, smooth: true}},
-      {i: 5, widget: {name: 'empty'}},
+      { i: 1, widget: { name: "empty" } },
+      { i: 2, widget: { name: "empty" } },
+      { i: 3, widget: { name: "empty" } },
+      {
+        i: 4,
+        widget: { name: "AnalogClock", showSeconds: true, smooth: true },
+      },
+      { i: 5, widget: { name: "empty" } },
     ],
     xxs: [
-      {i: 1, widget: {name: 'empty'}},
-      {i: 2, widget: {name: 'empty'}},
-      {i: 3, widget: {name: 'empty'}},
-      {i: 4, widget: {name: 'empty'}},
-      {i: 5, widget: {name: 'AnalogClock', showSeconds: true, smooth: true}},
+      { i: 1, widget: { name: "empty" } },
+      { i: 2, widget: { name: "empty" } },
+      { i: 3, widget: { name: "empty" } },
+      { i: 4, widget: { name: "empty" } },
+      {
+        i: 5,
+        widget: { name: "AnalogClock", showSeconds: true, smooth: true },
+      },
     ],
-  }
+  };
 
-  const originalLayouts = getFromLS("layoutStorage","layouts") || {
+  const originalLayouts = getFromLS("layoutStorage", "layouts") || {
     lg: [
       { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
       { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
@@ -162,11 +185,11 @@ const Demo = () => {
   };
 
   const onSaveOriginalLayouts = () => {
-    saveToLS("layoutStorage","layouts", originalLayouts);
+    saveToLS("layoutStorage", "layouts", originalLayouts);
   };
 
   const onSaveOriginalWidgets = () => {
-    saveToLS("widgetStorage","widgets", originalWidgets)
+    saveToLS("widgetStorage", "widgets", originalWidgets);
   };
 
   const [layouts, setLayouts] = useState(
@@ -175,7 +198,7 @@ const Demo = () => {
 
   const [widgets, setWidgets] = useState(
     JSON.parse(JSON.stringify(originalWidgets))
-  )
+  );
 
   if (layouts === undefined) {
     onSaveOriginalLayouts();
@@ -188,11 +211,11 @@ const Demo = () => {
   }
 
   const onSave = () => {
-    onWidgetChange()
-    saveToLS("layoutStorage","layouts", layouts);
-    saveToLS("widgetStorage","widgets", widgets);
-    console.log(currentLayout)
-    console.log(currentWidget)
+    onWidgetChange();
+    saveToLS("layoutStorage", "layouts", layouts);
+    saveToLS("widgetStorage", "widgets", widgets);
+    console.log(currentLayout);
+    console.log(currentWidget);
     toast.success("Layout Saved");
     // toast.promise(saveToLS("layouts", layouts), {
     //   loading: "Saving...",
@@ -209,12 +232,14 @@ const Demo = () => {
     widgets[`${currentScreen}`]
   );
 
-  useEffect(()=>{
-    setCurrentLayout(layouts[`${currentScreen}`])
-    setCurrentWidget(widgets[`${currentScreen}`])
-  },[])
+  useEffect(() => {
+    setCurrentLayout(layouts[`${currentScreen}`]);
+    setCurrentWidget(widgets[`${currentScreen}`]);
+  }, []);
 
-  const [widgetCounter, setWidgetCounter] = useState(currentLayout[currentLayout.length-1].i);
+  const [widgetCounter, setWidgetCounter] = useState(
+    currentLayout[currentLayout.length - 1].i
+  );
 
   const onAdd = () => {
     setCurrentLayout((prevLayout) => [
@@ -231,17 +256,16 @@ const Demo = () => {
       ...prevWidget,
       {
         i: widgetCounter + 1,
-        widget: {name: 'empty'}
+        widget: { name: "empty" },
       },
     ]);
     setWidgetCounter(widgetCounter + 1);
     toast.success("Widget Added");
   };
 
-
   const breakPointChange = (newBreakPt) => {
-    setLayouts(getFromLS("layoutStorage","layouts"));
-    setWidgets(getFromLS("widgetStorage","widgets"));
+    setLayouts(getFromLS("layoutStorage", "layouts"));
+    setWidgets(getFromLS("widgetStorage", "widgets"));
     setCurrentLayout(layouts[newBreakPt]);
     setCurrentWidget(widgets[newBreakPt]);
   };
@@ -254,7 +278,7 @@ const Demo = () => {
 
   function onWidgetChange() {
     const editWidget = widgets;
-    editWidget[`${currentScreen}`] = currentWidget
+    editWidget[`${currentScreen}`] = currentWidget;
     setWidgets(editWidget);
   }
 
@@ -263,19 +287,19 @@ const Demo = () => {
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
-    console.log('layout removed')
+    console.log("layout removed");
     // console.log(id)
     setCurrentWidget((prevWidget) =>
       prevWidget.filter((currWidget) => currWidget.i != id)
     );
-    onWidgetChange()
-    console.log(currentLayout)
-    console.log(currentWidget)
-    console.log('widget removed')
+    onWidgetChange();
+    console.log(currentLayout);
+    console.log(currentWidget);
+    console.log("widget removed");
     // setLayouts(JSON.parse(JSON.stringify(getFromLS("layoutStorage","layouts"))));
     // setWidgets(JSON.parse(JSON.stringify(getFromLS("widgetStorage","widgets"))));
-    console.log(currentLayout)
-    console.log(currentWidget)
+    console.log(currentLayout);
+    console.log(currentWidget);
     toast.success("Widget Deleted");
   };
 
@@ -289,13 +313,23 @@ const Demo = () => {
       >
         Save
       </Button>
-      <Button
-        color="warning"
-        className="absolute z-10 top-5 right-28 text-xl font-medium"
-        onClick={onAdd}
-      >
-        Add
-      </Button>
+
+      <Link href="/demo/add">
+        <Button
+          color="warning"
+          className="absolute z-10 top-5 right-28 text-xl font-medium"
+        >
+          Add
+        </Button>
+      </Link>
+      <Link href="/demoLanding">
+        <Button
+          color="warning"
+          className="absolute z-10 top-20 right-16 text-xl font-medium"
+        >
+          Preview
+        </Button>
+      </Link>
       <ResponsiveReactGridLayout
         className="border-2 border-red-500 min-h-screen"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -310,10 +344,12 @@ const Demo = () => {
         onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
       >
         {currentLayout.map((box) => {
-          console.log(currentWidget)
-          var thisWidget = currentWidget.filter(ele => ele.i == box.i)[0].widget
+          console.log(currentWidget);
+          var thisWidget = currentWidget.filter((ele) => ele.i == box.i)[0]
+            .widget;
           var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
-          var boxwidth = Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
+          var boxwidth =
+            Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
           return (
             <div
               key={box.i}
@@ -337,10 +373,31 @@ const Demo = () => {
                 {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
                 {
                   {
-                    'empty': <></>,
-                    'AnalogClock': <AnalogClock width={Math.floor((9 / 10) * boxwidth)} height={boxheight} showSeconds={thisWidget.showSeconds} smooth={thisWidget.smooth} />,
-                    'DigitalClock': <DigitalClock width={boxwidth} height={boxheight} clock24hr={thisWidget.clock24hr} showSeconds={thisWidget.showSeconds} vertical={thisWidget.vertical} />,
-                    'SearchBar': <SearchBar width={Math.floor((9 / 10) * boxwidth)} height={boxheight} darkMode={thisWidget.darkMode} />
+                    empty: <></>,
+                    AnalogClock: (
+                      <AnalogClock
+                        width={Math.floor((9 / 10) * boxwidth)}
+                        height={boxheight}
+                        showSeconds={thisWidget.showSeconds}
+                        smooth={thisWidget.smooth}
+                      />
+                    ),
+                    DigitalClock: (
+                      <DigitalClock
+                        width={boxwidth}
+                        height={boxheight}
+                        clock24hr={thisWidget.clock24hr}
+                        showSeconds={thisWidget.showSeconds}
+                        vertical={thisWidget.vertical}
+                      />
+                    ),
+                    SearchBar: (
+                      <SearchBar
+                        width={Math.floor((9 / 10) * boxwidth)}
+                        height={boxheight}
+                        darkMode={thisWidget.darkMode}
+                      />
+                    ),
                   }[thisWidget.name]
                 }
               </div>
