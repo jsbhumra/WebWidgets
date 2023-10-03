@@ -187,7 +187,16 @@ export default function add() {
     }
     // console.log(widgets)
     setWidgets([...theseWidgets])
+    const newWidget = widgets.find((widget) => widget.id==currWidgetID)
+    const WidgetProps = newWidget.props;
+    console.log(WidgetProps)
+    var newPropsArr = []
+    for(var i in WidgetProps){
+      newPropsArr.push([i, WidgetProps[i]]);
+    }
+    setCurrWidgetProps(newPropsArr)
     console.log(widgets)
+    console.log(currWidgetProps)
   }
 
   function resetOutline(){
@@ -216,7 +225,7 @@ export default function add() {
       setCurrentLayout((prevLayout) => [
         ...prevLayout,
         {
-          i: widgetCounter + 1,
+          i: (widgetCounter*1 + 1)*1,
           x: Infinity,
           y: Infinity,
           w: 3,
@@ -231,7 +240,7 @@ export default function add() {
       setCurrentWidget((prevWidget) => [
         ...prevWidget,
         {
-          i: widgetCounter + 1,
+          i: (widgetCounter*1 + 1)*1,
           widget: {name: thisWidget.name }
         },
       ]);
