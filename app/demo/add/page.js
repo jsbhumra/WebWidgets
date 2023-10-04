@@ -209,9 +209,12 @@ export default function add() {
   }
 
   // console.log(widgets)
-
+var currentLength = 0
+if(currentLayout!=undefined){
+  currentLength = currentLayout[currentLayout.length - 1].i
+}
   const [widgetCounter, setWidgetCounter] = useState(
-    currentLayout[currentLayout.length - 1].i
+    currentLength
   );
 
   const onAdd = () => {
@@ -226,28 +229,49 @@ export default function add() {
     // for(var i in currWidgetProps){
     //   newPropsArr.push([i, WidgetProps[i]]);
     // }
-    setCurrentLayout((prevLayout) => [
-      ...prevLayout,
-      {
-        i: (widgetCounter * 1 + 1) * 1,
-        x: Infinity,
-        y: Infinity,
-        w: 3,
-        h: 4,
-      },
-    ]);
+    if(currentLayout!=undefined){
+      setCurrentLayout((prevLayout) => [
+        ...prevLayout,
+        {
+          i: (widgetCounter * 1 + 1) * 1,
+          x: Infinity,
+          y: Infinity,
+          w: 3,
+          h: 4,
+        },
+      ]);
+    } else {
+      setCurrentLayout([
+        {
+          i: (widgetCounter * 1 + 1) * 1,
+          x: Infinity,
+          y: Infinity,
+          w: 3,
+          h: 4,
+        },
+      ]);
+    }
     onLayoutChange();
     // console.log({
     //   i: widgetCounter + 1,
     //   widget: {name: thisWidget.name, theseProps }
     // })
-    setCurrentWidget((prevWidget) => [
-      ...prevWidget,
-      {
-        i: (widgetCounter * 1 + 1) * 1,
-        widget: { name: thisWidget.name },
-      },
-    ]);
+    if(currentLayout!=undefined){
+      setCurrentWidget((prevWidget) => [
+        ...prevWidget,
+        {
+          i: (widgetCounter * 1 + 1) * 1,
+          widget: { name: thisWidget.name },
+        },
+      ]);
+    } else {
+      setCurrentWidget([
+        {
+          i: (widgetCounter * 1 + 1) * 1,
+          widget: { name: thisWidget.name },
+        },
+      ]);
+    }
     console.log(currentLayout);
     console.log(currentWidget);
     setWidgetCounter(widgetCounter + 1);

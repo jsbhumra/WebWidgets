@@ -123,7 +123,7 @@ const Demo = () => {
   useEffect(() => {
     setCurrentLayout(layouts[`${currentScreen}`]);
     setCurrentWidget(widgets[`${currentScreen}`]);
-  }, []);
+  }, [currentScreen]);
 
   const breakPointChange = (newBreakPt) => {
     setLayouts(getFromLS("layoutStorage", "layouts"));
@@ -134,7 +134,7 @@ const Demo = () => {
 
   return (
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
-      <ResponsiveReactGridLayout
+      {currentLayout!=undefined?<ResponsiveReactGridLayout
         className="border-2 border-red-500 min-h-screen"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
@@ -207,7 +207,7 @@ const Demo = () => {
             </div>
           );
         })}
-      </ResponsiveReactGridLayout>
+      </ResponsiveReactGridLayout>:null}
     </div>
   );
 };
