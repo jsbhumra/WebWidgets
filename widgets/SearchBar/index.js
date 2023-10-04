@@ -103,7 +103,7 @@ function SearchBar({ width = 250, darkMode = true }) {
   }, [searchTerm]);
 
   return (
-    <div className={`search-bar h-12 w-full relative mt-0`}>
+    <div className={`search-bar h-12 w-full relative z-0 mt-0`}>
       <input
         type="text"
         placeholder="Search Google..."

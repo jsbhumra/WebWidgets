@@ -71,31 +71,33 @@ function DigitalClock({
     <div
       className={`absolute DigitalClock w-full h-full left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-[5]`}
       style={{
-              lineHeight: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              fontVariantNumeric: "tabular-nums lining-nums",
-            }}
+        lineHeight: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        fontVariantNumeric: "tabular-nums lining-nums",
+      }}
     >
       <Textfit
-        mode={vertical?"multi":"single"}
+        mode={vertical ? "multi" : "single"}
         className="w-full h-full flex justify-center items-center"
       >
-      <span>
-        {clock24hr
-          ? convertToTwoDigit(time.hours)
-          : convertToTwoDigit(time.hours % 12)}
-        {vertical ? <br /> : ":"}
-      </span>
-      <span>{convertToTwoDigit(time.minutes)}</span>
-      {showSeconds ? (
         <span>
+          {clock24hr
+            ? convertToTwoDigit(time.hours)
+            : convertToTwoDigit(time.hours % 12)}
           {vertical ? <br /> : ":"}
-          {convertToTwoDigit(time.seconds)}
         </span>
-      ) : null}
-      {vertical && <br />}
-      <span style={vertical?{ fontVariantCaps: "all-small-caps" }:null}>{clock24hr ? null : time.hours >= 12 ? " PM" : " AM"}</span>
+        <span>{convertToTwoDigit(time.minutes)}</span>
+        {showSeconds ? (
+          <span>
+            {vertical ? <br /> : ":"}
+            {convertToTwoDigit(time.seconds)}
+          </span>
+        ) : null}
+        {vertical && <br />}
+        <span style={vertical ? { fontVariantCaps: "all-small-caps" } : null}>
+          {clock24hr ? null : time.hours >= 12 ? " PM" : " AM"}
+        </span>
       </Textfit>
     </div>
   );

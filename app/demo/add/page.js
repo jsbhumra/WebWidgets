@@ -1,6 +1,5 @@
 "use client";
 import dynamic from "next/dynamic";
-import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Switch } from "@mui/material";
@@ -20,6 +19,16 @@ const widgetComponents = {
   SearchBar: SearchBar,
   Calendar: Calendar,
 };
+
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from "@nextui-org/react";
 
 function useWindowSize() {
   const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
@@ -41,6 +50,12 @@ export default function add() {
   const [currWidgetID, setCurrWidgetID] = useState("");
   const [currWidgetProps, setCurrWidgetProps] = useState("");
   const [screenHeight, screenWidth] = useWindowSize();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleOpen = (elem, id) => {
+    onOpen();
+    showPropOptions(elem, id);
+  };
 
   const screenSize = window.innerWidth;
   let currentScreen, currCols;
@@ -97,8 +112,8 @@ export default function add() {
   const originalWidgets = getFromLS("widgetStorage", "widgets");
   const originalLayouts = getFromLS("layoutStorage", "layouts");
 
-  console.log(originalLayouts);
-  console.log(originalWidgets);
+  // console.log(originalLayouts);
+  // console.log(originalWidgets);
 
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
@@ -116,19 +131,19 @@ export default function add() {
     editWidgets[`${currentScreen}`]
   );
 
-  console.log(currentLayout);
-  console.log(currentWidget);
+  // console.log(currentLayout);
+  // console.log(currentWidget);
 
   useEffect(() => {
     if (currWidgetProps != "") {
       var theseProps = currWidgetProps;
       var l = currentLayout.length - 1;
       let newCurrWidget = currentWidget;
-      console.log(newCurrWidget[l]);
+      // console.log(newCurrWidget[l]);
       for (var t = 0; t < theseProps.length; t++) {
         var thisProp = theseProps[t][0];
-        console.log(thisProp);
-        console.log(theseProps[t][1]);
+        // console.log(thisProp);
+        // console.log(theseProps[t][1]);
         newCurrWidget[l].widget[thisProp] = theseProps[t][1];
       }
       setCurrentWidget(newCurrWidget);
@@ -161,13 +176,13 @@ export default function add() {
   }
 
   function showPropOptions(elem, el) {
-    // console.log(el)
+    // console.log(el);
     resetOutline();
     elem.target.style.outlineColor = "rgb(101,163,13)";
     const newWidget = widgets.find((widget) => widget.id == el);
     setCurrWidgetID(newWidget.id);
     const WidgetProps = newWidget.props;
-    console.log(WidgetProps);
+    // console.log(WidgetProps);
     var newPropsArr = [];
     for (var i in WidgetProps) {
       newPropsArr.push([i, WidgetProps[i]]);
@@ -191,14 +206,14 @@ export default function add() {
     setWidgets([...theseWidgets]);
     const newWidget = widgets.find((widget) => widget.id == currWidgetID);
     const WidgetProps = newWidget.props;
-    console.log(WidgetProps);
+    // console.log(WidgetProps);
     var newPropsArr = [];
     for (var i in WidgetProps) {
       newPropsArr.push([i, WidgetProps[i]]);
     }
     setCurrWidgetProps(newPropsArr);
-    console.log(widgets);
-    console.log(currWidgetProps);
+    // console.log(widgets);
+    // console.log(currWidgetProps);
   }
 
   function resetOutline() {
@@ -209,13 +224,11 @@ export default function add() {
   }
 
   // console.log(widgets)
-var currentLength = 0
-if(currentLayout!=undefined){
-  currentLength = currentLayout[currentLayout.length - 1].i
-}
-  const [widgetCounter, setWidgetCounter] = useState(
-    currentLength
-  );
+  var currentLength = 0;
+  if (currentLayout != undefined) {
+    currentLength = currentLayout[currentLayout.length - 1].i;
+  }
+  const [widgetCounter, setWidgetCounter] = useState(currentLength);
 
   const onAdd = () => {
     // const theseWidgets = widgets
@@ -229,7 +242,7 @@ if(currentLayout!=undefined){
     // for(var i in currWidgetProps){
     //   newPropsArr.push([i, WidgetProps[i]]);
     // }
-    if(currentLayout!=undefined){
+    if (currentLayout != undefined) {
       setCurrentLayout((prevLayout) => [
         ...prevLayout,
         {
@@ -256,7 +269,7 @@ if(currentLayout!=undefined){
     //   i: widgetCounter + 1,
     //   widget: {name: thisWidget.name, theseProps }
     // })
-    if(currentLayout!=undefined){
+    if (currentLayout != undefined) {
       setCurrentWidget((prevWidget) => [
         ...prevWidget,
         {
@@ -272,8 +285,8 @@ if(currentLayout!=undefined){
         },
       ]);
     }
-    console.log(currentLayout);
-    console.log(currentWidget);
+    // console.log(currentLayout);
+    // console.log(currentWidget);
     setWidgetCounter(widgetCounter + 1);
 
     onWidgetChange();
@@ -286,12 +299,12 @@ if(currentLayout!=undefined){
         {widgets.map((widget) => {
           const WidgetName = widgetComponents[widget.name];
           // const WidgetProps = Object.keys(widget.props);
-          console.log(widget.name);
-          console.log({ ...widget.props });
+          // console.log(widget.name);
+          // console.log({ ...widget.props });
           return (
             <div
               key={widget.id}
-              onClick={(elem) => showPropOptions(elem, widget.id)}
+              onClick={(elem) => handleOpen(elem, widget.id)}
               className="widgetlist relative w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6"
             >
               <div className="w-full h-full m-0 p-0 pointer-events-none">
@@ -301,30 +314,84 @@ if(currentLayout!=undefined){
             </div>
           );
         })}
-        {console.log(currWidgetID)}
+        {/* {console.log(currWidgetID)} */}
       </div>
       <div className="w-full h-auto ms-8 mt-8">
-        {console.log(JSON.stringify(currWidgetProps))}
+        {/* {console.log(JSON.stringify(currWidgetProps))} */}
         {currWidgetProps == "" ? (
           <p>Select a component first!</p>
         ) : (
           <div className="">
-            {currWidgetProps.map((arr) => {
-              const prop = arr[0];
-              return (
-                <div key={arr[0]}>
-                  <h4>Would you like to change {arr[0]} feature?</h4>
-                  <Switch
-                    value={prop}
-                    defaultChecked={arr[1]}
-                    onChange={(e) => changeProps(e)}
-                  />
-                </div>
-              );
-            })}
+            <Modal
+              size="full"
+              backdrop="blur"
+              isOpen={isOpen}
+              onClose={onClose}
+              className="relative text-white bg-bgGradientDark rounded-md z-50 h-4/5 w-4/5"
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1 text-xl text-center">
+                      Customize Widget
+                    </ModalHeader>
+                    <ModalBody className="flex flex-row justify-evenly items-center">
+                      <div className="widgetlist relative w-96 h-96 rounded-md m-6">
+                        <div className="w-full h-full m-0 p-3 border-2 rounded-2xl pointer-events-none">
+                          {widgets
+                            .filter((widget) => widget.id == currWidgetID)
+                            .map((widget) => {
+                              const Wid = widgetComponents[widget.name];
+                              return <Wid {...widget.props} />;
+                            })}
+                        </div>
+                      </div>
+
+                      <div className="min-h-96 p-4">
+                        {currWidgetProps.map((arr) => {
+                          const prop = arr[0];
+                          return (
+                            <div key={arr[0]}>
+                              <h4>
+                                Would you like to change {arr[0]} feature?
+                              </h4>
+                              <Switch
+                                value={prop}
+                                defaultChecked={arr[1]}
+                                onChange={(e) => changeProps(e)}
+                                color="warning"
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button
+                        color="danger"
+                        variant="light"
+                        onPress={onClose}
+                        className="text-xl"
+                      >
+                        Close
+                      </Button>
+                      <Button
+                        color="warning"
+                        variant="flat"
+                        onPress={onClose}
+                        className="text-xl"
+                        onClick={onAdd}
+                      >
+                        Add
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
           </div>
         )}
-        {currWidgetProps != "" ? (
+        {/* {currWidgetProps != "" ? (
           <Button
             color="warning"
             className="z-10 top-5 text-xl font-medium"
@@ -332,7 +399,7 @@ if(currentLayout!=undefined){
           >
             Add
           </Button>
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   );
