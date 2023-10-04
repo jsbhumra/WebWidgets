@@ -59,7 +59,7 @@ const Calendar = ({ width = 250, height = 250, showYear = false }) => {
   }, []);
 
   return (
-    <div className="w-full h-full  flex-col text-center font-bold p-4">
+    <div className="w-full h-full justify-center items-center flex-col text-center font-bold p-4">
       <Textfit
         mode="multi"
         className="w-full h-full flex justify-center items-center"

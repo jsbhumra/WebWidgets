@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { Textfit } from "react-textfit";
 import "./styles.css";
 
 function DigitalClock({
@@ -69,40 +70,33 @@ function DigitalClock({
   return (
     <div
       className={`absolute DigitalClock w-full h-full left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-[5]`}
-      style={
-        vertical
-          ? {
+      style={{
               lineHeight: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              fontVariantNumeric: "tabular-nums lining-nums",
-              fontSize: `calc(${fs} * ${dim}px)`,
-            }
-          : {
-              lineHeight: 1,
-              display: "flex",
-              flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              fontSize: `calc(${fs} * ${dim}px)`,
-            }
-      }
+              fontVariantNumeric: "tabular-nums lining-nums",
+            }}
     >
+      <Textfit
+        mode={vertical?"multi":"single"}
+        className="w-full h-full flex justify-center items-center"
+      >
       <span>
         {clock24hr
           ? convertToTwoDigit(time.hours)
           : convertToTwoDigit(time.hours % 12)}
-        {vertical ? null : ":"}
+        {vertical ? <br /> : ":"}
       </span>
       <span>{convertToTwoDigit(time.minutes)}</span>
       {showSeconds ? (
         <span>
-          {vertical ? null : ":"}
+          {vertical ? <br /> : ":"}
           {convertToTwoDigit(time.seconds)}
         </span>
       ) : null}
-      <span>{clock24hr ? null : time.hours >= 12 ? " PM" : " AM"}</span>
+      {vertical && <br />}
+      <span style={vertical?{ fontVariantCaps: "all-small-caps" }:null}>{clock24hr ? null : time.hours >= 12 ? " PM" : " AM"}</span>
+      </Textfit>
     </div>
   );
 }
