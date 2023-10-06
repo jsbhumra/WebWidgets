@@ -1,0 +1,51 @@
+.main {
+    width: 16rem;
+    height: 15rem;
+    padding: 0.75rem 1rem;
+    /* margin-left: 1rem; */
+    margin: 1rem 0;
+    /* border: 1px solid blue; */
+    background-color: #414141;
+    border-radius: 1.5rem;
+ }
+ .header {
+    /* padding-top: 0.75rem; */
+    display: flex;
+    /* padding-bottom: 0.75rem; */
+    padding: 0.5rem 0.4rem;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    vertical-align: middle;
+ }
+ .header button {
+    font-size: 1rem;
+    cursor: pointer;
+ }
+ .body {
+    padding-top: 0.25rem;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+ }
+ .box {
+    height: 1.75rem;
+    width: 1.5rem;
+    background-color: #414141;
+    font-weight: 600;
+    font-size: 0.8rem;
+    /* border: 1px solid #ccc; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100%;
+ }
+ .box.empty {
+    background-color: #414141;
+    cursor: default;
+ }
+ .box.selected {
+    background-color: red;
+    color: white;
+ }

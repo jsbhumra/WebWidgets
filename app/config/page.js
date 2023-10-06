@@ -22,6 +22,9 @@ const Calendar = dynamic(() => import("@/widgets/Calendar"), {
 // import "@/widgets/DigitalClock/styles.css";
 
 import SearchBar from "@/widgets/SearchBar";
+const NewCalendar = dynamic(() => import("@/widgets/NewCalendar"), {
+  ssr: false,
+});
 // import "@/widgets/SearchBar/styles.css";
 
 //REMOVE 2 LINES TO REMOVE CALENDAR
@@ -89,7 +92,8 @@ const Config = () => {
           <AnalogClock width={300} height={200} />
         </div>
         <DigitalClock clock24hr={true} showSeconds={false} vertical={true} /> */}
-        <Calendar />
+        {/* <Calendar /> */}
+        <NewCalendar />
       </div>
     </>
   );
