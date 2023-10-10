@@ -1,0 +1,7 @@
+*{
+   margin: 0;
+   padding: 0;
+}
+.weatherContainer{
+   border-radius: 15px;
+}

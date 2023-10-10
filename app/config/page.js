@@ -2,44 +2,25 @@
 import dynamic from "next/dynamic";
 
 const Nav = dynamic(() => import("@/components/Navbar"), { ssr: false });
-
-const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
-  ssr: false,
-});
-
-const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
-  ssr: false,
-});
-
-const Calendar = dynamic(() => import("@/widgets/Calendar"), {
-  ssr: false,
-});
-
-// import AnalogClock from "@/widgets/AnalogClock";
-// import "@/widgets/AnalogClock/styles.css";
-
-// import DigitalClock from "@/widgets/DigitalClock";
-// import "@/widgets/DigitalClock/styles.css";
-
-import SearchBar from "@/widgets/SearchBar";
 const NewCalendar = dynamic(() => import("@/widgets/NewCalendar"), {
   ssr: false,
 });
-// import "@/widgets/SearchBar/styles.css";
+const Weather = dynamic(() => import("@/widgets/Weather"), {
+  ssr: false,
+});
+import React, { useState } from "react";
 
-//REMOVE 2 LINES TO REMOVE CALENDAR
-// import Calendar from "react-calendar";
-// import "react-calendar/dist/Calendar.css";
 
-import React from "react";
 
 const Config = () => {
+  
   return (
     <>
       <div className="bgcol w-screen min-h-screen">
         <Nav />
         <div className="ms-16 mt-8">
-          <h2 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+          
+          {/* <h2 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
             Set us up as your default startup link on your browser
           </h2>
           <div className="row-auto">
@@ -83,7 +64,7 @@ const Config = () => {
                 so far, in reverse chronological order.
               </p>
             </a>
-          </div>
+          </div> */}
         </div>
         {/* <div style={{ width: "500px", height: "300px" }}>
           <SearchBar width={500} height={300} darkMode={true} />
@@ -94,6 +75,10 @@ const Config = () => {
         <DigitalClock clock24hr={true} showSeconds={false} vertical={true} /> */}
         {/* <Calendar /> */}
         <NewCalendar />
+        <Weather />
+      </div>
+      <div className="weatherContainer">
+
       </div>
     </>
   );
