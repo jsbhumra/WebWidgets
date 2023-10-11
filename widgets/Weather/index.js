@@ -28,28 +28,31 @@ function Weather() {
     "50n": "mist",
   };
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${api_key}`,
-        { mode: "cors" }
-      );
-
-      const res = await response.json();
-      // console.log(res);
-      setData({
-        city: res.name,
-        country: res.sys.country,
-        temp: Math.round(res.main.temp * 10) / 10,
-        humidity: res.main.humidity,
-        pressure: res.main.pressure,
-        wind: res.wind.speed,
-        weather: res.weather[0].main,
-        icon: icons[res.weather[0].icon],
-      });
-    } catch (error) {
-      toast.error("An Error Occured");
+  useEffect(() => {
+    async function getWeather(){
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${api_key}`,
+          { mode: "cors" }
+        );
+  
+        const res = await response.json();
+        // console.log(res);
+        setData({
+          city: res.name,
+          country: res.sys.country,
+          temp: Math.round(res.main.temp * 10) / 10,
+          humidity: res.main.humidity,
+          pressure: res.main.pressure,
+          wind: res.wind.speed,
+          weather: res.weather[0].main,
+          icon: icons[res.weather[0].icon],
+        });
+      } catch (error) {
+        toast.error("An Error Occured");
+      }
     }
+    getWeather()
   }, []); // Add city afterward in dependecy array. Currently retrieving only FOR Mumabi
 
   return (
@@ -77,7 +80,7 @@ function Weather() {
           </div>
         </div>
         <div className="right h-full w-1/3">
-          <img src={`/weatherImages/${data.icon}.svg`} alt="" srcset="" />
+          <img src={`/weatherImages/${data.icon}.svg`} alt="" srcSet="" />
         </div>
       </div>
     </div>
