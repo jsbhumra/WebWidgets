@@ -4,6 +4,13 @@ import "./styles.css";
 function Calendar() {
    const [sDate, setsDate] = useState(new Date());
    const [isCurrMonth, setIsCurrMonth] = useState(true)
+   let lDay = new Date(sDate.getFullYear(),sDate.getMonth()+1,1).getDay()
+   let lDate = new Date(sDate.getFullYear(),sDate.getMonth()+1,0).getDate()
+
+   useEffect(() => {
+      lDay = new Date(sDate.getFullYear(),sDate.getMonth()+1,1).getDay()
+      lDate = new Date(sDate.getFullYear(),sDate.getMonth()+1,0).getDate()
+   },[sDate])
 
    const findMonthDays = (y, m) => {
       return new Date(y, m + 1, 0).getDate();
@@ -48,17 +55,77 @@ function Calendar() {
       const y = sDate.getFullYear();
       const m = sDate.getMonth();
       const mDays = findMonthDays(y, m);
-      const fDay = findFirstDay(y, m);
+      const newday = findFirstDay(y, m);
+      var fDay = newday
 
       const allDays = [];
+
+      const weekdays = ['S','M','T','W','T','F','S']
+
+      // For weekday cells
+      for (let p = 0; p < weekdays.length; p++) {
+         allDays.push(<div key={`wd-${p}`} className = "box">{weekdays[p]}</div>);
+      }
+
+      console.table({lDay, lDate})
+
+      if (lDay==1 && lDate==30){
+         const date = new Date(y, m, 30);
+         const isSelected = sDate && date.toDateString() === sDate.toDateString();
+         allDays.push(
+            <div
+               key = {`d-30`}
+               className = {`box ${(isSelected && isCurrMonth) ? "selected" : ""}`}
+               >
+               30
+            </div>
+         );
+         fDay-=1
+      } else if (lDay==1 && lDate==31){
+         const date = new Date(y, m, 31);
+         const isSelected = sDate && date.toDateString() === sDate.toDateString();
+         allDays.push(
+            <div
+               key = {`d-31`}
+               className = {`box ${(isSelected && isCurrMonth) ? "selected" : ""}`}
+               >
+               31
+            </div>
+         );
+         fDay-=1
+      } else if (lDay==2 && lDate==31){
+         const date = new Date(y, m, 30);
+         const isSelected = sDate && date.toDateString() === sDate.toDateString();
+         const otherdate = new Date(y, m, 31);
+         const isOtherSelected = sDate && otherdate.toDateString() === sDate.toDateString();
+         allDays.push(
+            <div
+               key = {`d-30`}
+               className = {`box ${(isSelected && isCurrMonth) ? "selected" : ""}`}
+               >
+               30
+            </div>
+         );
+         allDays.push(
+            <div
+               key = {`d-31`}
+               className = {`box ${(isOtherSelected && isCurrMonth) ? "selected" : ""}`}
+               >
+               31
+            </div>
+         );
+         fDay-=2
+      }
 
       // For empty cells
       for (let p = 0; p < fDay; p++) {
          allDays.push(<div key = {`em-${p}`} className = "box empty"></div>);
       }
 
+      var theseDays = (35-newday<mDays)?35-newday:mDays
+
       // Show actual days
-      for (let d = 1; d <= mDays; d++) {
+      for (let d = 1; d <= theseDays; d++) {
          const date = new Date(y, m, d);
          const isSelected = sDate && date.toDateString() === sDate.toDateString();
 
@@ -86,11 +153,11 @@ function Calendar() {
  })
 
    return (
-      <div className="w-[16rem] h-[16rem]">
+      <div className="main w-[16rem] h-[16rem]">
       {/* <h3>
          Creating the <i> calendar component </i> from scratch using React JS
       </h3> */}
-        <div className = "main">
+        {/* <div className = "main"> */}
             <div className = "header">
                 <h2 style={{ fontWeight: '800' }} >
                 <span style={{ color: 'red' }} >{theMonth}</span>&nbsp;&nbsp;<span style={{ color: 'white' }} >{theYear}</span>
@@ -101,7 +168,7 @@ function Calendar() {
                 </span>
             </div>
             <div className = "body">{showCalendar()} </div>
-         </div>
+         {/* </div> */}
       </div>
    );
 }

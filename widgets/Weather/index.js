@@ -61,16 +61,16 @@ function Weather() {
       <div className="flex flex-row w-full h-full weatherContainer bg-[#ffebcd] text-[#d2691e]">
         {/* <div className="flex flex-row w-full h-full weatherContainer bg-[#f0f8ff] text-[#000000]"> */}
         <div className="flex flex-row left h-full w-2/3 relative">
-          <div className="first h-full w-2/5 relative">
+          <div className="first h-full w-5/12 relative">
             <div className="text1 left-1/2 top-[30px] -translate-x-1/2 text-sm font-bold absolute">
               {data.weather}
             </div>
-            <div className="tempText left-1/2 -translate-x-1/2 text-5xl absolute bottom-[20px]">
-              {data.temp}°
+            <div className="tempText left-1/2 -translate-x-1/2 text-5xl absolute bottom-[20px] text-center">
+              <span className="relative">{data.temp}<span className="absolute text-2xl pt-[0.09rem]" style={{ fontWeight: '700' }}>°C</span></span>
             </div>
           </div>
-          <div className="absolute left-[40%] top-[40%] h-1/2 w-[1px] bg-black"></div>
-          <div className="second h-full w-3/5 pt-12 relative ps-3">
+          <div className="absolute left-[calc(575%/12)] top-[40%] h-1/2 w-[1px] bg-[#d2691e]"></div>
+          <div className="second h-full left-[calc(100%/12)] w-1/2 pt-12 relative ps-3">
             <div className="text2 text-xs">Humidity: {data.humidity} %</div>
             <div className="text2 text-xs">Pressure: {data.pressure} mb</div>
             <div className="text2 text-xs">Wind: {data.wind} km/h</div>
@@ -79,8 +79,8 @@ function Weather() {
             </div>
           </div>
         </div>
-        <div className="right h-full w-1/3">
-          <img src={`/weatherImages/${data.icon}.svg`} alt="" srcSet="" />
+        <div className="right h-full w-1/3 p-5 ps-3">
+          <img src={`/weatherImages/${data.icon}.svg`} style={{ filter: "invert(38%) sepia(100%) saturate(589%) hue-rotate(348deg) brightness(100%) contrast(70%)" }} alt="" srcSet="" />
         </div>
       </div>
     </div>
