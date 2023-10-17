@@ -2,7 +2,8 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Switch } from "@mui/material";
+// import { Switch } from "@mui/material";
+import { Switch } from "@nextui-org/react";
 import SearchBar from "@/widgets/SearchBar";
 const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
   ssr: false,
@@ -182,10 +183,11 @@ export default function add() {
     const newWidget = widgets.find((widget) => widget.id == el);
     setCurrWidgetID(newWidget.id);
     const WidgetProps = newWidget.props;
+    const WidgetPropLabel = newWidget.propLabel;
     // console.log(WidgetProps);
     var newPropsArr = [];
     for (var i in WidgetProps) {
-      newPropsArr.push([i, WidgetProps[i]]);
+      newPropsArr.push([i, WidgetProps[i], WidgetPropLabel]);
     }
     setCurrWidgetProps(newPropsArr);
     return;
@@ -206,10 +208,11 @@ export default function add() {
     setWidgets([...theseWidgets]);
     const newWidget = widgets.find((widget) => widget.id == currWidgetID);
     const WidgetProps = newWidget.props;
+    const WidgetPropLabel = newWidget.propLabel;
     // console.log(WidgetProps);
     var newPropsArr = [];
     for (var i in WidgetProps) {
-      newPropsArr.push([i, WidgetProps[i]]);
+      newPropsArr.push([i, WidgetProps[i], WidgetPropLabel]);
     }
     setCurrWidgetProps(newPropsArr);
     // console.log(widgets);
@@ -332,7 +335,7 @@ export default function add() {
               <ModalContent>
                 {(onClose) => (
                   <>
-                    <ModalHeader className="flex flex-col gap-1 text-xl text-center">
+                    <ModalHeader className="flex flex-col gap-1 text-2xl text-center">
                       Customize Widget
                     </ModalHeader>
                     <ModalBody className="flex flex-row justify-evenly items-center">
@@ -349,15 +352,17 @@ export default function add() {
 
                       <div className="min-h-96 p-4">
                         {currWidgetProps.map((arr) => {
+                          const prompts = arr[2];
                           const prop = arr[0];
                           return (
                             <div key={arr[0]}>
-                              <h4>
-                                Would you like to change {arr[0]} feature?
+                              <h4 className="text-xl my-2">
+                                {/* Would you like to change {arr[0]} feature? */}
+                                {prompts[prop]}
                               </h4>
                               <Switch
                                 value={prop}
-                                defaultChecked={arr[1]}
+                                defaultSelected={arr[1]}
                                 onChange={(e) => changeProps(e)}
                                 color="warning"
                               />
