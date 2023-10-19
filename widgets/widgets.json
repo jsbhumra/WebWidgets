@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "AnalogClock",
+    "props": {
+      "showSeconds": true,
+      "smooth": true
+    },
+    "propLabel": {
+      "showSeconds": "Display Seconds",
+      "smooth": "Smooth Display"
+    }
+  },
+  {
+    "id": 2,
+    "name": "DigitalClock",
+    "props": {
+      "clock24hr": true,
+      "showSeconds": false,
+      "vertical": true
+    },
+    "propLabel": {
+      "clock24hr": "24 Hour Time Format",
+      "showSeconds": "Display Seconds",
+      "vertical": "Vertical Orientation"
+    }
+  },
+  {
+    "id": 3,
+    "name": "SearchBar",
+    "props": {
+      "darkMode": true
+    },
+    "propLabel": {
+      "darkMode": "Dark Mode"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Calendar",
+    "props": {
+      "showYear": false
+    },
+    "propLabel": {
+      "showYear": "Show Year"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Weather",
+    "props": {
+      "showWind": false
+    },
+    "propLabel": {
+      "showWind": "Show Wind"
+    }
+  }
+]
