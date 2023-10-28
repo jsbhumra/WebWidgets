@@ -94,8 +94,8 @@ export const dbConnect = async () => {
   try {
     await mongoose.connect(process.env.DB_URI, {
       dbName: "WebWidgets",
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
     });
     isConnected = true;
     console.log("DB connected ");
