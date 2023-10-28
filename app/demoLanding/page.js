@@ -161,7 +161,8 @@ const Demo = () => {
                 key={box.i}
                 // Dynamic Values from Database for w, h, minW, minH.
                 data-grid={box}
-                className="group flex  bg-gray-950 rounded-md bg-clip-padding bg-transparent items-center justify-center "
+                className="group flex bg-gray-950 rounded-md bg-clip-padding bg-transparent items-center justify-center"
+                style={thisWidget.name=="SearchBar"?{ zIndex: 10 }:{ zIndex: 5 }}
               >
                 {/* Add Paddind to remove overlap betn widget and delete btn*/}
                 <div className="text w-full h-full">
