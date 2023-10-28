@@ -381,7 +381,7 @@ export default function add() {
                         Close
                       </Button>
                       <Button
-                        color="warning"
+                        color="primary"
                         variant="flat"
                         onPress={onClose}
                         className="text-xl"

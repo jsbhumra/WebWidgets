@@ -283,7 +283,7 @@ const Demo = () => {
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
       <Toaster position="top-center" reverseOrder={false} />
       <Button
-        color="warning"
+        color="primary"
         className="absolute z-10 top-5 right-5 text-xl font-medium"
         onClick={onSave}
       >
@@ -292,7 +292,7 @@ const Demo = () => {
 
       <Link href="/demo/add">
         <Button
-          color="warning"
+          color="primary"
           className="absolute z-10 top-5 right-28 text-xl font-medium"
         >
           Add
@@ -300,7 +300,7 @@ const Demo = () => {
       </Link>
       <Link href="/demoLanding">
         <Button
-          color="warning"
+          color="primary"
           className="absolute z-10 top-20 right-16 text-xl font-medium"
         >
           Preview
