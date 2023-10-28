@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import { compare, hash } from "bcryptjs";
 
 var Schema = mongoose.Schema;
 
@@ -14,6 +15,17 @@ const userSchema = new Schema({
   },
   password: { type: String, require: true },
 });
+
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await hash(this.password, 10);
+  }
+  return next();
+});
+
+userSchema.methods.comparePassword = async function (password) {
+  return await compare(password, this.password);
+};
 
 let User;
 try {

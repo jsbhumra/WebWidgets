@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image.js";
 import "./styles.css";
 import {
@@ -13,10 +13,21 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import Dropdown from "./Dropdown";
+import { getSession } from "next-auth/react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const [sess, setSess] = useState(false);
+
+  useEffect(() => {
+    getSession().then((session) => {
+      if (session) {
+        setSess(true);
+      }
+    });
+  }, []);
   const menuItems = [
     { name: "Home", to: "/" },
     { name: "About", to: "/" },
@@ -77,28 +88,45 @@ export default function App() {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem>
-          <Button
-            as={Link}
-            color="primary"
-            href="login"
-            variant="flat"
-            className="text-lg lg:text-xl p-4"
-          >
-            Sign In
-          </Button>
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
-          <Button
-            as={Link}
-            color="primary"
-            href="signup"
-            variant="bordered"
-            className="text-lg lg:text-xl p-4"
-          >
-            Sign Up
-          </Button>
-        </NavbarItem>
+        {sess ? (
+          // <NavbarItem className="hidden lg:flex">
+          //   <Button
+          //     as={Link}
+          //     color="primary"
+          //     href="logout"
+          //     variant="flat"
+          //     className="text-lg lg:text-xl p-4"
+          //   >
+          //     Logout
+          //   </Button>
+          // </NavbarItem>
+          <Dropdown />
+        ) : (
+          <>
+            <NavbarItem>
+              <Button
+                as={Link}
+                color="primary"
+                href="login"
+                variant="flat"
+                className="text-lg lg:text-xl p-4"
+              >
+                Sign In
+              </Button>
+            </NavbarItem>
+            <NavbarItem className="hidden lg:flex">
+              <Button
+                as={Link}
+                color="primary"
+                href="signup"
+                variant="bordered"
+                className="text-lg lg:text-xl p-4"
+              >
+                Sign Up
+              </Button>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
 
       <NavbarMenu className="bg-transparent">

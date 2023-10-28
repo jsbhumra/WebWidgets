@@ -26,7 +26,7 @@ export default function Signup() {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   async function createUser(fname, lname, email, password) {
-    const response = await fetch("/api/user", {
+    const response = await fetch("/api/signup", {
       method: "POST",
       body: JSON.stringify({ fname, lname, email, password }),
       headers: {

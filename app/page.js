@@ -1,15 +1,6 @@
 import Nav from "../components/Navbar";
 import Polygon from "../components/Polygon";
-import { dbConnect } from "@/utils/dbConnect";
-
-const GET = async (request) => {
-  try {
-    dbConnect();
-    //return logic here
-  } catch (error) {
-    //return logic here
-  }
-};
+import { dbConnect } from "../utils/dbConnect";
 
 export default function Home() {
   dbConnect();
