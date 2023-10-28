@@ -1,14 +1,17 @@
+"use client";
 import Nav from "../components/Navbar";
 import Polygon from "../components/Polygon";
-import { dbConnect } from "../utils/dbConnect";
+import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Home() {
-  dbConnect();
+  const router = useRouter();
   return (
-    <div className="bgcol w-screen h-screen">
+    <div className="bgcol w-full h-screen">
       <Nav />
       <div>
-        <div className="absolute top-[50%] -translate-y-[50%] z-10">
+        <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-10 pt-10">
           <div className="text-5xl text-white font-bold text-center">
             Welcome to
           </div>
@@ -16,16 +19,24 @@ export default function Home() {
             WebWidgets
           </div>
           <br></br>
-          <div className="text-2xl text-white text-center px-96">
-            Your home to customise, create and ----- widgets according to your
-            needs
+          <div className="text-3xl text-white text-center p-5 pb-10 font-semibold">
+            Innovate. Integrate. Widgetize.
           </div>
           <br></br>
-          <a href="./setup">
-            <span className=" absolute text-2xl border-2 text-primary font-bold bg-white left-[50%] -translate-x-[50%] px-5 py-2 rounded-lg hover:bg-gray-200 cursor-pointer">
-              Get Started
+
+          <Button
+            color="primary"
+            variant="flat"
+            className="left-1/2 -translate-x-1/2 px-6 py-7 text-2xl backdrop-blur-2xl font-semibold border border-primaryOrange"
+            onClick={() => {
+              router.push("/setup");
+            }}
+          >
+            Get Started
+            <span className="">
+              <Image src="/lightning.svg" width={30} height={30} />
             </span>
-          </a>
+          </Button>
         </div>
         <div>
           <Polygon />

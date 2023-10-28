@@ -40,7 +40,7 @@ export default function App() {
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
       isBordered
-      className="py-4 bg-transparent border-b-[#262626] backdrop-blur-sm backdrop-saturate-100"
+      className="py-4 bg-transparent border-b-[#262626] backdrop-blur-3xl backdrop-saturate-100"
     >
       <NavbarContent>
         <NavbarMenuToggle
@@ -80,17 +80,6 @@ export default function App() {
 
       <NavbarContent justify="end">
         {sess ? (
-          // <NavbarItem className="hidden lg:flex">
-          //   <Button
-          //     as={Link}
-          //     color="primary"
-          //     href="logout"
-          //     variant="flat"
-          //     className="text-lg lg:text-xl p-4"
-          //   >
-          //     Logout
-          //   </Button>
-          // </NavbarItem>
           <Dropdown />
         ) : (
           <>

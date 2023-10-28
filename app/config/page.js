@@ -4,16 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
-const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
+const AnalogClock = dynamic(() => import("../../widgets/AnalogClock"), {
   ssr: false,
 });
-const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
+const DigitalClock = dynamic(() => import("../../widgets/DigitalClock"), {
   ssr: false,
 });
-import Weather from "@/widgets/Weather";
-import Calendar from "@/widgets/Calendar";
-import NewCalendar from "@/widgets/NewCalendar";
-import SearchBar from "@/widgets/SearchBar";
+import Weather from "../../widgets/Weather";
+import Calendar from "../../widgets/Calendar";
+import NewCalendar from "../../widgets/NewCalendar";
+import SearchBar from "../../widgets/SearchBar";
+// import Weather from "@/widgets/Weather";
+// import Calendar from "@/widgets/Calendar";
+// import NewCalendar from "@/widgets/NewCalendar";
+// import SearchBar from "@/widgets/SearchBar";
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -35,7 +39,7 @@ function useWindowSize() {
 }
 
 const Config = () => {
-  const router=useRouter();
+  const router = useRouter();
   const [screenHeight, screenWidth] = useWindowSize();
 
   const screenSize = window.innerWidth;
@@ -90,104 +94,108 @@ const Config = () => {
     }
   };
 
-  const originalWidgets = getFromLS("widgetStorage", "widgets") || {
-    // lg: [
-    //   {
-    //     i: 1,
-    //     widget: { name: "AnalogClock", showSeconds: false, smooth: true },
-    //   },
-    //   { i: 2, widget: { name: "SearchBar", darkMode: true } },
-    //   {
-    //     i: 3,
-    //     widget: {
-    //       name: "DigitalClock",
-    //       clock24hr: true,
-    //       showSeconds: true,
-    //       vertical: false,
-    //     },
-    //   },
-    //   { i: 4, widget: { name: "empty" } },
-    //   { i: 5, widget: { name: "empty" } },
-    // ],
-    // md: [
-    //   { i: 1, widget: { name: "empty" } },
-    //   {
-    //     i: 2,
-    //     widget: { name: "AnalogClock", showSeconds: true, smooth: false },
-    //   },
-    //   { i: 3, widget: { name: "empty" } },
-    //   { i: 4, widget: { name: "SearchBar", darkMode: false } },
-    //   { i: 5, widget: { name: "empty" } },
-    // ],
-    // sm: [
-    //   { i: 1, widget: { name: "empty" } },
-    //   { i: 2, widget: { name: "empty" } },
-    //   {
-    //     i: 3,
-    //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
-    //   },
-    //   { i: 4, widget: { name: "empty" } },
-    //   { i: 5, widget: { name: "empty" } },
-    // ],
-    // xs: [
-    //   { i: 1, widget: { name: "empty" } },
-    //   { i: 2, widget: { name: "empty" } },
-    //   { i: 3, widget: { name: "empty" } },
-    //   {
-    //     i: 4,
-    //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
-    //   },
-    //   { i: 5, widget: { name: "empty" } },
-    // ],
-    // xxs: [
-    //   { i: 1, widget: { name: "empty" } },
-    //   { i: 2, widget: { name: "empty" } },
-    //   { i: 3, widget: { name: "empty" } },
-    //   { i: 4, widget: { name: "empty" } },
-    //   {
-    //     i: 5,
-    //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
-    //   },
-    // ],
-  };
+  const originalWidgets =
+    getFromLS("widgetStorage", "widgets") ||
+    {
+      // lg: [
+      //   {
+      //     i: 1,
+      //     widget: { name: "AnalogClock", showSeconds: false, smooth: true },
+      //   },
+      //   { i: 2, widget: { name: "SearchBar", darkMode: true } },
+      //   {
+      //     i: 3,
+      //     widget: {
+      //       name: "DigitalClock",
+      //       clock24hr: true,
+      //       showSeconds: true,
+      //       vertical: false,
+      //     },
+      //   },
+      //   { i: 4, widget: { name: "empty" } },
+      //   { i: 5, widget: { name: "empty" } },
+      // ],
+      // md: [
+      //   { i: 1, widget: { name: "empty" } },
+      //   {
+      //     i: 2,
+      //     widget: { name: "AnalogClock", showSeconds: true, smooth: false },
+      //   },
+      //   { i: 3, widget: { name: "empty" } },
+      //   { i: 4, widget: { name: "SearchBar", darkMode: false } },
+      //   { i: 5, widget: { name: "empty" } },
+      // ],
+      // sm: [
+      //   { i: 1, widget: { name: "empty" } },
+      //   { i: 2, widget: { name: "empty" } },
+      //   {
+      //     i: 3,
+      //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
+      //   },
+      //   { i: 4, widget: { name: "empty" } },
+      //   { i: 5, widget: { name: "empty" } },
+      // ],
+      // xs: [
+      //   { i: 1, widget: { name: "empty" } },
+      //   { i: 2, widget: { name: "empty" } },
+      //   { i: 3, widget: { name: "empty" } },
+      //   {
+      //     i: 4,
+      //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
+      //   },
+      //   { i: 5, widget: { name: "empty" } },
+      // ],
+      // xxs: [
+      //   { i: 1, widget: { name: "empty" } },
+      //   { i: 2, widget: { name: "empty" } },
+      //   { i: 3, widget: { name: "empty" } },
+      //   { i: 4, widget: { name: "empty" } },
+      //   {
+      //     i: 5,
+      //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
+      //   },
+      // ],
+    };
 
-  const originalLayouts = getFromLS("layoutStorage", "layouts") || {
-    // lg: [
-    //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-    //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-    //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-    //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-    //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    // ],
-    // md: [
-    //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-    //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-    //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-    //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-    //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    // ],
-    // sm: [
-    //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-    //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-    //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-    //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-    //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    // ],
-    // xs: [
-    //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-    //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-    //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-    //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-    //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    // ],
-    // xxs: [
-    //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-    //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-    //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-    //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-    //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-    // ],
-  };
+  const originalLayouts =
+    getFromLS("layoutStorage", "layouts") ||
+    {
+      // lg: [
+      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+      // ],
+      // md: [
+      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+      // ],
+      // sm: [
+      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+      // ],
+      // xs: [
+      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+      // ],
+      // xxs: [
+      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
+      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
+      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
+      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
+      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
+      // ],
+    };
 
   const onSaveOriginalLayouts = () => {
     saveToLS("layoutStorage", "layouts", originalLayouts);
@@ -242,7 +250,6 @@ const Config = () => {
     setCurrentWidget(widgets[`${currentScreen}`]);
   }, []);
 
-
   const breakPointChange = (newBreakPt) => {
     setLayouts(getFromLS("layoutStorage", "layouts"));
     setWidgets(getFromLS("widgetStorage", "widgets"));
@@ -289,7 +296,7 @@ const Config = () => {
       <Button
         color="primary"
         className="absolute z-10 top-5 right-48 text-xl font-medium"
-        onClick={()=>router.push("/")}
+        onClick={() => router.push("/")}
       >
         Home
       </Button>
@@ -317,119 +324,122 @@ const Config = () => {
           Preview
         </Button>
       </Link>
-      {currentLayout!=undefined?<ResponsiveReactGridLayout
-        className="border-2 border-red-500 min-h-screen"
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-        rowHeight={30}
-        layouts={layouts}
-        onLayoutChange={(layout, layouts) => onLayoutChange(layout, layouts)}
-        compactType={null}
-        preventCollision={true}
-        useCSSTransforms={true}
-        margin={[15, 15]}
-        onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
-      >
-        {console.log(currentLayout)}
-        {currentLayout.map((box) => {
-          console.log(currentWidget);
-          console.log(currentLayout);
-          var thisWidget = currentWidget.filter((ele) => ele.i == box.i)[0]
-            .widget;
-          var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
-          var boxwidth =
-            Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
-          return (
-            <div
-              key={box.i}
-              // Dynamic Values from Database for w, h, minW, minH.
-              data-grid={{
-                w: 2,
-                h: 3,
-                x: 0,
-                y: 0,
-                minW: 2,
-                minH: 3,
-                maxW: 10,
-                maxH: 10,
-              }}
-              className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
-            >
-              {/* Add Paddind to remove overlap betn widget and delete btn*/}
-              <div className="text w-full h-full pointer-events-none">
-                {/* {parentRef?.current[box.i]?.clientWidth} */}
-                {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
-                {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
-                {
-                  {
-                    empty: <></>,
-                    AnalogClock: (
-                      <AnalogClock
-                        width={Math.floor((9 / 10) * boxwidth)}
-                        height={boxheight}
-                        showSeconds={thisWidget.showSeconds}
-                        smooth={thisWidget.smooth}
-                      />
-                    ),
-                    DigitalClock: (
-                      <DigitalClock
-                        width={boxwidth}
-                        height={boxheight}
-                        clock24hr={thisWidget.clock24hr}
-                        showSeconds={thisWidget.showSeconds}
-                        vertical={thisWidget.vertical}
-                      />
-                    ),
-                    SearchBar: (
-                      <SearchBar
-                        width={Math.floor((9 / 10) * boxwidth)}
-                        height={boxheight}
-                        darkMode={thisWidget.darkMode}
-                      />
-                    ),
-                    Calendar: (
-                      <Calendar
-                        width={Math.floor((9 / 10) * boxwidth)}
-                        height={boxheight}
-                        showYear={thisWidget.showYear}
-                      />
-                    ),
-                    NewCalendar:(
-                      <NewCalendar
-                      width={Math.floor((9 / 10) * boxwidth)}
-                        height={boxheight}
-                        darkMode={thisWidget.darkMode}
-
-                      />
-                    ),
-                    Weather:(
-                      <Weather
-                      width={Math.floor((9 / 10) * boxwidth)}
-                        height={boxheight}
-                        darkMode={thisWidget.darkMode}
-
-                  
-                      />
-                    )
-                  }[thisWidget.name]
-                }
-              </div>
-              <span
-                className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block z-[500]"
-                onClick={onRemoveItem}
-                id={box.i}
+      {currentLayout != undefined ? (
+        <ResponsiveReactGridLayout
+          className="border-2 border-red-500 min-h-screen"
+          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+          rowHeight={30}
+          layouts={layouts}
+          onLayoutChange={(layout, layouts) => onLayoutChange(layout, layouts)}
+          compactType={null}
+          preventCollision={true}
+          useCSSTransforms={true}
+          margin={[15, 15]}
+          onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
+        >
+          {console.log(currentLayout)}
+          {currentLayout.map((box) => {
+            console.log(currentWidget);
+            console.log(currentLayout);
+            var thisWidget = currentWidget.filter((ele) => ele.i == box.i)[0]
+              .widget;
+            var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
+            var boxwidth =
+              Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
+            return (
+              <div
+                key={box.i}
+                // Dynamic Values from Database for w, h, minW, minH.
+                data-grid={{
+                  w: 2,
+                  h: 3,
+                  x: 0,
+                  y: 0,
+                  minW: 2,
+                  minH: 3,
+                  maxW: 10,
+                  maxH: 10,
+                }}
+                className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
               >
-                <Image
-                  src="/delete.svg"
-                  height={20}
-                  width={20}
-                  className="h-full w-full m-0 p-0 z-[500]"
-                />
-              </span>
-            </div>
-          );
-        })}
-      </ResponsiveReactGridLayout>:<h3 className="absolute text-3xl italic left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-opacity-60 text-white">No widgets added yet!</h3>}
+                {/* Add Paddind to remove overlap betn widget and delete btn*/}
+                <div className="text w-full h-full pointer-events-none">
+                  {/* {parentRef?.current[box.i]?.clientWidth} */}
+                  {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
+                  {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
+                  {
+                    {
+                      empty: <></>,
+                      AnalogClock: (
+                        <AnalogClock
+                          width={Math.floor((9 / 10) * boxwidth)}
+                          height={boxheight}
+                          showSeconds={thisWidget.showSeconds}
+                          smooth={thisWidget.smooth}
+                        />
+                      ),
+                      DigitalClock: (
+                        <DigitalClock
+                          width={boxwidth}
+                          height={boxheight}
+                          clock24hr={thisWidget.clock24hr}
+                          showSeconds={thisWidget.showSeconds}
+                          vertical={thisWidget.vertical}
+                        />
+                      ),
+                      SearchBar: (
+                        <SearchBar
+                          width={Math.floor((9 / 10) * boxwidth)}
+                          height={boxheight}
+                          darkMode={thisWidget.darkMode}
+                        />
+                      ),
+                      Calendar: (
+                        <Calendar
+                          width={Math.floor((9 / 10) * boxwidth)}
+                          height={boxheight}
+                          showYear={thisWidget.showYear}
+                        />
+                      ),
+                      NewCalendar: (
+                        <NewCalendar
+                          width={Math.floor((9 / 10) * boxwidth)}
+                          height={boxheight}
+                          darkMode={thisWidget.darkMode}
+                        />
+                      ),
+                      Weather: (
+                        <Weather
+                          width={Math.floor((9 / 10) * boxwidth)}
+                          height={boxheight}
+                          darkMode={thisWidget.darkMode}
+                        />
+                      ),
+                    }[thisWidget.name]
+                  }
+                </div>
+                <span
+                  className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block z-[500]"
+                  onClick={onRemoveItem}
+                  id={box.i}
+                >
+                  <Image
+                    src="/delete.svg"
+                    height={20}
+                    width={20}
+                    className="h-full w-full m-0 p-0 z-[500]"
+                  />
+                </span>
+              </div>
+            );
+          })}
+        </ResponsiveReactGridLayout>
+      ) : (
+        <h3 className="absolute text-3xl italic left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-opacity-60 text-white">
+          No widgets added yet!
+        </h3>
+      )}
     </div>
   );
 };

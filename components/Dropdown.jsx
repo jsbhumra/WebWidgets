@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -6,8 +6,16 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+import { useSession, getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function App() {
+  const { data, status } = useSession();
+  const router = useRouter();
+
   return (
     <Dropdown
       color="primary"
@@ -18,27 +26,35 @@ export default function App() {
         <Button
           color="primary"
           variant="flat"
-          className="text-lg lg:text-xl p-4"
+          className="text-lg lg:text-2xl p-4"
         >
-          Dhruv
+          {data?.user.fname}
+          <span>
+            <Image src="/arrow.svg" width={30} height={30} />
+          </span>
         </Button>
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Action event example"
         onAction={(key) => alert(key)}
+        className="backdrop-blur-lg border border-primary rounded-lg"
       >
-        <DropdownItem key="new" className="text-4xl">
-          Create
+        <DropdownItem className="text-4xl text-center">
+          {" "}
+          <span className="text-lg">Create</span>
         </DropdownItem>
-        <DropdownItem key="copy" className="text-4xl">
-          Copy link
+        <DropdownItem className="text-4xl text-center">
+          {" "}
+          <span className="text-lg ">Logout</span>
         </DropdownItem>
         <DropdownItem
-          key="delete"
           color="danger"
-          className="text-danger text-lg lg:text-xl"
+          className="text-danger text-4xl font-bold text-center"
+          onClick={() => {
+            signOut();
+          }}
         >
-          Logout
+          <span className="text-lg font-semibold">Logout</span>
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
