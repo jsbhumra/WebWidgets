@@ -1,20 +1,65 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "@nextui-org/react";
 import "./styles.css";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { Button } from "@nextui-org/react";
-import { MailIcon } from "./MailIcon";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-export default function Login() {
-  const [isVisible, setIsVisible] = React.useState(false);
+export default function Signup() {
+  const router = useRouter();
+
+  const [data, setData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    password: "",
+  });
+
+  const [isVisible, setIsVisible] = useState(false);
   function randomNum() {
     return Math.ceil(Math.random() * 20);
   }
   const bgNum = randomNum();
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  async function createUser(fname, lname, email, password) {
+    const response = await fetch("/api/user", {
+      method: "POST",
+      body: JSON.stringify({ fname, lname, email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong!");
+    }
+
+    return data;
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(data);
+    try {
+      await createUser(data.fname, data.lname, data.email, data.password);
+      router.replace("/login");
+    } catch (error) {}
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
   return (
     <>
       <div className="body flex justify-between items-center pr-24 pb-44">
@@ -32,7 +77,7 @@ export default function Login() {
               </a>
             </p>
           </div>
-          <form method="POST" action="">
+          <form method="POST" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-4 mt-10 form">
               <div className="flex flex-wrap md:flex-nowrap mb-2 gap-4 inputsm">
                 <Input
@@ -43,6 +88,9 @@ export default function Login() {
                   label="First Name"
                   isRequired
                   hideRequired="true"
+                  name="fname"
+                  value={data.fname}
+                  onChange={handleInputChange}
                 />
                 <Input
                   type="text"
@@ -50,6 +98,9 @@ export default function Login() {
                   variant="bordered"
                   color="default"
                   label="Last Name"
+                  name="lname"
+                  value={data.lname}
+                  onChange={handleInputChange}
                   isRequired
                 />
 
@@ -65,6 +116,9 @@ export default function Login() {
                   variant="bordered"
                   color="default"
                   label="Email"
+                  name="email"
+                  value={data.email}
+                  onChange={handleInputChange}
                   isRequired
                 />
                 {/* <Input type="email" variant="bordered" color="default" label="Email" startContent={
@@ -93,6 +147,9 @@ export default function Login() {
                 pattern="[a-zA-Z0-9@]{1,15}"
                 title="Password should be digits (0 to 9) or alphabets (a to z)."
                 classNames={{ label: "after:content-[']" }}
+                name="password"
+                value={data.password}
+                onChange={handleInputChange}
                 isRequired
               />
               <div className="inputlg">
