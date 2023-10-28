@@ -1,9 +1,19 @@
 import Nav from "../components/Navbar";
 import Polygon from "../components/Polygon";
-import dbConnect from '../utils/dbConnect';
+import { dbConnect } from "@/utils/dbConnect";
+
+const GET = async (request) => {
+  try {
+    dbConnect();
+    //return logic here
+  } catch (error) {
+    //return logic here
+  }
+};
 
 export default function Home() {
-  dbConnect()
+  // GET();
+  dbConnect();
   return (
     <div className="bgcol w-screen h-screen">
       <Nav />
