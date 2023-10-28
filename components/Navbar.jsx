@@ -20,7 +20,6 @@ export default function App() {
   const menuItems = [
     { name: "Home", to: "/" },
     { name: "About", to: "/" },
-    { name: "Demo", to: "/demo" },
     { name: "Configure", to: "/config" },
     { name: "Sign Up", to: "/signup" },
     { name: "Log Out", to: "/" },
@@ -64,14 +63,6 @@ export default function App() {
             className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
             Configure
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            href="/demo"
-            className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
-          >
-            Demo
           </Link>
         </NavbarItem>
       </NavbarContent>

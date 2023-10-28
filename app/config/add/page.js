@@ -11,7 +11,9 @@ const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
 const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
   ssr: false,
 });
+import Weather from "@/widgets/Weather";
 import Calendar from "@/widgets/Calendar";
+import NewCalendar from "@/widgets/NewCalendar";
 import allWidgets from "@/widgets/widgets";
 
 const widgetComponents = {
@@ -19,6 +21,8 @@ const widgetComponents = {
   DigitalClock: DigitalClock,
   SearchBar: SearchBar,
   Calendar: Calendar,
+  NewCalendar:NewCalendar,
+  Weather:Weather
 };
 
 import {
@@ -159,7 +163,7 @@ export default function add() {
       // getFromLS("layoutStorage","layouts")
       // getFromLS("widgetStorage","widgets")
 
-      router.push("../demo");
+      router.push("../config");
     }
   }, [currentWidget]);
 
@@ -322,7 +326,7 @@ export default function add() {
       <div className="w-full h-auto ms-8 mt-8">
         {/* {console.log(JSON.stringify(currWidgetProps))} */}
         {currWidgetProps == "" ? (
-          <p>Select a component first!</p>
+          <p>Select a component to add!</p>
         ) : (
           <div className="">
             <Modal
@@ -330,7 +334,7 @@ export default function add() {
               backdrop="blur"
               isOpen={isOpen}
               onClose={onClose}
-              className="relative text-white bg-bgGradientDark rounded-md z-50 h-4/5 w-4/5"
+              className="relative text-white bg-bgGradientLight rounded-md z-50 h-4/5 w-4/5"
             >
               <ModalContent>
                 {(onClose) => (
@@ -374,7 +378,7 @@ export default function add() {
                     <ModalFooter>
                       <Button
                         color="danger"
-                        variant="light"
+                        variant="flat"
                         onPress={onClose}
                         className="text-xl"
                       >
@@ -382,7 +386,7 @@ export default function add() {
                       </Button>
                       <Button
                         color="primary"
-                        variant="flat"
+                        variant="ghost"
                         onPress={onClose}
                         className="text-xl"
                         onClick={onAdd}
