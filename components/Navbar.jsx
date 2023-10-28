@@ -44,7 +44,7 @@ export default function App() {
       <NavbarContent className="hidden sm:flex gap-5 lg:gap-8" justify="center">
         <NavbarItem>
           <Link
-            href="#"
+            href="./"
             className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
             Home
@@ -52,15 +52,15 @@ export default function App() {
         </NavbarItem>
         <NavbarItem>
           <Link
-            href="#"
+            href="./setup"
             className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
-            About
+            Setup
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link
-            href="config"
+            href="./config"
             className="text-lg lg:text-xl border-b-2 border-transparent hover:border-primaryOrange py-1"
           >
             Configure
