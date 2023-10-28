@@ -9,7 +9,11 @@ const AnalogClock = dynamic(() => import("@/widgets/AnalogClock"), {
 const DigitalClock = dynamic(() => import("@/widgets/DigitalClock"), {
   ssr: false,
 });
+import NewCalendar from "@/widgets/NewCalendar";
+import Weather from "@/widgets/Weather";
 import Calendar from "@/widgets/Calendar";
+import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -27,7 +31,8 @@ function useWindowSize() {
   return size;
 }
 
-const Demo = () => {
+const View = () => {
+  const router = useRouter()
   const [screenHeight, screenWidth] = useWindowSize();
 
   const screenSize = window.innerWidth;
@@ -134,6 +139,13 @@ const Demo = () => {
 
   return (
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
+      <Button
+        color="primary"
+        className="absolute z-10 top-5 right-5 text-xl font-medium"
+        onClick={()=>router.push("/")}
+      >
+        Home
+      </Button>
       {currentLayout != undefined ? (
         <ResponsiveReactGridLayout
           className="border-2 border-red-500 min-h-screen"
@@ -203,6 +215,23 @@ const Demo = () => {
                           // darkMode={thisWidget.darkMode}
                         />
                       ),
+                      NewCalendar:(
+                        <NewCalendar
+                        width={Math.floor((9 / 10) * boxwidth)}
+                          height={boxheight}
+                          darkMode={thisWidget.darkMode}
+
+                        />
+                      ),
+                      Weather:(
+                        <Weather
+                        width={Math.floor((9 / 10) * boxwidth)}
+                          height={boxheight}
+                          darkMode={thisWidget.darkMode}
+
+                        />
+                      )
+
                     }[thisWidget.name]
                   }
                 </div>
@@ -215,4 +244,4 @@ const Demo = () => {
   );
 };
 
-export default Demo;
+export default View;

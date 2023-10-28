@@ -44,5 +44,25 @@
     "propLabel": {
       "showYear": "Show Year"
     }
+  },
+  {
+    "id": 5,
+    "name": "NewCalendar",
+    "props": {
+      "darkMode": true
+    },
+    "propLabel": {
+      "darkMode": "Dark Mode"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Weather",
+    "props": {
+      "darkMode": true
+    },
+    "propLabel": {
+      "darkMode": "Dark Mode"
+    }
   }
 ]

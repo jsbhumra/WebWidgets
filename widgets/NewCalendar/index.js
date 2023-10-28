@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import "./styles.css";
 
-function Calendar() {
+function Calendar({ width = 250, height = 250, darkMode = false }) {
+   const [dMode, setdMode] = useState(darkMode);
    const [sDate, setsDate] = useState(new Date());
    const [isCurrMonth, setIsCurrMonth] = useState(true)
    let lDay = new Date(sDate.getFullYear(),sDate.getMonth()+1,1).getDay()
    let lDate = new Date(sDate.getFullYear(),sDate.getMonth()+1,0).getDate()
-
+   
    useEffect(() => {
       lDay = new Date(sDate.getFullYear(),sDate.getMonth()+1,1).getDay()
       lDate = new Date(sDate.getFullYear(),sDate.getMonth()+1,0).getDate()
    },[sDate])
+   useEffect(() => {
+      setdMode(darkMode)
+   },[darkMode])
 
    const findMonthDays = (y, m) => {
       return new Date(y, m + 1, 0).getDate();
@@ -64,7 +68,8 @@ function Calendar() {
 
       // For weekday cells
       for (let p = 0; p < weekdays.length; p++) {
-         allDays.push(<div key={`wd-${p}`} className = "box">{weekdays[p]}</div>);
+         allDays.push(<div key={`wd-${p}`} className = "box" style={dMode? {backgroundColor : "#414141", color:"white"} : {backgroundColor: "white",  color:"#414141", fontWeight:800 }}
+         >{weekdays[p]}</div>);
       }
 
       console.table({lDay, lDate})
@@ -76,7 +81,7 @@ function Calendar() {
             <div
                key = {`d-30`}
                className = {`box ${(isSelected && isCurrMonth) ? "selected" : ""}`}
-               >
+               style={isSelected && isCurrMonth?  {backgroundColor : "red", color:"white"}: dMode?  {backgroundColor : "#414141", color:"white"} :  {backgroundColor: "white",  color:"#414141", fontWeight:800}}>
                30
             </div>
          );
@@ -88,7 +93,7 @@ function Calendar() {
             <div
                key = {`d-31`}
                className = {`box ${(isSelected && isCurrMonth) ? "selected" : ""}`}
-               >
+               style={isSelected && isCurrMonth?  {backgroundColor : "red", color:"white"}: dMode?  {backgroundColor : "#414141", color:"white"} :  {backgroundColor: "white",  color:"#414141", fontWeight:800}}>
                31
             </div>
          );
@@ -102,7 +107,7 @@ function Calendar() {
             <div
                key = {`d-30`}
                className = {`box ${(isSelected && isCurrMonth) ? "selected" : ""}`}
-               >
+                style={isSelected && isCurrMonth?  {backgroundColor : "red", color:"white"}: dMode?  {backgroundColor : "#414141", color:"white"} :  {backgroundColor: "white",  color:"#414141", fontWeight:800}}>
                30
             </div>
          );
@@ -110,7 +115,7 @@ function Calendar() {
             <div
                key = {`d-31`}
                className = {`box ${(isOtherSelected && isCurrMonth) ? "selected" : ""}`}
-               >
+                style={isSelected && isCurrMonth?  {backgroundColor : "red", color:"white"}: dMode?  {backgroundColor : "#414141", color:"white"} :  {backgroundColor: "white",  color:"#414141", fontWeight:800}}>
                31
             </div>
          );
@@ -119,7 +124,7 @@ function Calendar() {
 
       // For empty cells
       for (let p = 0; p < fDay; p++) {
-         allDays.push(<div key = {`em-${p}`} className = "box empty"></div>);
+         allDays.push(<div key = {`em-${p}`} className = "box empty" style={dMode?  {backgroundColor : "#414141", color:"white"} :  {backgroundColor: "white",  color:"#414141", fontWeight:800}}></div>);
       }
 
       var theseDays = (35-newday<mDays)?35-newday:mDays
@@ -133,6 +138,7 @@ function Calendar() {
             <div
                key = {`d-${d}`}
                className = {`box ${(isSelected && isCurrMonth) ? "selected" : ""}`}
+               style={isSelected && isCurrMonth?  {backgroundColor : "red", color:"white"}: dMode?  {backgroundColor : "#414141", color:"white"} :  {backgroundColor: "white",  color:"#414141", fontWeight:800}}
                >
                {d}
             </div>
@@ -153,16 +159,16 @@ function Calendar() {
  })
 
    return (
-      <div className="main w-[16rem] h-[16rem]">
+      <div className={dMode?"main w-[16rem] h-[16rem] bg-[#414141]":"main w-[16rem] h-[16rem] bg-white" }>
       {/* <h3>
          Creating the <i> calendar component </i> from scratch using React JS
       </h3> */}
         {/* <div className = "main"> */}
             <div className = "header">
                 <h2 style={{ fontWeight: '800' }} >
-                <span style={{ color: 'red' }} >{theMonth}</span>&nbsp;&nbsp;<span style={{ color: 'white' }} >{theYear}</span>
+                <span style={{ color: 'red' }} >{theMonth}</span>&nbsp;&nbsp;<span style={dMode?{ color: 'white' }:{color:'#414141'}} >{theYear}</span>
                 </h2>
-                <span>
+                <span style={dMode?  {backgroundColor : "#414141", color:"white"} :  {backgroundColor: "white",  color:"#414141", fontWeight:800}}>
                     <button className="px-2" onClick = {changeToPrevMonth}>{`<`}</button>
                     <button className="px-2" onClick = {changeToNextMonth}>{`>`}</button>
                 </span>
