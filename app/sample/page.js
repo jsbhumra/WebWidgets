@@ -33,24 +33,6 @@ export default function add() {
     }
   };
 
-  async function saveToDB(userID, widgets, layouts) {
-    const response = await fetch("/api/widget", {
-      method: "PUT",
-      body: JSON.stringify({ userID, widgets, layouts }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    console.log(data);
-    if (!response.ok) {
-      throw new Error(data.message || "Something went wrong!");
-    }
-
-    return data;
-  }
-
   const widgets = {
     lg: [
       {

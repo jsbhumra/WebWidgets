@@ -32,7 +32,7 @@ function useWindowSize() {
 }
 
 const View = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [screenHeight, screenWidth] = useWindowSize();
 
   const screenSize = window.innerWidth;
@@ -142,13 +142,13 @@ const View = () => {
       <Button
         color="primary"
         className="absolute z-10 top-5 right-5 text-xl font-medium"
-        onClick={()=>router.push("/")}
+        onClick={() => router.push("/config")}
       >
-        Home
+        Back
       </Button>
       {currentLayout != undefined ? (
         <ResponsiveReactGridLayout
-          className="border-2 border-red-500 min-h-screen"
+          className="min-h-screen"
           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
           rowHeight={30}
@@ -174,7 +174,11 @@ const View = () => {
                 // Dynamic Values from Database for w, h, minW, minH.
                 data-grid={box}
                 className="group flex bg-gray-950 rounded-md bg-clip-padding bg-transparent items-center justify-center"
-                style={thisWidget.name=="SearchBar"?{ zIndex: 10 }:{ zIndex: 5 }}
+                style={
+                  thisWidget.name == "SearchBar"
+                    ? { zIndex: 10 }
+                    : { zIndex: 5 }
+                }
               >
                 {/* Add Paddind to remove overlap betn widget and delete btn*/}
                 <div className="text w-full h-full">
@@ -215,23 +219,20 @@ const View = () => {
                           // darkMode={thisWidget.darkMode}
                         />
                       ),
-                      NewCalendar:(
+                      NewCalendar: (
                         <NewCalendar
-                        width={Math.floor((9 / 10) * boxwidth)}
+                          width={Math.floor((9 / 10) * boxwidth)}
                           height={boxheight}
                           darkMode={thisWidget.darkMode}
-
                         />
                       ),
-                      Weather:(
+                      Weather: (
                         <Weather
-                        width={Math.floor((9 / 10) * boxwidth)}
+                          width={Math.floor((9 / 10) * boxwidth)}
                           height={boxheight}
                           darkMode={thisWidget.darkMode}
-
                         />
-                      )
-
+                      ),
                     }[thisWidget.name]
                   }
                 </div>

@@ -23,6 +23,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 // import { Router } from "express";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
+import { useSession } from "next-auth/react";
 
 function useWindowSize() {
   const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
@@ -39,6 +40,8 @@ function useWindowSize() {
 }
 
 const Config = () => {
+  const { data, status } = useSession();
+  const userID = data?.user._id;
   const router = useRouter();
   const [screenHeight, screenWidth] = useWindowSize();
 
@@ -75,7 +78,7 @@ const Config = () => {
         ls = JSON.parse(localStorage.getItem(name));
         return ls[key];
       } catch (e) {
-        // console.log(e);
+        //  //console.log(e);
       }
     } else {
       {
@@ -94,108 +97,9 @@ const Config = () => {
     }
   };
 
-  const originalWidgets =
-    getFromLS("widgetStorage", "widgets") ||
-    {
-      // lg: [
-      //   {
-      //     i: 1,
-      //     widget: { name: "AnalogClock", showSeconds: false, smooth: true },
-      //   },
-      //   { i: 2, widget: { name: "SearchBar", darkMode: true } },
-      //   {
-      //     i: 3,
-      //     widget: {
-      //       name: "DigitalClock",
-      //       clock24hr: true,
-      //       showSeconds: true,
-      //       vertical: false,
-      //     },
-      //   },
-      //   { i: 4, widget: { name: "empty" } },
-      //   { i: 5, widget: { name: "empty" } },
-      // ],
-      // md: [
-      //   { i: 1, widget: { name: "empty" } },
-      //   {
-      //     i: 2,
-      //     widget: { name: "AnalogClock", showSeconds: true, smooth: false },
-      //   },
-      //   { i: 3, widget: { name: "empty" } },
-      //   { i: 4, widget: { name: "SearchBar", darkMode: false } },
-      //   { i: 5, widget: { name: "empty" } },
-      // ],
-      // sm: [
-      //   { i: 1, widget: { name: "empty" } },
-      //   { i: 2, widget: { name: "empty" } },
-      //   {
-      //     i: 3,
-      //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
-      //   },
-      //   { i: 4, widget: { name: "empty" } },
-      //   { i: 5, widget: { name: "empty" } },
-      // ],
-      // xs: [
-      //   { i: 1, widget: { name: "empty" } },
-      //   { i: 2, widget: { name: "empty" } },
-      //   { i: 3, widget: { name: "empty" } },
-      //   {
-      //     i: 4,
-      //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
-      //   },
-      //   { i: 5, widget: { name: "empty" } },
-      // ],
-      // xxs: [
-      //   { i: 1, widget: { name: "empty" } },
-      //   { i: 2, widget: { name: "empty" } },
-      //   { i: 3, widget: { name: "empty" } },
-      //   { i: 4, widget: { name: "empty" } },
-      //   {
-      //     i: 5,
-      //     widget: { name: "AnalogClock", showSeconds: true, smooth: true },
-      //   },
-      // ],
-    };
+  const originalWidgets = getFromLS("widgetStorage", "widgets") || {};
 
-  const originalLayouts =
-    getFromLS("layoutStorage", "layouts") ||
-    {
-      // lg: [
-      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-      // ],
-      // md: [
-      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-      // ],
-      // sm: [
-      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-      // ],
-      // xs: [
-      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-      // ],
-      // xxs: [
-      //   { i: 1, w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 },
-      //   { i: 2, w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 },
-      //   { i: 3, w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 },
-      //   { i: 4, w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 },
-      //   { i: 5, w: 2, h: 3, x: 8, y: 0, minW: 2, minH: 3 },
-      // ],
-    };
+  const originalLayouts = getFromLS("layoutStorage", "layouts") || {};
 
   const onSaveOriginalLayouts = () => {
     saveToLS("layoutStorage", "layouts", originalLayouts);
@@ -223,12 +127,32 @@ const Config = () => {
     location.reload();
   }
 
+  async function saveToDB(userID, widgets, layouts) {
+    const response = await fetch("/api/widget", {
+      method: "PUT",
+      body: JSON.stringify({ userID, widgets, layouts }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong!");
+    }
+    //console.log(data);
+    return data;
+  }
+
   const onSave = () => {
     onWidgetChange();
     saveToLS("layoutStorage", "layouts", layouts);
     saveToLS("widgetStorage", "widgets", widgets);
-    console.log(currentLayout);
-    console.log(currentWidget);
+
+    // console.log(userID, widgets, layouts);
+    saveToDB(userID, widgets, layouts);
+    // console.log(currentLayout);
+    // console.log(currentWidget);
     toast.success("Layout Saved");
     // toast.promise(saveToLS("layouts", layouts), {
     //   loading: "Saving...",
@@ -258,7 +182,7 @@ const Config = () => {
   };
 
   const onLayoutChange = (layout, layouts) => {
-    // console.log(layout)
+    //  //console.log(layout)
     setCurrentLayout(layout);
     setLayouts(layouts);
   };
@@ -274,19 +198,19 @@ const Config = () => {
     setCurrentLayout((prevLayout) =>
       prevLayout.filter((layout) => layout.i != id)
     );
-    console.log("layout removed");
-    // console.log(id)
+    //console.log("layout removed");
+    //  //console.log(id)
     setCurrentWidget((prevWidget) =>
       prevWidget.filter((currWidget) => currWidget.i != id)
     );
     onWidgetChange();
-    console.log(currentLayout);
-    console.log(currentWidget);
-    console.log("widget removed");
+    //console.log(currentLayout);
+    //console.log(currentWidget);
+    //console.log("widget removed");
     // setLayouts(JSON.parse(JSON.stringify(getFromLS("layoutStorage","layouts"))));
     // setWidgets(JSON.parse(JSON.stringify(getFromLS("widgetStorage","widgets"))));
-    console.log(currentLayout);
-    console.log(currentWidget);
+    //console.log(currentLayout);
+    //console.log(currentWidget);
     toast.success("Widget Deleted");
   };
 
@@ -338,17 +262,17 @@ const Config = () => {
           margin={[15, 15]}
           onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
         >
-          {console.log(currentLayout)}
+          {/* {console.log(currentLayout)} */}
           {currentLayout.map((box) => {
-            console.log(currentWidget);
-            // console.log(currentLayout);
+            //console.log(currentWidget);
+            //  //console.log(currentLayout);
             var thisWidget = currentWidget.filter((ele) => ele.i == box.i)[0]
               .widget;
             var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
             var boxwidth =
               Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
-              console.log(thisWidget)
-              return (
+            //console.log(thisWidget);
+            return (
               <div
                 key={box.i}
                 // Dynamic Values from Database for w, h, minW, minH.

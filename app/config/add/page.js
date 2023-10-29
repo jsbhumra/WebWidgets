@@ -21,8 +21,8 @@ const widgetComponents = {
   DigitalClock: DigitalClock,
   SearchBar: SearchBar,
   Calendar: Calendar,
-  NewCalendar:NewCalendar,
-  Weather:Weather
+  NewCalendar: NewCalendar,
+  Weather: Weather,
 };
 
 import {
@@ -233,7 +233,8 @@ export default function add() {
 
   // console.log(widgets)
   var currentLength = 0;
-  if (currentLayout != undefined) {
+
+  if (currentLayout.length != 0 && currentLayout != undefined) {
     currentLength = currentLayout[currentLayout.length - 1].i;
   }
   const [widgetCounter, setWidgetCounter] = useState(currentLength);
@@ -247,7 +248,7 @@ export default function add() {
         break;
       }
     }
-    console.log(thisWidget.minH)
+    console.log(thisWidget.minH);
     // for(var i in currWidgetProps){
     //   newPropsArr.push([i, WidgetProps[i]]);
     // }
@@ -260,8 +261,8 @@ export default function add() {
           y: Infinity,
           w: thisWidget.w,
           h: thisWidget.h,
-          minW:thisWidget.minW,
-          minH:thisWidget.minH,
+          minW: thisWidget.minW,
+          minH: thisWidget.minH,
         },
       ]);
     } else {
@@ -272,8 +273,8 @@ export default function add() {
           y: Infinity,
           w: thisWidget.w,
           h: thisWidget.h,
-          minW:thisWidget.minW,
-          minH:thisWidget.minH,
+          minW: thisWidget.minW,
+          minH: thisWidget.minH,
         },
       ]);
     }
@@ -318,9 +319,19 @@ export default function add() {
             <div
               key={widget.id}
               onClick={(elem) => handleOpen(elem, widget.id)}
-              className={widget.size==2?" flex widgetlist relative max-w-full w-[548px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center" : " flex widgetlist relative max-w-full w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center"}
+              className={
+                widget.size == 2
+                  ? " flex widgetlist relative max-w-full w-[548px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center"
+                  : " flex widgetlist relative max-w-full w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center"
+              }
             >
-              <div className={widget.id==3?"flex w-full h-full m-0 p-0 pointer-events-none":"flex w-full h-full m-0 p-0 pointer-events-none justify-center items-center"}>
+              <div
+                className={
+                  widget.id == 3
+                    ? "flex w-full h-full m-0 p-0 pointer-events-none"
+                    : "flex w-full h-full m-0 p-0 pointer-events-none justify-center items-center"
+                }
+              >
                 <WidgetName {...widget.props} />
               </div>
               {/* {console.log(WidgetProps)} */}
