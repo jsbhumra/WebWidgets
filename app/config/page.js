@@ -45,7 +45,7 @@ const Config = () => {
   const userID = data?.user._id;
   const router = useRouter();
 
-  if(status == 'unauthenticated') router.replace('./login')
+  if (status == "unauthenticated") router.replace("./login");
 
   const [screenHeight, screenWidth] = useWindowSize();
   const [isSame, setIsSame] = useState(true);
@@ -192,17 +192,20 @@ const Config = () => {
     const db1 = dbdata?.layouts;
     const db2 = dbdata?.widgets;
 
-    // console.log(db1);
-    // console.log(db2);
+    console.log(db1);
+    console.log(db2);
 
     const lsdata1 = getFromLS("layoutStorage", "layouts");
     const lsdata2 = getFromLS("widgetStorage", "widgets");
+
+    console.log(lsdata1);
+    console.log(lsdata2);
 
     var res = _.isEqual(db1, lsdata1) && _.isEqual(db2, lsdata2);
     setIsSame(res);
   }
 
-  function chooseLocalCopy(){
+  function chooseLocalCopy() {
     const lsdata2 = getFromLS("layoutStorage", "layouts");
     const lsdata1 = getFromLS("widgetStorage", "widgets");
 
@@ -210,12 +213,12 @@ const Config = () => {
 
     // router.refresh();
     toast.success("Local copy saved, refreshing now");
-    setTimeout(() => {window.location.reload()}, 3000)
-    
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   }
 
-  async function chooseCloudCopy(){
-
+  async function chooseCloudCopy() {
     const dbdata = await getfromdb(userID);
     const db1 = dbdata?.layouts;
     const db2 = dbdata?.widgets;
@@ -225,7 +228,9 @@ const Config = () => {
 
     // router.refresh();
     toast.success("Cloud copy saved, refreshing now");
-    setTimeout(() => {window.location.reload()}, 3000)
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   }
 
   useEffect(() => {
@@ -269,7 +274,7 @@ const Config = () => {
     toast.success("Widget Deleted");
   };
 
-  if (!isSame) {
+  if (isSame) {
     return (
       <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
         <Toaster position="top-center" reverseOrder={false} />
@@ -430,10 +435,27 @@ const Config = () => {
       <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
         <Toaster position="top-center" reverseOrder={false} />
         <div className="absolute text-center text-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 border border-primaryOrange rounded-lg">
-          <h1 className="text-center text-3xl pb-5">A conflict in widget templates has been found in your local and cloud copies!</h1>
+          <h1 className="text-center text-3xl pb-5">
+            A conflict in widget templates has been found in your local and
+            cloud copies!
+          </h1>
           <div className="flex p-3 justify-evenly">
-            <Button className="h-full text-2xl p-2 bg-primaryOrange capitalize" onClick={()=>{chooseLocalCopy()}}>Use local copy</Button>
-            <Button className="h-full text-2xl p-2 bg-primaryOrange capitalize" onClick={()=>{chooseCloudCopy()}}>Use cloud copy</Button>
+            <Button
+              className="h-full text-2xl p-2 bg-primaryOrange capitalize"
+              onClick={() => {
+                chooseLocalCopy();
+              }}
+            >
+              Use local copy
+            </Button>
+            <Button
+              className="h-full text-2xl p-2 bg-primaryOrange capitalize"
+              onClick={() => {
+                chooseCloudCopy();
+              }}
+            >
+              Use cloud copy
+            </Button>
           </div>
         </div>
       </div>
