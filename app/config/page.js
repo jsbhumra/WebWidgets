@@ -341,23 +341,24 @@ const Config = () => {
           {console.log(currentLayout)}
           {currentLayout.map((box) => {
             console.log(currentWidget);
-            console.log(currentLayout);
+            // console.log(currentLayout);
             var thisWidget = currentWidget.filter((ele) => ele.i == box.i)[0]
               .widget;
             var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
             var boxwidth =
               Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
-            return (
+              console.log(thisWidget)
+              return (
               <div
                 key={box.i}
                 // Dynamic Values from Database for w, h, minW, minH.
                 data-grid={{
-                  w: 2,
-                  h: 3,
+                  w: box.w,
+                  h: box.h,
                   x: 0,
                   y: 0,
-                  minW: 2,
-                  minH: 3,
+                  minW: box.minW,
+                  minH: box.minH,
                   maxW: 10,
                   maxH: 10,
                 }}
