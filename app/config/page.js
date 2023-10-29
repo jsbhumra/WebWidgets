@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 import { useSession } from "next-auth/react";
 import _ from "lodash";
+import Toolbar from "../../components/Toolbar";
 
 function useWindowSize() {
   const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
@@ -276,159 +277,134 @@ const Config = () => {
 
   if (isSame) {
     return (
-      <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
-        <Toaster position="top-center" reverseOrder={false} />
-        <Button
-          color="primary"
-          className="absolute z-10 top-5 right-48 text-xl font-medium"
-          onClick={() => router.push("/")}
-        >
-          Home
-        </Button>
-        <Button
-          color="primary"
-          className="absolute z-10 top-5 right-5 text-xl font-medium"
-          onClick={onSave}
-        >
-          Save
-        </Button>
+      <>
+        <Toolbar onSave={onSave} />
+        <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
+          <Toaster position="top-center" reverseOrder={false} />
 
-        <Link href="/config/add">
-          <Button
-            color="primary"
-            className="absolute z-10 top-5 right-28 text-xl font-medium"
-          >
-            Add
-          </Button>
-        </Link>
-        <Link href="/view">
-          <Button
-            color="primary"
-            className="absolute z-10 top-20 right-16 text-xl font-medium"
-          >
-            Preview
-          </Button>
-        </Link>
-        {currentLayout != undefined ? (
-          <ResponsiveReactGridLayout
-            className="border-2 border-red-500 min-h-screen"
-            breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-            cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-            rowHeight={30}
-            layouts={layouts}
-            onLayoutChange={(layout, layouts) =>
-              onLayoutChange(layout, layouts)
-            }
-            compactType={null}
-            preventCollision={true}
-            useCSSTransforms={true}
-            margin={[15, 15]}
-            onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
-          >
-            {/* {console.log(currentLayout)} */}
-            {currentLayout.map((box) => {
-              //console.log(currentWidget);
-              //  //console.log(currentLayout);
-              var thisWidget = currentWidget.filter((ele) => ele.i == box.i)[0]
-                .widget;
-              var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
-              var boxwidth =
-                Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
-              //console.log(thisWidget);
-              return (
-                <div
-                  key={box.i}
-                  // Dynamic Values from Database for w, h, minW, minH.
-                  data-grid={{
-                    w: box.w,
-                    h: box.h,
-                    x: 0,
-                    y: 0,
-                    minW: box.minW,
-                    minH: box.minH,
-                    maxW: 10,
-                    maxH: 10,
-                  }}
-                  className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
-                >
-                  {/* Add Paddind to remove overlap betn widget and delete btn*/}
-                  <div className="text w-full h-full pointer-events-none">
-                    {/* {parentRef?.current[box.i]?.clientWidth} */}
-                    {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
-                    {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
-                    {
-                      {
-                        empty: <></>,
-                        AnalogClock: (
-                          <AnalogClock
-                            width={Math.floor((9 / 10) * boxwidth)}
-                            height={boxheight}
-                            showSeconds={thisWidget.showSeconds}
-                            smooth={thisWidget.smooth}
-                          />
-                        ),
-                        DigitalClock: (
-                          <DigitalClock
-                            width={boxwidth}
-                            height={boxheight}
-                            clock24hr={thisWidget.clock24hr}
-                            showSeconds={thisWidget.showSeconds}
-                            vertical={thisWidget.vertical}
-                          />
-                        ),
-                        SearchBar: (
-                          <SearchBar
-                            width={Math.floor((9 / 10) * boxwidth)}
-                            height={boxheight}
-                            darkMode={thisWidget.darkMode}
-                          />
-                        ),
-                        Calendar: (
-                          <Calendar
-                            width={Math.floor((9 / 10) * boxwidth)}
-                            height={boxheight}
-                            showYear={thisWidget.showYear}
-                          />
-                        ),
-                        NewCalendar: (
-                          <NewCalendar
-                            width={Math.floor((9 / 10) * boxwidth)}
-                            height={boxheight}
-                            darkMode={thisWidget.darkMode}
-                          />
-                        ),
-                        Weather: (
-                          <Weather
-                            width={Math.floor((9 / 10) * boxwidth)}
-                            height={boxheight}
-                            darkMode={thisWidget.darkMode}
-                          />
-                        ),
-                      }[thisWidget.name]
-                    }
-                  </div>
-                  <span
-                    className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block z-[500]"
-                    onClick={onRemoveItem}
-                    id={box.i}
+          {currentLayout != undefined ? (
+            <ResponsiveReactGridLayout
+              className="min-h-screen"
+              breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+              cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+              rowHeight={30}
+              layouts={layouts}
+              onLayoutChange={(layout, layouts) =>
+                onLayoutChange(layout, layouts)
+              }
+              compactType={null}
+              preventCollision={true}
+              useCSSTransforms={true}
+              margin={[15, 15]}
+              onBreakpointChange={(newBreakPt) => breakPointChange(newBreakPt)}
+            >
+              {/* {console.log(currentLayout)} */}
+              {currentLayout.map((box) => {
+                //console.log(currentWidget);
+                //  //console.log(currentLayout);
+                var thisWidget = currentWidget.filter(
+                  (ele) => ele.i == box.i
+                )[0].widget;
+                var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
+                var boxwidth =
+                  Math.floor(box.w * (screenWidth / currCols)) +
+                  15 * (box.w - 1);
+                //console.log(thisWidget);
+                return (
+                  <div
+                    key={box.i}
+                    // Dynamic Values from Database for w, h, minW, minH.
+                    data-grid={{
+                      w: box.w,
+                      h: box.h,
+                      x: 0,
+                      y: 0,
+                      minW: box.minW,
+                      minH: box.minH,
+                      maxW: 10,
+                      maxH: 10,
+                    }}
+                    className="group flex  bg-gray-950 rounded-md bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 outline-dashed outline-offset-[3.5px] outline-[3.5px] outline-lime-200 hover:outline-lime-500 active:outline-indigo-500 items-center justify-center cursor-grab active:cursor-grabbing"
                   >
-                    <Image
-                      src="/delete.svg"
-                      height={20}
-                      width={20}
-                      className="h-full w-full m-0 p-0 z-[500]"
-                    />
-                  </span>
-                </div>
-              );
-            })}
-          </ResponsiveReactGridLayout>
-        ) : (
-          <h3 className="absolute text-3xl italic left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-opacity-60 text-white">
-            No widgets added yet!
-          </h3>
-        )}
-      </div>
+                    {/* Add Paddind to remove overlap betn widget and delete btn*/}
+                    <div className="text w-full h-full pointer-events-none">
+                      {/* {parentRef?.current[box.i]?.clientWidth} */}
+                      {/* <Counter width={parentRef.current[box.i]?.clientWidth} height={parentRef.current[box.i]?.clientHeight} /> */}
+                      {/* <p>Height: {boxheight}<br />Width: {boxwidth}</p> */}
+                      {
+                        {
+                          empty: <></>,
+                          AnalogClock: (
+                            <AnalogClock
+                              width={Math.floor((9 / 10) * boxwidth)}
+                              height={boxheight}
+                              showSeconds={thisWidget.showSeconds}
+                              smooth={thisWidget.smooth}
+                            />
+                          ),
+                          DigitalClock: (
+                            <DigitalClock
+                              width={boxwidth}
+                              height={boxheight}
+                              clock24hr={thisWidget.clock24hr}
+                              showSeconds={thisWidget.showSeconds}
+                              vertical={thisWidget.vertical}
+                            />
+                          ),
+                          SearchBar: (
+                            <SearchBar
+                              width={Math.floor((9 / 10) * boxwidth)}
+                              height={boxheight}
+                              darkMode={thisWidget.darkMode}
+                            />
+                          ),
+                          Calendar: (
+                            <Calendar
+                              width={Math.floor((9 / 10) * boxwidth)}
+                              height={boxheight}
+                              showYear={thisWidget.showYear}
+                            />
+                          ),
+                          NewCalendar: (
+                            <NewCalendar
+                              width={Math.floor((9 / 10) * boxwidth)}
+                              height={boxheight}
+                              darkMode={thisWidget.darkMode}
+                            />
+                          ),
+                          Weather: (
+                            <Weather
+                              width={Math.floor((9 / 10) * boxwidth)}
+                              height={boxheight}
+                              darkMode={thisWidget.darkMode}
+                            />
+                          ),
+                        }[thisWidget.name]
+                      }
+                    </div>
+                    <span
+                      className="border-2 border-red-500 rounded-md p-[2px] cursor-pointer absolute right-0 top-0 h-6 w-6 hidden group-hover:block z-[500]"
+                      onClick={onRemoveItem}
+                      id={box.i}
+                    >
+                      <Image
+                        src="/delete.svg"
+                        height={20}
+                        width={20}
+                        className="h-full w-full m-0 p-0 z-[500]"
+                      />
+                    </span>
+                  </div>
+                );
+              })}
+            </ResponsiveReactGridLayout>
+          ) : (
+            <h3 className="absolute text-3xl italic left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-opacity-60 text-white">
+              No widgets added yet!
+            </h3>
+          )}
+        </div>
+      </>
     );
   } else {
     return (

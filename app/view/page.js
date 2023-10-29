@@ -39,7 +39,7 @@ const View = () => {
   const [isSame, setIsSame] = useState(true);
   const router = useRouter();
 
-  if(status == 'unauthenticated') router.replace('./login')
+  if (status == "unauthenticated") router.replace("./login");
 
   useEffect(() => {
     console.log(userID);
@@ -47,8 +47,8 @@ const View = () => {
   }, [status, userID]);
 
   useEffect(() => {
-    if(!isSame) router.replace('../config')
-  },[isSame])
+    if (!isSame) router.replace("../config");
+  }, [isSame]);
 
   const [screenHeight, screenWidth] = useWindowSize();
 
@@ -186,13 +186,6 @@ const View = () => {
 
   return (
     <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
-      <Button
-        color="primary"
-        className="absolute z-10 top-5 right-5 text-xl font-medium"
-        onClick={() => router.push("/config")}
-      >
-        Back
-      </Button>
       {currentLayout != undefined ? (
         <ResponsiveReactGridLayout
           className="min-h-screen"
