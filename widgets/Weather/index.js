@@ -60,7 +60,7 @@ function Weather({ width = 250, height = 250,darkMode=false}) {
 
   return (
     <div className="w-[24rem] h-[8rem]">
-      <Toaster position="top-center" reverseOrder={false} />
+      {/* <Toaster position="top-center" reverseOrder={false} /> */}
       <div className={dMode?"flex flex-row w-full h-full weatherContainer bg-[#d2691e] text-[#ffebcd]":"flex flex-row w-full h-full weatherContainer bg-[#ffebcd] text-[#d2691e]"}>
         {/* <div className="flex flex-row w-full h-full weatherContainer bg-[#f0f8ff] text-[#000000]"> */}
         <div className="flex flex-row left h-full w-2/3 relative">

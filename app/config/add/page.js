@@ -177,6 +177,7 @@ export default function add() {
   function onWidgetChange() {
     const thisWidget = editWidgets;
     thisWidget[`${currentScreen}`] = currentWidget;
+    console.log(thisWidget);
     setEditWidgets(thisWidget);
   }
 
@@ -246,6 +247,7 @@ export default function add() {
         break;
       }
     }
+    console.log(thisWidget.minH)
     // for(var i in currWidgetProps){
     //   newPropsArr.push([i, WidgetProps[i]]);
     // }
@@ -256,8 +258,10 @@ export default function add() {
           i: (widgetCounter * 1 + 1) * 1,
           x: Infinity,
           y: Infinity,
-          w: 3,
-          h: 4,
+          w: thisWidget.w,
+          h: thisWidget.h,
+          minW:thisWidget.minW,
+          minH:thisWidget.minH,
         },
       ]);
     } else {
@@ -266,8 +270,10 @@ export default function add() {
           i: (widgetCounter * 1 + 1) * 1,
           x: Infinity,
           y: Infinity,
-          w: 3,
-          h: 4,
+          w: thisWidget.w,
+          h: thisWidget.h,
+          minW:thisWidget.minW,
+          minH:thisWidget.minH,
         },
       ]);
     }
