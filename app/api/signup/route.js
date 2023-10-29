@@ -4,6 +4,7 @@ import User from "../../../models/user";
 export async function POST(request) {
   dbConnect();
   const body = await request.json();
+
   const { fname, lname, email, password } = body;
 
   if (fname && lname && email && password) {
