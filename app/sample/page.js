@@ -35,7 +35,7 @@ export default function add() {
 
   async function saveToDB(userID, widgets, layouts) {
     const response = await fetch("/api/widget", {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify({ userID, widgets, layouts }),
       headers: {
         "Content-Type": "application/json",

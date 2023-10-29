@@ -25,6 +25,24 @@ export default function Signup() {
   const bgNum = randomNum();
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  async function createWidgetTemplate(userID, widgets, layouts) {
+    const response = await fetch("/api/widget", {
+      method: "POST",
+      body: JSON.stringify({ userID, widgets, layouts }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    console.log(data);
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong!");
+    }
+
+    return data;
+  }
+
   async function createUser(fname, lname, email, password) {
     const response = await fetch("/api/signup", {
       method: "POST",
@@ -40,6 +58,7 @@ export default function Signup() {
       throw new Error(data.message || "Something went wrong!");
     }
 
+    createWidgetTemplate(data._id, {}, {});
     return data;
   }
 
