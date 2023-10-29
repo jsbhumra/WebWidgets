@@ -312,9 +312,9 @@ export default function add() {
             <div
               key={widget.id}
               onClick={(elem) => handleOpen(elem, widget.id)}
-              className="widgetlist relative w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6"
+              className={widget.size==2?" flex widgetlist relative max-w-full w-[548px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center" : " flex widgetlist relative max-w-full w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center"}
             >
-              <div className="w-full h-full m-0 p-0 pointer-events-none">
+              <div className={widget.id==3?"flex w-full h-full m-0 p-0 pointer-events-none":"flex w-full h-full m-0 p-0 pointer-events-none justify-center items-center"}>
                 <WidgetName {...widget.props} />
               </div>
               {/* {console.log(WidgetProps)} */}
