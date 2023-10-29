@@ -302,9 +302,7 @@ const Config = () => {
               {currentLayout.map((box) => {
                 //console.log(currentWidget);
                 //  //console.log(currentLayout);
-                var thisWidget = currentWidget.filter(
-                  (ele) => ele.i == box.i
-                )[0].widget;
+                var thisWidget = currentWidget.filter((ele) => ele.i == box.i)[0].widget;
                 var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
                 var boxwidth =
                   Math.floor(box.w * (screenWidth / currCols)) +

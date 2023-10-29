@@ -131,8 +131,8 @@ export default function add() {
     }
   };
 
-  const originalWidgets = getFromLS("widgetStorage", "widgets");
-  const originalLayouts = getFromLS("layoutStorage", "layouts");
+  const originalWidgets = getFromLS("widgetStorage", "widgets") || {};
+  const originalLayouts = getFromLS("layoutStorage", "layouts") || {};
 
   // console.log(originalLayouts);
   // console.log(originalWidgets);
@@ -300,7 +300,7 @@ export default function add() {
   // console.log(widgets)
   var currentLength = 0;
 
-  if (currentLayout.length != 0 && currentLayout != undefined) {
+  if (currentLayout != undefined && currentLayout.length != 0) {
     currentLength = currentLayout[currentLayout.length - 1].i;
   }
   const [widgetCounter, setWidgetCounter] = useState(currentLength);
@@ -387,8 +387,8 @@ export default function add() {
               onClick={(elem) => handleOpen(elem, widget.id)}
               className={
                 widget.size == 2
-                  ? " flex widgetlist relative max-w-full w-[548px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center"
-                  : " flex widgetlist relative max-w-full w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center"
+                  ? " flex widgetlist relative max-w-full w-[548px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center z-[3]"
+                  : " flex widgetlist relative max-w-full w-[250px] h-[250px] cursor-pointer outline outline-offset-8 rounded-md m-6 justify-center items-center z-[3]"
               }
             >
               <div

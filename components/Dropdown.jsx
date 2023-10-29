@@ -36,16 +36,12 @@ export default function App() {
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Action event example"
-        onAction={(key) => alert(key)}
+        // onAction={(key) => alert(key)}
         className="backdrop-blur-lg border border-primary rounded-lg"
       >
         <DropdownItem className="text-4xl text-center">
           {" "}
-          <span className="text-lg">Create</span>
-        </DropdownItem>
-        <DropdownItem className="text-4xl text-center">
-          {" "}
-          <span className="text-lg ">Logout</span>
+          <Link href="/config" className="text-lg">Configure</Link>
         </DropdownItem>
         <DropdownItem
           color="danger"
@@ -53,8 +49,8 @@ export default function App() {
           onClick={() => {
             signOut();
           }}
-        >
-          <span className="text-lg font-semibold">Logout</span>
+        ><span className="text-lg font-semibold">Logout</span>
+          
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
