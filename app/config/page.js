@@ -43,8 +43,10 @@ function useWindowSize() {
 const Config = () => {
   const { data, status } = useSession();
   const userID = data?.user._id;
-
   const router = useRouter();
+
+  if(status == 'unauthenticated') router.replace('./login')
+
   const [screenHeight, screenWidth] = useWindowSize();
   const [isSame, setIsSame] = useState(true);
 
@@ -198,6 +200,32 @@ const Config = () => {
 
     var res = _.isEqual(db1, lsdata1) && _.isEqual(db2, lsdata2);
     setIsSame(res);
+  }
+
+  function chooseLocalCopy(){
+    const lsdata2 = getFromLS("layoutStorage", "layouts");
+    const lsdata1 = getFromLS("widgetStorage", "widgets");
+
+    saveToDB(userID, lsdata1, lsdata2);
+
+    // router.refresh();
+    toast.success("Local copy saved, refreshing now");
+    setTimeout(() => {window.location.reload()}, 3000)
+    
+  }
+
+  async function chooseCloudCopy(){
+
+    const dbdata = await getfromdb(userID);
+    const db1 = dbdata?.layouts;
+    const db2 = dbdata?.widgets;
+
+    saveToLS("layoutStorage", "layouts", db1);
+    saveToLS("widgetStorage", "widgets", db2);
+
+    // router.refresh();
+    toast.success("Cloud copy saved, refreshing now");
+    setTimeout(() => {window.location.reload()}, 3000)
   }
 
   useEffect(() => {
@@ -398,7 +426,18 @@ const Config = () => {
       </div>
     );
   } else {
-    return <div>Not Same</div>;
+    return (
+      <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
+        <Toaster position="top-center" reverseOrder={false} />
+        <div className="absolute text-center text-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 border border-primaryOrange rounded-lg">
+          <h1 className="text-center text-3xl pb-5">A conflict in widget templates has been found in your local and cloud copies!</h1>
+          <div className="flex p-3 justify-evenly">
+            <Button className="h-full text-2xl p-2 bg-primaryOrange capitalize" onClick={()=>{chooseLocalCopy()}}>Use local copy</Button>
+            <Button className="h-full text-2xl p-2 bg-primaryOrange capitalize" onClick={()=>{chooseCloudCopy()}}>Use cloud copy</Button>
+          </div>
+        </div>
+      </div>
+    );
   }
 };
 

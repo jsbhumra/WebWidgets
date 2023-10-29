@@ -15,6 +15,8 @@ import Weather from "@/widgets/Weather";
 import Calendar from "@/widgets/Calendar";
 import NewCalendar from "@/widgets/NewCalendar";
 import allWidgets from "@/widgets/widgets";
+import { useSession } from "next-auth/react";
+import _ from "lodash";
 
 const widgetComponents = {
   AnalogClock: AnalogClock,
@@ -50,7 +52,22 @@ function useWindowSize() {
 }
 
 export default function add() {
+  const { data, status } = useSession();
+  const userID = data?.user._id;
+  const [isSame, setIsSame] = useState(true);
   const router = useRouter();
+
+  if(status == 'unauthenticated') router.replace('../login')
+
+  useEffect(() => {
+    console.log(userID);
+    if (status == "authenticated" && userID != undefined) compareData();
+  }, [status, userID]);
+
+  useEffect(() => {
+    if(!isSame) router.replace('../config')
+  },[isSame])
+
   const [widgets, setWidgets] = useState(allWidgets);
   const [currWidgetID, setCurrWidgetID] = useState("");
   const [currWidgetProps, setCurrWidgetProps] = useState("");
@@ -136,6 +153,53 @@ export default function add() {
     editWidgets[`${currentScreen}`]
   );
 
+  async function saveToDB(userID, widgets, layouts) {
+    const response = await fetch("/api/widget", {
+      method: "PUT",
+      body: JSON.stringify({ userID, widgets, layouts }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong!");
+    }
+    //console.log(data);
+    return data;
+  }
+
+  async function getfromdb(userID) {
+    // console.log(userID);
+    const response = await fetch(`/api/widget?userID=${userID}`, {
+      method: "GET",
+    });
+
+    const data = await response.json();
+    // console.log(data);
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong!");
+    }
+
+    return data;
+  }
+
+  async function compareData() {
+    const dbdata = await getfromdb(userID);
+    const db1 = dbdata?.layouts;
+    const db2 = dbdata?.widgets;
+
+    // console.log(db1);
+    // console.log(db2);
+
+    const lsdata1 = getFromLS("layoutStorage", "layouts");
+    const lsdata2 = getFromLS("widgetStorage", "widgets");
+
+    var res = _.isEqual(db1, lsdata1) && _.isEqual(db2, lsdata2);
+    setIsSame(res);
+  }
+
   // console.log(currentLayout);
   // console.log(currentWidget);
 
@@ -159,6 +223,8 @@ export default function add() {
 
       saveToLS("layoutStorage", "layouts", layouts);
       saveToLS("widgetStorage", "widgets", editWidgets);
+
+      saveToDB(userID,widgets,layouts)
 
       // getFromLS("layoutStorage","layouts")
       // getFromLS("widgetStorage","widgets")
