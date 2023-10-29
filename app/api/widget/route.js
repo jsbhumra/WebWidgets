@@ -43,3 +43,22 @@ export async function PUT(request) {
     return Response.json({ error: "Data Incomplete" });
   }
 }
+
+export async function GET(request) {
+  dbConnect();
+  const url = request.url.split("?")[1];
+  const urlParams = new URLSearchParams(url);
+  const userID = urlParams.get("userID");
+
+  if (userID) {
+    try {
+      const res = await Widget.findOne({ userID: userID }).exec();
+
+      return Response.json(res);
+    } catch (error) {
+      return Response.json({ error: error.message });
+    }
+  } else {
+    return Response.json({ error: "Data Incomplete" });
+  }
+}
