@@ -241,7 +241,7 @@ const Config = () => {
     toast.success("Widget Deleted");
   };
 
-  if (isSame) {
+  if (!isSame) {
     return (
       <div className="min-h-screen bg-repeat bgcol bg-cover bg-center">
         <Toaster position="top-center" reverseOrder={false} />
