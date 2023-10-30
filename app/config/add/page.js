@@ -59,15 +59,6 @@ export default function Add() {
 
   if(status == 'unauthenticated') router.replace('../login')
 
-  useEffect(() => {
-    console.log(userID);
-    if (status == "authenticated" && userID != undefined) compareData();
-  }, [status, userID]);
-
-  useEffect(() => {
-    if(!isSame) router.replace('../config')
-  },[isSame])
-
   const [widgets, setWidgets] = useState(allWidgets);
   const [currWidgetID, setCurrWidgetID] = useState("");
   const [currWidgetProps, setCurrWidgetProps] = useState("");
@@ -202,6 +193,15 @@ export default function Add() {
 
   // console.log(currentLayout);
   // console.log(currentWidget);
+
+  useEffect(() => {
+    console.log(userID);
+    if (status == "authenticated" && userID != undefined) compareData();
+  }, [status, userID]);
+
+  useEffect(() => {
+    if(!isSame) router.replace('../config')
+  },[isSame])
 
   useEffect(() => {
     if (currWidgetProps != "") {

@@ -41,15 +41,6 @@ const View = () => {
 
   if (status == "unauthenticated") router.replace("./login");
 
-  useEffect(() => {
-    console.log(userID);
-    if (status == "authenticated" && userID != undefined) compareData();
-  }, [status, userID]);
-
-  useEffect(() => {
-    if (!isSame) router.replace("../config");
-  }, [isSame]);
-
   const [screenHeight, screenWidth] = useWindowSize();
 
   const screenSize = window.innerWidth;
@@ -171,6 +162,15 @@ const View = () => {
     var res = _.isEqual(db1, lsdata1) && _.isEqual(db2, lsdata2);
     setIsSame(res);
   }
+
+  useEffect(() => {
+    console.log(userID);
+    if (status == "authenticated" && userID != undefined) compareData();
+  }, [status, userID]);
+
+  useEffect(() => {
+    if (!isSame) router.replace("../config");
+  }, [isSame]);
 
   useEffect(() => {
     setCurrentLayout(layouts[`${currentScreen}`]);
