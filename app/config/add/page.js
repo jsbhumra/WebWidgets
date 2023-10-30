@@ -51,7 +51,7 @@ function useWindowSize() {
   return size;
 }
 
-export default function add() {
+export default function Add() {
   const { data, status } = useSession();
   const userID = data?.user._id;
   const [isSame, setIsSame] = useState(true);
