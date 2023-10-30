@@ -218,13 +218,15 @@ export default function Add() {
       setCurrentWidget(newCurrWidget);
       console.log(newCurrWidget);
 
+      saveToDB(userID,widgets,layouts)
+
       onLayoutChange();
       onWidgetChange();
 
       saveToLS("layoutStorage", "layouts", layouts);
       saveToLS("widgetStorage", "widgets", editWidgets);
 
-      saveToDB(userID,widgets,layouts)
+      
 
       // getFromLS("layoutStorage","layouts")
       // getFromLS("widgetStorage","widgets")

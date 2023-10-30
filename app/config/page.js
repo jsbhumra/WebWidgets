@@ -207,8 +207,8 @@ const Config = () => {
   }
 
   function chooseLocalCopy() {
-    const lsdata2 = getFromLS("layoutStorage", "layouts");
-    const lsdata1 = getFromLS("widgetStorage", "widgets");
+    const lsdata2 = getFromLS("layoutStorage", "layouts") || {};
+    const lsdata1 = getFromLS("widgetStorage", "widgets") || {};
 
     saveToDB(userID, lsdata1, lsdata2);
 
