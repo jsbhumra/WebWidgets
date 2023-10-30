@@ -432,7 +432,7 @@ export default function Add() {
                             .filter((widget) => widget.id == currWidgetID)
                             .map((widget) => {
                               const Wid = widgetComponents[widget.name];
-                              return <Wid {...widget.props} />;
+                              return <Wid key={widget.id} {...widget.props} />;
                             })}
                         </div>
                       </div>
