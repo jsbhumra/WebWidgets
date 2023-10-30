@@ -19,19 +19,19 @@ import _ from "lodash";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-function useWindowSize() {
-  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
-  useEffect(() => {
-    const handleResize = () => {
-      setSize([window.innerHeight, window.innerWidth]);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  return size;
-}
+// function useWindowSize() {
+//   const [size, setSize] = useState([]);
+//   useEffect(() => {
+//     const handleResize = () => {
+//       setSize([window.innerHeight, window.innerWidth]);
+//     };
+//     window.addEventListener("resize", handleResize);
+//     return () => {
+//       window.removeEventListener("resize", handleResize);
+//     };
+//   },[]);
+//   return size;
+// }
 
 const View = () => {
   const { data, status } = useSession();
@@ -41,9 +41,12 @@ const View = () => {
 
   if (status == "unauthenticated") router.replace("./login");
 
-  const [screenHeight, screenWidth] = useWindowSize();
+  // const [screenHeight, screenWidth] = useWindowSize();
 
-  const screenSize = window.innerWidth;
+  let screenSize;
+  useEffect(()=>{
+    screenSize = window.innerWidth
+  },[])
   let currentScreen, currCols;
   switch (true) {
     case screenSize > 1200:
@@ -71,7 +74,8 @@ const View = () => {
 
   const getFromLS = (name, key) => {
     let ls = {};
-    if (localStorage) {
+    const ISSERVER = typeof window === "undefined";
+    if (!ISSERVER && localStorage) {
       try {
         ls = JSON.parse(localStorage.getItem(name));
         return ls[key];
@@ -80,6 +84,7 @@ const View = () => {
       }
     } else {
       {
+        return {}
       }
     }
   };
@@ -207,7 +212,7 @@ const View = () => {
               .widget;
             var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
             var boxwidth =
-              Math.floor(box.w * (screenWidth / currCols)) + 15 * (box.w - 1);
+              Math.floor(box.w * (screenSize / currCols)) + 15 * (box.w - 1);
             return (
               <div
                 key={box.i}

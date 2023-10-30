@@ -27,19 +27,19 @@ import { useSession } from "next-auth/react";
 import _ from "lodash";
 import Toolbar from "../../components/Toolbar";
 
-function useWindowSize() {
-  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
-  useEffect(() => {
-    const handleResize = () => {
-      setSize([window.innerHeight, window.innerWidth]);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  return size;
-}
+// function useWindowSize() {
+//   const [size, setSize] = useState([]);
+//   useEffect(() => {
+//     const handleResize = () => {
+//       setSize([window.innerHeight, window.innerWidth]);
+//     };
+//     window.addEventListener("resize", handleResize);
+//     return () => {
+//       window.removeEventListener("resize", handleResize);
+//     };
+//   },[]);
+//   return size;
+// }
 
 const Config = () => {
   const { data, status } = useSession();
@@ -48,10 +48,13 @@ const Config = () => {
 
   if (status == "unauthenticated") router.replace("./login");
 
-  const [screenHeight, screenWidth] = useWindowSize();
+  // const [screenHeight, screenWidth] = useWindowSize();
   const [isSame, setIsSame] = useState(true);
 
-  const screenSize = window.innerWidth;
+  let screenSize;
+  useEffect(()=>{
+    screenSize = window.innerWidth
+  },[])
   let currentScreen, currCols;
   switch (true) {
     case screenSize > 1200:
@@ -79,15 +82,17 @@ const Config = () => {
 
   const getFromLS = (name, key) => {
     let ls = {};
-    if (localStorage) {
+    const ISSERVER = typeof window === "undefined";
+    if (!ISSERVER && localStorage) {
       try {
         ls = JSON.parse(localStorage.getItem(name));
         return ls[key];
       } catch (e) {
-        //  //console.log(e);
+        // console.log(e);
       }
     } else {
       {
+        return {}
       }
     }
   };
@@ -300,12 +305,12 @@ const Config = () => {
             >
               {/* {console.log(currentLayout)} */}
               {currentLayout.map((box) => {
-                //console.log(currentWidget);
-                //  //console.log(currentLayout);
+                console.table(currentWidget);
+                 console.table(currentLayout);
                 var thisWidget = currentWidget.filter((ele) => ele.i == box.i)[0].widget;
                 var boxheight = Math.floor(box.h * 30) + 15 * (box.h - 1);
                 var boxwidth =
-                  Math.floor(box.w * (screenWidth / currCols)) +
+                  Math.floor(box.w * (screenSize / currCols)) +
                   15 * (box.w - 1);
                 //console.log(thisWidget);
                 return (

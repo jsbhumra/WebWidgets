@@ -37,21 +37,25 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-function useWindowSize() {
-  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
-  useEffect(() => {
-    const handleResize = () => {
-      setSize([window.innerHeight, window.innerWidth]);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  return size;
-}
-
 export default function Add() {
+
+  // const [size, setSize] = useState([]);
+  // // function useWindowSize() {
+  //   useEffect(() => {
+  //     const handleResize = () => {
+  //       const h = window.innerHeight
+  //       const w = window.innerWidth
+  //       setSize([h, w]);
+  //       // return [h,w]
+  //     };
+  //     window.addEventListener("resize", handleResize);
+  //     return () => {
+  //       window.removeEventListener("resize", handleResize);
+  //     };
+  //   },[]);
+  // //   return size;
+  // }
+
   const { data, status } = useSession();
   const userID = data?.user._id;
   const [isSame, setIsSame] = useState(true);
@@ -62,7 +66,7 @@ export default function Add() {
   const [widgets, setWidgets] = useState(allWidgets);
   const [currWidgetID, setCurrWidgetID] = useState("");
   const [currWidgetProps, setCurrWidgetProps] = useState("");
-  const [screenHeight, screenWidth] = useWindowSize();
+  // const [screenHeight, screenWidth] = useWindowSize();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleOpen = (elem, id) => {
@@ -70,7 +74,10 @@ export default function Add() {
     showPropOptions(elem, id);
   };
 
-  const screenSize = window.innerWidth;
+  let screenSize;
+  useEffect(()=>{
+    screenSize = window.innerWidth
+  },[])
   let currentScreen, currCols;
   switch (true) {
     case screenSize > 1200:
@@ -98,7 +105,8 @@ export default function Add() {
 
   const getFromLS = (name, key) => {
     let ls = {};
-    if (localStorage) {
+    const ISSERVER = typeof window === "undefined";
+    if (!ISSERVER && localStorage) {
       try {
         ls = JSON.parse(localStorage.getItem(name));
         return ls[key];
@@ -107,6 +115,7 @@ export default function Add() {
       }
     } else {
       {
+        return {}
       }
     }
   };
@@ -205,6 +214,7 @@ export default function Add() {
 
   useEffect(() => {
     if (currWidgetProps != "") {
+      console.log("CurrWidgetProps : ",currWidgetProps)
       var theseProps = currWidgetProps;
       var l = currentLayout.length - 1;
       let newCurrWidget = currentWidget;
