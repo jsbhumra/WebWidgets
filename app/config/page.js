@@ -27,18 +27,25 @@ import { useSession } from "next-auth/react";
 import _ from "lodash";
 import Toolbar from "../../components/Toolbar";
 
-function useWindowSize() {
-  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
+const useWindowSize = () => {
+
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
+
+  const handleWindowResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  }
+
   useEffect(() => {
-    const handleResize = () => {
-      setSize([window.innerHeight, window.innerWidth]);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    // component is mounted and window is available
+    handleWindowResize();
+    window.addEventListener('resize', handleWindowResize);
+    // unsubscribe from the event on component unmount
+    return () => window.removeEventListener('resize', handleWindowResize);
   }, []);
-  return size;
+
+  return [height, width]
 }
 
 const Config = () => {
@@ -50,11 +57,16 @@ const Config = () => {
 
   const [screenHeight, screenWidth] = useWindowSize();
   const [isSame, setIsSame] = useState(true);
-
-  const screenSize = window.innerWidth;
+  // const [originalLayouts, setOriginalLayouts] = useState({})
+  // const [originalWidgets, setOriginalWidgets] = useState({})
+// console.table(screenHeight,screenWidth)
+  const screenSize = global?.window && window.innerWidth;
+  console.log(screenSize)
   let currentScreen, currCols;
-  switch (true) {
+  useEffect(()=>{
+    switch (true) {
     case screenSize > 1200:
+      console.log("switch")
       currentScreen = "lg";
       currCols = 12;
       break;
@@ -76,11 +88,15 @@ const Config = () => {
       currCols = 2;
       break;
   }
+  },[screenSize])
+  
 
   const getFromLS = (name, key) => {
     let ls = {};
-    if (localStorage) {
+    console.log("get")
+    if (global?.localStorage) {
       try {
+        console.log("ls")
         ls = JSON.parse(localStorage.getItem(name));
         return ls[key];
       } catch (e) {
@@ -93,7 +109,7 @@ const Config = () => {
   };
 
   const saveToLS = (name, key, value) => {
-    if (localStorage) {
+    if (global?.localStorage) {
       localStorage.setItem(
         name,
         JSON.stringify({
@@ -103,9 +119,13 @@ const Config = () => {
     }
   };
 
-  const originalWidgets = getFromLS("widgetStorage", "widgets") || {};
-
-  const originalLayouts = getFromLS("layoutStorage", "layouts") || {};
+  let originalWidgets = getFromLS("widgetStorage", "widgets") || {};
+  let originalLayouts = getFromLS("layoutStorage", "layouts") || {};
+  // useEffect(() => {
+  //   setOriginalWidgets(getFromLS("widgetStorage", "widgets"))
+  //   setOriginalLayouts(getFromLS("layoutStorage", "layouts"))
+  //   console.log("updated")
+  // },[window])
 
   const onSaveOriginalLayouts = () => {
     saveToLS("layoutStorage", "layouts", originalLayouts);

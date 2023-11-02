@@ -19,18 +19,25 @@ import _ from "lodash";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-function useWindowSize() {
-  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
+const useWindowSize = () => {
+
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
+
+  const handleWindowResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  }
+
   useEffect(() => {
-    const handleResize = () => {
-      setSize([window.innerHeight, window.innerWidth]);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    // component is mounted and window is available
+    handleWindowResize();
+    window.addEventListener('resize', handleWindowResize);
+    // unsubscribe from the event on component unmount
+    return () => window.removeEventListener('resize', handleWindowResize);
   }, []);
-  return size;
+
+  return [height, width]
 }
 
 const View = () => {
@@ -43,7 +50,7 @@ const View = () => {
 
   const [screenHeight, screenWidth] = useWindowSize();
 
-  const screenSize = window.innerWidth;
+  const screenSize = global?.window && window.innerWidth;
   let currentScreen, currCols;
   switch (true) {
     case screenSize > 1200:
@@ -71,7 +78,7 @@ const View = () => {
 
   const getFromLS = (name, key) => {
     let ls = {};
-    if (localStorage) {
+    if (global?.localStorage) {
       try {
         ls = JSON.parse(localStorage.getItem(name));
         return ls[key];
@@ -85,7 +92,7 @@ const View = () => {
   };
 
   const saveToLS = (name, key, value) => {
-    if (localStorage) {
+    if (global?.localStorage) {
       localStorage.setItem(
         name,
         JSON.stringify({
@@ -95,9 +102,9 @@ const View = () => {
     }
   };
 
-  const originalWidgets = getFromLS("widgetStorage", "widgets");
+  const originalWidgets = getFromLS("widgetStorage", "widgets") || {};
 
-  const originalLayouts = getFromLS("layoutStorage", "layouts");
+  const originalLayouts = getFromLS("layoutStorage", "layouts") || {};
 
   const onSaveOriginalLayouts = () => {
     saveToLS("layoutStorage", "layouts", originalLayouts);

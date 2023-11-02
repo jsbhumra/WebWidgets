@@ -37,18 +37,25 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-function useWindowSize() {
-  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
+const useWindowSize = () => {
+
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
+
+  const handleWindowResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  }
+
   useEffect(() => {
-    const handleResize = () => {
-      setSize([window.innerHeight, window.innerWidth]);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    // component is mounted and window is available
+    handleWindowResize();
+    window.addEventListener('resize', handleWindowResize);
+    // unsubscribe from the event on component unmount
+    return () => window.removeEventListener('resize', handleWindowResize);
   }, []);
-  return size;
+
+  return [height, width]
 }
 
 export default function Add() {
@@ -70,7 +77,7 @@ export default function Add() {
     showPropOptions(elem, id);
   };
 
-  const screenSize = window.innerWidth;
+  const screenSize = global?.window && window.innerWidth;
   let currentScreen, currCols;
   switch (true) {
     case screenSize > 1200:
@@ -98,7 +105,7 @@ export default function Add() {
 
   const getFromLS = (name, key) => {
     let ls = {};
-    if (localStorage) {
+    if (global?.localStorage) {
       try {
         ls = JSON.parse(localStorage.getItem(name));
         return ls[key];
@@ -112,7 +119,7 @@ export default function Add() {
   };
 
   const saveToLS = (name, key, value) => {
-    if (localStorage) {
+    if (global?.localStorage) {
       localStorage.setItem(
         name,
         JSON.stringify({
