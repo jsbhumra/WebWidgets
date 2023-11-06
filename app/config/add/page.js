@@ -238,7 +238,8 @@ export default function Add() {
       // getFromLS("layoutStorage","layouts")
       // getFromLS("widgetStorage","widgets")
 
-      router.push("../config");
+      // router.push("../config");
+      router.push("../config?updated=true")
     }
   }, [currentWidget]);
 

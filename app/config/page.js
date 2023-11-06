@@ -20,7 +20,7 @@ import SearchBar from "../../widgets/SearchBar";
 // import SearchBar from "@/widgets/SearchBar";
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 // import { Router } from "express";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 import { useSession } from "next-auth/react";
@@ -48,10 +48,13 @@ const useWindowSize = () => {
   return [height, width]
 }
 
+
 const Config = () => {
   const { data, status } = useSession();
   const userID = data?.user._id;
   const router = useRouter();
+  const searchParams = useSearchParams()
+  const updated = searchParams.get('updated')
 
   if (status == "unauthenticated") router.replace("./login");
 
@@ -209,6 +212,15 @@ const Config = () => {
   }
 
   async function compareData() {
+    if(updated){
+      const lsdata2 = getFromLS("layoutStorage", "layouts") || {};
+      const lsdata1 = getFromLS("widgetStorage", "widgets") || {};
+
+      saveToDB(userID, lsdata1, lsdata2);
+      // setTimeout(() => {
+        router.replace("../config");
+      // }, 500);
+    }
     const dbdata = await getfromdb(userID);
     const db1 = dbdata?.layouts;
     const db2 = dbdata?.widgets;

@@ -84,7 +84,7 @@ function DigitalClock({
         <span>
           {clock24hr
             ? convertToTwoDigit(time.hours)
-            : convertToTwoDigit(time.hours % 12)}
+            : (time.hours==12 ? 12 : convertToTwoDigit(time.hours % 12))}
           {vertical ? <br /> : ":"}
         </span>
         <span>{convertToTwoDigit(time.minutes)}</span>
